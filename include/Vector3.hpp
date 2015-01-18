@@ -5,49 +5,27 @@ namespace Module {
 
 class Vector3 {
 private:
-	float _x,_y,_z;
+	float coords[3];
 public:
-	Vector3() : _x(0),_y(0),_z(0) {}
-	Vector3(float x, float y, float z) : _x(x),_y(y),_z(z) {}
+	const float& x;
+	const float& y;
+	const float& z;
 	
-	Vector3 operator*(const Vector3& other) // component-wise multiplication
-	{
-		return Vector3( x * other.x,
-						y * other.y,
-						z * other.z);
-	}
+	Vector3();
+	Vector3(float _x, float _y, float _z);
 	
-	Vector3 operator+(const Vector3& other) // vector addition
-	{
-		return Vector3(	x + other.x,
-						y + other.y,
-						z + other.z);
-	}
+	Vector3 operator*(const Vector3& other); 		// component-wise multiplication
+	Vector3 operator+(const Vector3& other); 		// vector addition
+	Vector3& operator+=(const Vector3& other); 		// addition assignment
+	Vector3 operator-(); 							// negation
+	Vector3 operator-(const Vector3& other); 		// vector subtraction
+	Vector3& operator-=(const Vector3& other);		// subtraction assignment
+	const float& operator[](int index);				// index
+
+	const float* getCoords();
 	
-	Vector3 operator-() // negation
-	{
-		return Vector3(-x,-y,-z);
-	}
-	
-	Vector3 cross(const Vector3& other) // vector cross product
-	{
-		return Vector3(	y * other.z - z * other.y,
-						z * other.x - x * other.z,
-						x * other.y - y * other.x);
-	}
-	
-	float dot(const Vector3& other) // vector dot product
-	{
-		return x * other.x + y * other.y + z * other.z;
-	}
-	
-	Vector3& operator+=(const Vector3& other) // addition assignment
-	{
-		x += other.x;
-		y += other.y;
-		z += other.z;
-		return (*this);
-	}
+	Vector3 cross(const Vector3& other); 			// vector cross product	
+	float dot(const Vector3& other); 				// vector dot product	
 	
 	
 };
