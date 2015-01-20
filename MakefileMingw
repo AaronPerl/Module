@@ -15,14 +15,16 @@ LIBRARY_NAME = Module
 
 FULL_NAME = lib$(LIBRARY_NAME).a
 
-PATH64 = build/64bit/windows/mingw
-PATH32 = build/32bit/windows/mingw
 
 #Debug mode
-FLAGS += -g -ggdb 
+FLAGS += -g -DDEBUG -ggdb 
+PATH64 = build/debug/64bit/windows/mingw
+PATH32 = build/debug/32bit/windows/mingw
 
 #Release mode
-#FLAGS += -mwindows 
+#FLAGS += -DNDEBUG -mwindows 
+#PATH64 = build/release/64bit/windows/mingw
+#PATH32 = build/release/32bit/windows/mingw
 
 SRC = $(wildcard src/*.cpp)
 OBJ = $(notdir $(SRC:.cpp=.o))

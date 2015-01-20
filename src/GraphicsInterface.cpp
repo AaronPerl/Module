@@ -8,7 +8,7 @@ void Module::GraphicsInterface::start()
 
 void Module::GraphicsInterface::run()
 {
-	long prevTime = getMilliseconds();
+	unsigned long prevTime = getMilliseconds();
 	createWindow();
 	while (1)
 	{

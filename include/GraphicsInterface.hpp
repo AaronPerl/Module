@@ -18,7 +18,7 @@ protected:
 	
 	virtual void createWindow() = 0;
 	virtual void renderFrame() = 0;
-	virtual long getMilliseconds() = 0;
+	virtual unsigned long getMilliseconds() = 0;
 public:
 	GraphicsInterface() : fps(60) {}
 	GraphicsInterface(unsigned int set_fps) : fps(set_fps) {}

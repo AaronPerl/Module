@@ -2,63 +2,43 @@
 #define __MODULE__QUATERNION_HPP__
 
 #include "Vector3.hpp"
+#include <iostream>
 
 namespace Module {
 
 class Quaternion {
 private:
-	float coords[4];
-	float& x;
-	float& y;
-	float& z;
-	float& w;
+	float x;
+	float y;
+	float z;
+	float w;
 public:
 	Quaternion();
 	Quaternion(float _x, float _y, float _z, float _w);
 	Quaternion(Vector3 axis, float angle);
 	
-	/*Vector3 operator*(const Vector3& other) // component-wise multiplication
-	{
-		return Vector3( x * other.x,
-						y * other.y,
-						z * other.z);
-	}
+	Quaternion operator* (const Quaternion& other) const;	// quaternion multiplication
+	Quaternion& operator*= (const Quaternion& other);		// quaternion multiplication assignment
+	Quaternion quatpow(float exponent) const; 				// power of any quaternion
+	Quaternion unitpow(float exponent) const;				// power of unit quaternion, use with caution
+	//Quaternion& powAssign(float exponent); 				// power assignment
+
+	Quaternion inverse() const;								// inverse/conjugate quaternion
+	Quaternion unit() const;								// unit quaternion
+	Quaternion& normalize();								// unit quaternion assignment
 	
-	Vector3 operator+(const Vector3& other) // vector addition
-	{
-		return Vector3(	x + other.x,
-						y + other.y,
-						z + other.z);
-	}
-	
-	Vector3 operator-() // negation
-	{
-		return Vector3(-x,-y,-z);
-	}
-	
-	Vector3 cross(const Vector3& other) // vector cross product
-	{
-		return Vector3(	y * other.z - z * other.y,
-						z * other.x - x * other.z,
-						x * other.y - y * other.x);
-	}
-	
-	float dot(const Vector3& other) // vector dot product
-	{
-		return x * other.x + y * other.y + z * other.z;
-	}
-	
-	Vector3& operator+=(const Vector3& other) // addition assignment
-	{
-		x += other.x;
-		y += other.y;
-		z += other.z;
-		return (*this);
-	}*/
-	
+	float getX() const { return x; }
+	float getY() const { return y; }
+	float getZ() const { return z; }
+	float getW() const { return w; }	
 	
 };
 
+
+Quaternion slerp(const Quaternion& a, const Quaternion& b, float t);		// spherical linear interpolation
+
 }
+
+std::ostream& operator<< (std::ostream& o, const Module::Quaternion& q);	// ostream insertion operator
 
 #endif
