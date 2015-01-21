@@ -1,7 +1,11 @@
 #ifndef __MODULE__VECTOR_HPP__
 #define __MODULE__VECTOR_HPP__
 
+#include <iostream>
+
 namespace Module {
+
+class Quaternion;
 
 class Vector3 {
 private:
@@ -21,6 +25,8 @@ public:
 	Vector3 operator-(const Vector3& other) const;	// vector subtraction
 	Vector3& operator-=(const Vector3& other);		// subtraction assignment
 	
+	Vector3 rotate(const Quaternion& other) const;	// quaternion rotation
+	
 	float getX() const { return x; }
 	float getY() const { return y; }
 	float getZ() const { return z; }
@@ -32,5 +38,7 @@ public:
 };
 
 }
+
+std::ostream& operator<< (std::ostream& o, const Module::Vector3& v);	// ostream insertion operator
 
 #endif

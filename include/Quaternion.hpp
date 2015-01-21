@@ -1,10 +1,11 @@
 #ifndef __MODULE__QUATERNION_HPP__
 #define __MODULE__QUATERNION_HPP__
 
-#include "Vector3.hpp"
 #include <iostream>
 
 namespace Module {
+
+class Vector3;
 
 class Quaternion {
 private:

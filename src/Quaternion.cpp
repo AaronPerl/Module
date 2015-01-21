@@ -98,7 +98,7 @@ Quaternion Module::slerp(const Quaternion& a, const Quaternion& b, float t) // s
 
 std::ostream& operator<< (std::ostream& o, const Quaternion& q) // ostream insertion operator
 {
-	o << q.getX() << "," << q.getY() << "," << q.getZ() << "," << q.getW();
+	o << "Quaternion(" << q.getX() << "," << q.getY() << "," << q.getZ() << "," << q.getW() << ")";
 	return o;
 }
 

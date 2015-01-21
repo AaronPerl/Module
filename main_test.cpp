@@ -24,11 +24,17 @@ int main()
 	std::cout << quat4.getX() << "," << quat4.getY() << "," << quat4.getZ() << "," << quat4.getW() << std::endl;
 	std::cout << vec.getY() << std::endl;
 	std::cout << 1-FLT_EPSILON << std::endl;*/
-	Module::Quaternion quat1(Module::Vector3(0,1,0),0);
+	/*Module::Quaternion quat1(Module::Vector3(0,1,0),0);
 	Module::Quaternion quat2(Module::Vector3(1,0,0),MATH_PI/2);
 	std::cout << quat1 << std::endl;
 	std::cout << Module::slerp(quat1,quat2,0.5f) << std::endl;
-	std::cout << quat2 << std::endl;
+	std::cout << quat2 << std::endl;*/
 	//std::cout << quat1 << std::endl;
+	
+	Module::Quaternion rot(Module::Vector3(1,0,0),MATH_PI/2);
+	
+	std::cout << rot << std::endl;
+	std::cout << vec.rotate(rot) << std::endl;
+	
 	return 0;
 }

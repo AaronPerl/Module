@@ -1,4 +1,5 @@
 #include "Vector3.hpp"
+#include "Quaternion.hpp"
 
 using Module::Vector3;
 
@@ -71,6 +72,13 @@ Vector3& Vector3::operator-=(const Vector3& other) // addition assignment
 	return (*this);
 }
 
+Vector3 Vector3::rotate(const Quaternion& other) const
+{
+	Quaternion self(x,y,z,0);
+	Quaternion result = (other * self) * other.inverse();
+	return Vector3(result.getX(),result.getY(),result.getZ());
+}
+
 Vector3 Vector3::cross(const Vector3& other) const // vector cross product
 {
 	return Vector3(	y * other.z - z * other.y,
@@ -81,4 +89,10 @@ Vector3 Vector3::cross(const Vector3& other) const // vector cross product
 float Vector3::dot(const Vector3& other) const // vector dot product
 {
 	return x * other.x + y * other.y + z * other.z;
+}
+
+std::ostream& operator<< (std::ostream& o, const Module::Vector3& v) // ostream insertion operator
+{
+	o << "Vector3(" << v.getX() << "," << v.getY() << "," << v.getZ() << ")";
+	return o;
 }
