@@ -1,7 +1,7 @@
 #ifndef __MODULE__GRAPHICSINTERFACE_HPP__
 #define __MODULE__GRAPHICSINTERFACE_HPP__
 
-#include "ThreadingInterface.hpp"
+#include "ThreadObject.hpp"
 
 namespace Module {
 
@@ -12,13 +12,13 @@ protected:
 	unsigned int fps;
 	ModuleGame* game;
 	
-	virtual void start();
-	//overrides ThreadObject::run()
-	virtual void run();
+	void start();
+	void run(); //overrides ThreadObject::run()
 	
-	virtual void createWindow() = 0;
-	virtual void renderFrame() = 0;
-	virtual unsigned long getMilliseconds() = 0;
+	// IMPLEMENT THESE //
+	virtual void createWindow() = 0; 				// initialization and window creation
+	virtual void renderFrame() = 0;					// render individual frame
+	virtual unsigned long getMilliseconds() = 0;	// get time since initialization
 public:
 	GraphicsInterface() : fps(60) {}
 	GraphicsInterface(unsigned int set_fps) : fps(set_fps) {}

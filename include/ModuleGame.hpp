@@ -1,9 +1,10 @@
 #ifndef __MODULE__MODULEGAME_HPP__
 #define __MODULE__MODULEGAME_HPP__
 
-#include "GraphicsInterface.hpp"
-
 namespace Module {
+	
+class GraphicsInterface;
+class ThreadingInterface;
 
 class ModuleGame {
 private:

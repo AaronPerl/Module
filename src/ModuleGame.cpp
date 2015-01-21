@@ -1,7 +1,9 @@
 #include "ModuleGame.hpp"
+#include "GraphicsInterface.hpp"
+#include "ThreadingInterface.hpp"
 #include <cassert>
 
-Module::ModuleGame::ModuleGame() : graphics(0)
+Module::ModuleGame::ModuleGame() : graphics(0), threading(0)
 {
 }
 
