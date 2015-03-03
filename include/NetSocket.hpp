@@ -1,9 +1,10 @@
 #ifndef __MODULE__NETSOCKET_HPP__
 #define __MODULE__NETSOCKET_HPP__
 
-
 #include "ModuleGame.hpp"
 #include "ThreadObject.hpp"
+
+#include <string>
 
 namespace Module
 {
@@ -15,6 +16,7 @@ protected:
 	NetworkInterface* network;
 
 
+public:
 
 	friend class ModuleGame;
 	friend class NetworkInterface;
