@@ -3,36 +3,37 @@
 
 #include <iostream>
 #include <string>
-#include "SoundObject.hpp"
-#include "SoundInstance.hpp"
+#include <vector>
+#include "Sound.hpp"
+#include "SoundData.hpp"
 
 namespace Module
 {
-	class AudioInterface
-	{
-		protected:
-			unsigned int numSounds;				// The number of SoundObjects
-			unsigned int numPlaying;			// The number of currently-playing SoundObjects
-			
-			SoundObject*	soundObjects[5];	// The collection of all sounds
-			SoundInstance*	soundInstances[5];	// The collection of all currently-playing sounds
+class Sound;
+class SoundData;
+// The AudioInterface is one of Module's four core interfaces,
+// and handles its titular audio. It may be used to load and
+// or play sounds.
+class AudioInterface
+{
+	protected:
+		// REPRESENTATION
+		std::vector<Sound*> sounds;				// The collection of all playing sounds
+		std::vector<SoundData*> soundData;		// The collection of all loaded sounds
 		
-		public:
-			// FUNCTIONS
-			SoundObject* createSound(std::string, uint16_t*);	// Assembles a SoundObject (returns success)
-			bool removeSound(SoundObject*);						// Removes a SoundObject by its pointer (returns success)
-			bool removeSound(std::string);						// Removes a SoundObject by its name (returns success)
-			bool playSound(SoundObject*);						// Creates a SoundInstance by its pointer (returns success)
-			bool playSound(std::string);						// Creates a SoundInstance by its name (returns success)
-			
-			// DEBUG FUNCTIONS
-			void printSoundObjects();					// A function for debugging the sound collection
-			void printSoundInstances();					// A function for debugging the currently-playing sounds
-			
-			// CONSTRUCTOR (Temporary, before this becomes pure virtual)
-			AudioInterface():	numSounds((unsigned int)0),
-								numPlaying((unsigned int)0){}
-	};
+	public:
+		// FUNCTIONS
+		Module::Sound* playSound(SoundData*);				// Plays a Sound
+		SoundData* loadSoundData(std::string, uint16_t*);	// Loads SoundData
+		//void unloadSoundData(SoundData*);					// Unloads SoundData
+		
+		// DEBUG FUNCTIONS
+		void printSounds();		// A function for debugging the sound collection
+		
+		// CONSTRUCTOR (Temporary, before this becomes pure virtual)
+		AudioInterface(){}
+};
+
 }
 
 #endif

@@ -36,5 +36,17 @@ int main()
 	std::cout << rot << std::endl;
 	std::cout << vec.rotate(rot) << std::endl;
 	
+	
+	// AUDIO TESTS //
+	Module::AudioInterface ai;
+	Module::SoundData* sound = ai.loadSoundData("explosion",NULL);
+	ai.loadSoundData("laser",NULL);
+	ai.loadSoundData("murmur",NULL);
+	ai.loadSoundData("music",NULL);
+	ai.loadSoundData("murmur",NULL);
+	ai.playSound(sound);
+	ai.playSound(sound);
+	ai.printSounds();
+	
 	return 0;
 }

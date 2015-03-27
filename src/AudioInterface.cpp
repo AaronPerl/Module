@@ -1,81 +1,57 @@
-//#include "ModuleGame.hpp"
 #include "AudioInterface.hpp"
 
-Module::SoundObject* Module::AudioInterface::createSound(std::string name, uint16_t* data)
+Module::Sound* Module::AudioInterface::playSound(SoundData* soundData)
 {
-	for(unsigned int i = 0; i < numSounds; i++)
+	if(soundData)
 	{
-		if(soundObjects[i]->getName() == name)
+		sounds.push_back(new Sound(soundData));
+		sounds.back()->replay();
+	}
+	else
+	{
+		std::cerr << "AudioInterface: This SoundData is NULL!" << std::endl;
+	}
+}
+Module::SoundData* Module::AudioInterface::loadSoundData(std::string name, uint16_t* data)
+{
+	for(unsigned int i = 0; i < soundData.size(); i++)
+	{
+		if(soundData[i]->getName() == name)
 		{
+			std::cerr << "AudioInterface: The name \"" << name << "\" has already been used." << std::endl;
 			return NULL;
 		}
 	}
-	soundObjects[numSounds++] = new SoundObject(name, data);
-	return soundObjects[numSounds-1]; // What if the name's taken?
+	soundData.push_back(new SoundData(name,data));
+	return soundData.back();
 }
-bool Module::AudioInterface::removeSound(SoundObject* sound)
+//TODO: Link this up in such a way that unloading SoundData removes all Sounds pointing to it.
+/*
+void Module::AudioInterface::unloadSoundData(Module::SoundData* sD)
 {
-	for(unsigned int i = 0; i < numSounds; i++)
+	for(unsigned int i = 0; i < soundData.size(); i++)
 	{
-		if(soundObjects[i] == sound)
+		if(soundData[i] == sD)
 		{
-			delete soundObjects[i];
-			soundObjects[i] = NULL;
-			return true;
+			std::cerr << "AudioInterface: The name \"" << sD->getName() << "\" has already been used." << std::endl;
+			soundData.erase(soundData.begin()+i);
+			return;
 		}
 	}
-	return false;
 }
-bool Module::AudioInterface::removeSound(std::string name)
-{
-	for(unsigned int i = 0; i < numSounds; i++)
-	{
-		if(soundObjects[i]->getName() == name)
-		{
-			delete soundObjects[i];
-			soundObjects[i] = NULL;
-			return true;
-		}
-	}
-	return false;
-}
-bool Module::AudioInterface::playSound(SoundObject* sound)
-{
-	for(unsigned int i = 0; i < numSounds; i++)
-	{
-		if(soundObjects[i] == sound)
-		{
-			soundInstances[numPlaying++] = new SoundInstance((soundObjects[i]->numInstances++),soundObjects[i]);
-		}
-	}
-	return false;
-}
-bool Module::AudioInterface::playSound(std::string name)
-{
-	for(unsigned int i = 0; i < numSounds; i++)
-	{
-		if(soundObjects[i]->getName() == name)
-		{
-			soundInstances[numPlaying++] = new SoundInstance((soundObjects[i]->numInstances++),soundObjects[i]);
-		}
-	}
-	return false;
-}
-void Module::AudioInterface::printSoundObjects()
+*/
+void Module::AudioInterface::printSounds()
 {
 	std::cout << "Sound Collection:" << std::endl;
-	std::cout << " There are " << numSounds << "." << std::endl;
-	for(unsigned int i = 0; i < numSounds; i++)
+	std::cout << " There are " << soundData.size() << "." << std::endl;
+	for(unsigned int i = 0; i < soundData.size(); ++i)
 	{
-		std::cout << " " << i << ") " << soundObjects[i]->getName() << std::endl;
+		std::cout << " " << i << ") " << soundData[i]->getName() << std::endl;
 	}
-}
-void Module::AudioInterface::printSoundInstances()
-{
 	std::cout << "Currently-playing Sounds:" << std::endl;
-	std::cout << " There are " << numPlaying << "." << std::endl;
-	for(unsigned int i = 0; i < numPlaying; i++)
+	std::cout << " There are " << sounds.size() << "." << std::endl;
+	for(unsigned int i = 0; i < sounds.size(); ++i)
 	{
-		std::cout << " " << i << ") " << soundInstances[i]->getName() << std::endl;
+		std::cout << " " << i << ") " << sounds[i]->getName() << std::endl;
 	}
 }
