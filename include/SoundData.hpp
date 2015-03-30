@@ -2,6 +2,7 @@
 #define __MODULE__SOUNDDATA_HPP__
 
 #include <string>
+#include <stdint.h>
 
 namespace Module
 {

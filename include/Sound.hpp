@@ -3,6 +3,7 @@
 
 #include <cstdio>
 #include <string>
+#include <stdint.h>
 #include "AudioInterface.hpp"
 #include "SoundData.hpp"
 
