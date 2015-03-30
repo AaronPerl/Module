@@ -31,8 +31,8 @@ namespace Module
 			virtual unsigned long getMilliseconds() = 0;	// get time since initialization
 			
 		public:
-			GraphicsInterface() : fps(60) {}
-			GraphicsInterface(unsigned int set_fps) : fps(set_fps) {}
+			GraphicsInterface();
+			GraphicsInterface(unsigned int set_fps);
 			
 			virtual Mesh* createMesh(Vector3* vertices, unsigned int num_vertices, const std::string& name);
 			virtual Mesh* createMesh(const DynamicArray<Vector3>& vertices, const std::string& name);

@@ -15,12 +15,12 @@ public:
 	DynamicArray() : size(0)
 	{
 		allocatedSpace = INIT_SIZE;
-		myArray = new T[INIT_SIZE];
+		myArray = (T*) ::operator new(INIT_SIZE * sizeof(T));
 	}
 	DynamicArray(size_type initSize) : size(0)
 	{
 		allocatedSpace = initSize;
-		myArray = new T[initSize];
+		myArray = (T*) ::operator new(initSize * sizeof(T));
 	}
 	
 	size_type getSize() const { return size; }

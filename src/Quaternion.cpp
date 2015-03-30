@@ -57,7 +57,7 @@ Quaternion Quaternion::quatpow(float exponent) const // power
 
 Quaternion Quaternion::unitpow(float exponent) const // power of unit quaternion, use with caution
 {
-	assert(abs(x*x + y*y + z*z + w*w-1)<0.01);
+	assert(std::abs(x*x + y*y + z*z + w*w-1)<0.01);
 	float thetadiv2 = acos(w);
 	float vec_factor = sin(exponent*thetadiv2)/sin(thetadiv2);
 	return Quaternion(	vec_factor * x,

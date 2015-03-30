@@ -6,6 +6,10 @@
 
 using namespace Module;
 
+GraphicsInterface::GraphicsInterface() : fps(60) {}
+
+GraphicsInterface::GraphicsInterface(unsigned int set_fps) : fps(set_fps) {}
+
 void GraphicsInterface::start()
 {
 	game->startThread(this);
@@ -25,7 +29,7 @@ void GraphicsInterface::run()
 Mesh* GraphicsInterface::createMesh(Vector3* vertices, unsigned int num_vertices, const std::string& name)
 {
 	assert(num_vertices);
-	DynamicArray<Vector3>::size_t firstIndex = allVertices.getSize();
+	DynamicArray<Vector3>::size_type firstIndex = allVertices.getSize();
 	allVertices.append(vertices, num_vertices);
 	Mesh* retVal = new Mesh(&allVertices[firstIndex], num_vertices, name);
 	return retVal;
@@ -33,7 +37,7 @@ Mesh* GraphicsInterface::createMesh(Vector3* vertices, unsigned int num_vertices
 
 Mesh* GraphicsInterface::createMesh(const DynamicArray<Vector3>& vertices, const std::string& name)
 {
-	DynamicArray<Vector3>::size_t firstIndex = allVertices.getSize();
+	DynamicArray<Vector3>::size_type firstIndex = allVertices.getSize();
 	allVertices.append(vertices);
 	Mesh* retVal = new Mesh(&allVertices[firstIndex], vertices.getSize(), name);
 	return retVal;

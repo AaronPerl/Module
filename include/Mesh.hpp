@@ -3,6 +3,7 @@
 
 #include "GraphicsInterface.hpp"
 #include <string>
+#include <cstdlib>
 
 namespace Module {
 
