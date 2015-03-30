@@ -18,18 +18,26 @@ FULL_NAME = lib$(LIBRARY_NAME).a
 
 #Debug mode
 FLAGS += -g -DDEBUG -ggdb 
-PATH64 = build/debug/64bit/windows/mingw
-PATH32 = build/debug/32bit/windows/mingw
+PATH64 = build/debug/64bit
+PATH32 = build/debug/32bit
 
 #Release mode
 #FLAGS += -DNDEBUG -mwindows 
-#PATH64 = build/release/64bit/windows/mingw
-#PATH32 = build/release/32bit/windows/mingw
+#PATH64 = build/release/64bit
+#PATH32 = build/release/32bit
 
 SRC = $(wildcard src/*.cpp)
 OBJ = $(notdir $(SRC:.cpp=.o))
 OBJ_PATHS64 = $(addprefix $(PATH64)/,$(OBJ))
 OBJ_PATHS32 = $(addprefix $(PATH32)/,$(OBJ))
+
+ifeq ($(OS), Windows_NT)
+	PATH64 := $(addsuffix /windows/mingw, $(PATH64))
+	PATH32 := $(addsuffix /windows/mingw, $(PATH32))
+else
+	PATH64 := $(addsuffix /linux, $(PATH64))
+	PATH32 := $(addsuffix /linux, $(PATH32))	
+endif
 
 all: 64bit 32bit
 
