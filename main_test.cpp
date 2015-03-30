@@ -5,6 +5,7 @@
 #include "Sound.hpp"
 #include "SoundData.hpp"
 
+#include "DynamicArray.hpp"
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
 #include <cfloat>
@@ -19,7 +20,10 @@ float timesTwo(float x)
 int main()
 {
 	Module::ModuleGame g;
+	
+	// UTILITY TESTS //
 	Module::Vector3 vec(0,10,0);
+	
 	/*Module::Quaternion quat1(3,4,3,0);
 	Module::Quaternion quat2(3.9,-1,-3,4);
 	Module::Quaternion quat3 = quat1 * quat2;
@@ -36,10 +40,19 @@ int main()
 	//std::cout << quat1 << std::endl;
 	
 	Module::Quaternion rot(Module::Vector3(1,0,0),MATH_PI/2);
-	
 	std::cout << rot << std::endl;
 	std::cout << vec.rotate(rot) << std::endl;
 	
+	Module::DynamicArray<unsigned int> testArray;
+	std::cout << "Initial size = " << testArray.getAllocatedSpace() << std::endl;
+	for (unsigned int i = 0; i < 257; i++)
+	{
+		testArray.add(i);
+	}
+	std::cout << "Size after 257 additions = " << testArray.getAllocatedSpace() << std::endl;
+	
+	// GRAPHICS TESTS //
+	// :( //
 	
 	// AUDIO TESTS //
 	Module::AudioInterface ai;
