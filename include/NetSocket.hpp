@@ -14,7 +14,9 @@ class NetSocket : ThreadObject
 protected:
 	ModuleGame* game;
 	NetworkInterface* network;
+	bool isServer;
 
+	virtual void run();//When run, the port waits
 
 public:
 

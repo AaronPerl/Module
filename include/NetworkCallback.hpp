@@ -11,8 +11,10 @@ class NetworkCallback
 protected:
 
 public:
-	virtual void onReceiveConnection(std::string port,std::string clientip) {};
-	virtual void onReceiveMessage(std::string port,std::string message) {};//temp, replace with different message type
+	virtual void onReceiveConnection(unsigned short port,std::string clientip) {};
+	//Called when a server port receives a connection.
+	virtual void onReceiveMessage(unsigned short port,std::string message) {};
+	//Called when a client or server port receives a message.
 }
 
 }
