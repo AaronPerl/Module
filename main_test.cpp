@@ -1,6 +1,10 @@
 #include <cmath>
 #include <iostream>
 #include "ModuleGame.hpp"
+#include "AudioInterface.hpp"
+#include "Sound.hpp"
+#include "SoundData.hpp"
+
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
 #include <cfloat>
