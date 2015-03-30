@@ -5,6 +5,7 @@ namespace Module {
 	
 class GraphicsInterface;
 class ThreadingInterface;
+class ThreadObject;
 
 class ModuleGame {
 private:
