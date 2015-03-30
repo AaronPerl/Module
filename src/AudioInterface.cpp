@@ -11,6 +11,7 @@ Module::Sound* Module::AudioInterface::playSound(SoundData* soundData)
 	{
 		std::cerr << "AudioInterface: This SoundData is NULL!" << std::endl;
 	}
+	return sounds.back();
 }
 Module::SoundData* Module::AudioInterface::loadSoundData(std::string name, uint16_t* data)
 {
