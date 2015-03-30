@@ -42,6 +42,12 @@ clean:
 	rm -f $(PATH64)/*
 	rm -f $(PATH32)/*
 
+$(PATH64):
+	mkdir -p $(PATH64)
+	
+$(PATH32):
+	mkdir -p $(PATH32)
+	
 $(PATH64)/%.o : src/%.cpp
 	g++ $< -c -Iinclude $(FLAGS) -o $@
 	
@@ -55,3 +61,6 @@ $(PATH64)/$(FULL_NAME): $(OBJ_PATHS64)
 $(PATH32)/$(FULL_NAME): $(OBJ_PATHS32)
 	ar rcs $(PATH32)/$(FULL_NAME) $(PATH32)/*.o
 #	i686-w64-mingw32-g++ $(FLAGS) $(SRC) $(LIB_PATHS_32) $(LIB_INC_PATHS_32) $(LIBS) -o $@
+
+$(OBJ_PATHS64) : | $(PATH64)
+$(OBJ_PATHS32) : | $(PATH32)
