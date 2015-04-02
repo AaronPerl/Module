@@ -6,6 +6,7 @@
 #include <vector>
 #include "Sound.hpp"
 #include "SoundData.hpp"
+#include "DynamicArray.hpp"
 
 namespace Module
 {
@@ -16,15 +17,15 @@ class SoundData;
 // or play sounds.
 class AudioInterface
 {
-	protected:
+	public: //protected:
 		// REPRESENTATION
-		std::vector<Sound*> sounds;				// The collection of all playing sounds
-		std::vector<SoundData*> soundData;		// The collection of all loaded sounds
+		DynamicArray<Sound> sounds;				// The collection of all playing sounds
+		DynamicArray<SoundData> soundData;		// The collection of all loaded sounds
 		
 	public:
 		// FUNCTIONS
 		Module::Sound* playSound(SoundData*);				// Plays a Sound
-		SoundData* loadSoundData(std::string, uint16_t*);	// Loads SoundData
+		SoundData* loadSoundData(std::string);				// Loads SoundData
 		//void unloadSoundData(SoundData*);					// Unloads SoundData
 		
 		// DEBUG FUNCTIONS

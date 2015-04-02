@@ -4,27 +4,27 @@ Module::Sound* Module::AudioInterface::playSound(SoundData* soundData)
 {
 	if(soundData)
 	{
-		sounds.push_back(new Sound(soundData));
-		sounds.back()->replay();
+		sounds.add(Sound(soundData));
+		sounds.back().replay();
 	}
 	else
 	{
 		std::cerr << "AudioInterface: This SoundData is NULL!" << std::endl;
 	}
-	return sounds.back();
+	return &sounds.back();
 }
-Module::SoundData* Module::AudioInterface::loadSoundData(std::string name, uint16_t* data)
+Module::SoundData* Module::AudioInterface::loadSoundData(std::string name)
 {
 	for(unsigned int i = 0; i < soundData.size(); i++)
 	{
-		if(soundData[i]->getName() == name)
+		if(soundData[i].getName() == name)
 		{
 			std::cerr << "AudioInterface: The name \"" << name << "\" has already been used." << std::endl;
 			return NULL;
 		}
 	}
-	soundData.push_back(new SoundData(name,data));
-	return soundData.back();
+	soundData.add(SoundData(name,data));
+	return &soundData.back();
 }
 //TODO: Link this up in such a way that unloading SoundData removes all Sounds pointing to it.
 /*
@@ -47,12 +47,12 @@ void Module::AudioInterface::printSounds()
 	std::cout << " There are " << soundData.size() << "." << std::endl;
 	for(unsigned int i = 0; i < soundData.size(); ++i)
 	{
-		std::cout << " " << i << ") " << soundData[i]->getName() << std::endl;
+		std::cout << " " << i << ") " << soundData[i].getName() << std::endl;
 	}
 	std::cout << "Currently-playing Sounds:" << std::endl;
 	std::cout << " There are " << sounds.size() << "." << std::endl;
 	for(unsigned int i = 0; i < sounds.size(); ++i)
 	{
-		std::cout << " " << i << ") " << sounds[i]->getName() << std::endl;
+		std::cout << " " << i << ") " << sounds[i].getName() << std::endl;
 	}
 }

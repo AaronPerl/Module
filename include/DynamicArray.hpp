@@ -1,95 +1,132 @@
-#ifndef __MODULE__DYNAMIC_ARRAY_HPP__
-#define __MODULE__DYNAMIC_ARRAY_HPP__
+#ifndef __MODULE__DYNAMIC_data_HPP__
+#define __MODULE__DYNAMIC_data_HPP__
 
 #include <cstddef>
+#include <iostream>
 
-namespace Module {
+namespace Module
+{
+// DynamicArrays are an in-house replacement for stl's vector,
+// allowing for implementations across platforms to use it.
+template <class T>
+class DynamicArray 
+{
+	public:
+		// TYPEDEFS
+		typedef unsigned int size_type;		// The usedSize type for DynamicArrays
+		static const size_type INIT_SIZE = 32;
+		
+		// CONSTRUCTORS
+		DynamicArray();						// The default constructor for a DynamicArray
+		DynamicArray(size_type initSize);	// A constructor for DynamicArray given a size
+		
+		// GETTERS
+		T& operator[] (size_type index)				{ return data[index];	}		// The bracket [] operator
+		const T& operator[] (size_type index) const	{ return data[index];	}		// The const bracket [] operator
+		T& get(size_type index)						{ return data[index];	}		// The get() function
+		const T& get(size_type index) const			{ return data[index];	}		// The const get() function
+		
+		T& front()									{ return data[0];			}	// The first element in the data
+		const T& front() const						{ return data[0];			}	// The first element in the data
+		T& back()									{ return data[usedSize-1];	}	// The last element in the data
+		const T& back()	const						{ return data[usedSize-1];	}	// The last element in the data
+		
+		size_type size() const						{ return usedSize;		}		// Gets the size of the DynamicArray
+		size_type capacity() const					{ return allocSize;		}		// Gets the allocated space of the DynamicArray
+		
+		// MEMBER FUNCTIONS
+		void add(const T& newVal);									// Adds an element to the end of a DynamicArray
+		void resize(size_type newSize);								// Resizes the DynamicArray
+		void insert(const T& newVal, size_type index);				// Inserts an element into the DynamicArray
+		void append(T* appendedData, size_type appendedSize);		// Appends an data to this DynamicArray
+		void append(const Module::DynamicArray<T>& other);			// Appends a DynamicArray to this DynamicArray
+		bool remove(size_type index);								// Removes an element from the DynamicArray (returns success)
+		bool removeFromEnd(size_type numRemoved);					// Removes the last element from the DynamicArray (returns success)
+
+	private:
+		// REPRESENTATION
+		T* data;				// The underlying representation of a DynamicArray
+		size_type usedSize;		// The number of elements in the DynamicArray
+		size_type allocSize;	// The size allocated for this DynamicArray
+};
+template <class T>
+DynamicArray<T>::DynamicArray() : usedSize(0)
+{
+	allocSize = INIT_SIZE;
+	data = (T*)::operator new(sizeof(T) * INIT_SIZE);
+}
+template <class T>
+DynamicArray<T>::DynamicArray(size_type initSize) : usedSize(0)
+{
+	allocSize = initSize;
+	data = (T*)::operator new(sizeof(T) * initSize);
+}
 
 template <class T>
-class DynamicArray {
-	
-public:
-	typedef unsigned int size_type;
-	static const size_type INIT_SIZE = 32;
-	
-	DynamicArray() : size(0)
+void DynamicArray<T>::add(const T& newVal)
+{
+	std::cout << &newVal << std::endl;
+	std:: cout << "ASDF" << std::endl;
+	std::cout << data << std::endl;
+	if (usedSize == allocSize)
 	{
-		allocatedSpace = INIT_SIZE;
-		myArray = (T*) ::operator new(INIT_SIZE * sizeof(T));
+		if (usedSize != 0)
+			resize(allocSize * 2);
+		else
+			resize(INIT_SIZE);
 	}
-	DynamicArray(size_type initSize) : size(0)
+	data[usedSize] = newVal;
+	usedSize++;
+}
+template <class T>
+void DynamicArray<T>:: resize(size_type newSize)
+{
+	if (newSize > allocSize) // If we're expanding the data
 	{
-		allocatedSpace = initSize;
-		myArray = (T*) ::operator new(initSize * sizeof(T));
-	}
-	
-	size_type getSize() const { return size; }
-	size_type getAllocatedSpace() const { return allocatedSpace; }
-	
-	void expand(size_type newSize)
-	{
-		if (newSize > allocatedSpace) // do not contract the array
+		T* newdata = (T*)::operator new(sizeof(T) * newSize);
+		for (size_type i = 0; i < usedSize; i++)
 		{
-			T* newArray = new T[newSize];
-			
-			for (size_type i = 0; i < size; i++)
-			{
-				newArray[i] = myArray[i];
-			}
-			
-			delete[] myArray;
-			myArray = newArray;
-			allocatedSpace = newSize;
+			newdata[i] = data[i];
 		}
+		delete[] data;
+		data = newdata;
+		allocSize = newSize;
 	}
-	
-	T& operator[] (size_type index) { return myArray[index]; }
-	const T& operator[] (size_type index) const { return myArray[index]; }
-	
-	T& get(size_type index) { return myArray[index]; }
-	const T& get(size_type index) const { return myArray[index]; }
-	
-	void add(const T& newVal)
+	else if (newSize < allocSize)
 	{
-		if (size == allocatedSpace)
+		T* newdata = (T*)::operator new(sizeof(T) * newSize);
+		for (size_type i = newSize; i < usedSize; i++)
 		{
-			if (size)
-				expand(allocatedSpace * 2);
-			else
-				expand(INIT_SIZE);
+			data[i].~T();
 		}
-		myArray[size] = newVal;
-		size++;
+		for (size_type i = 0; i < usedSize; i++)
+		{
+			newdata[i] = data[i];
+		}
+		delete[] data;
+		data = newdata;
+		allocSize = newSize;
 	}
-	
-	void insert(const T& newVal, size_type index);
-	bool remove(size_type index);
-	bool removeFromEnd(size_type numRemoved);
-	
-	void append(T* appendedArray, size_type appendedSize)
+}
+template <class T>
+void DynamicArray<T>::append(T* appendedData, size_type appendedSize)
+{
+	if (usedSize + appendedSize < allocSize)
 	{
-		if (size + appendedSize < allocatedSpace)
-		{
-			size_type newSize = allocatedSpace;
-			while (newSize < size + appendedSize) newSize *=2;
-			expand(newSize);
-		}
-		for (size_type i = 0; i < appendedSize; i++)
-		{
-			myArray[size + i] = appendedArray[i];
-		}
+		size_type newSize = allocSize;
+		while (newSize < usedSize + appendedSize) newSize *=2;
+		resize(newSize);
 	}
-	
-	void append(const Module::DynamicArray<T>& other)
+	for (size_type i = 0; i < appendedSize; i++)
 	{
-		append(other.myArray, other.size);
+		data[usedSize + i] = appendedData[i];
 	}
-
-private:
-	T* myArray;
-	size_type size;
-	size_type allocatedSpace;
-};
+}
+template <class T>
+void DynamicArray<T>::append(const Module::DynamicArray<T>& other)
+{
+	append(other.data, other.usedSize);
+}
 
 }
 

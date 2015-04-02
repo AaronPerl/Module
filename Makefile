@@ -44,7 +44,7 @@ all: 64bit 32bit
 64bit: $(PATH64)/$(FULL_NAME)
 32bit: $(PATH32)/$(FULL_NAME)
 test: 64bit
-	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) -o main_test
+	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(FLAGS) -o main_test
 	
 clean:
 	rm -f $(PATH64)/*
