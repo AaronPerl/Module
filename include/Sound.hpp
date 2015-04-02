@@ -23,7 +23,7 @@ class Sound
 		SoundData* soundData;	// The data this Sound is playing
 		
 		// CONSTRUCTOR
-		Sound(SoundData* sd): uid(sd->getNextUID()), soundData(sd) {}
+		Sound(SoundData* sd): uid(sd->getNextUID()), time(0), soundData(sd) {}
 		
 	public:
 		// FUNCTIONS

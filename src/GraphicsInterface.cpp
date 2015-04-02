@@ -29,17 +29,19 @@ void GraphicsInterface::run()
 Mesh* GraphicsInterface::createMesh(Vector3* vertices, unsigned int num_vertices, const std::string& name)
 {
 	assert(num_vertices);
-	DynamicArray<Vector3>::size_type firstIndex = allVertices.getSize();
-	allVertices.append(vertices, num_vertices);
+	std::vector<Vector3>::size_type firstIndex = allVertices.size();
+	for (unsigned int i = 0; i < num_vertices; i++)
+		allVertices.push_back(vertices[i]);
 	Mesh* retVal = new Mesh(&allVertices[firstIndex], num_vertices, name);
 	return retVal;
 }
 
-Mesh* GraphicsInterface::createMesh(const DynamicArray<Vector3>& vertices, const std::string& name)
+Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const std::string& name)
 {
-	DynamicArray<Vector3>::size_type firstIndex = allVertices.getSize();
-	allVertices.append(vertices);
-	Mesh* retVal = new Mesh(&allVertices[firstIndex], vertices.getSize(), name);
+	std::vector<Vector3>::size_type firstIndex = allVertices.size();
+	for (unsigned int i = 0; i < vertices.size(); i++)
+		allVertices.push_back(vertices[i]);
+	Mesh* retVal = new Mesh(&allVertices[firstIndex], vertices.size(), name);
 	return retVal;
 }
 

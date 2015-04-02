@@ -42,25 +42,28 @@ int main()
 	Module::Quaternion rot(Module::Vector3(1,0,0),MATH_PI/2);
 	std::cout << rot << std::endl;
 	std::cout << vec.rotate(rot) << std::endl;
-	
+	/*
 	Module::DynamicArray<unsigned int> testArray;
-	std::cout << "Initial size = " << testArray.getAllocatedSpace() << std::endl;
+	std::cout << "Initial size = " << testArray.capacity() << std::endl;
 	for (unsigned int i = 0; i < 257; i++)
 	{
 		testArray.add(i);
 	}
-	std::cout << "Size after 257 additions = " << testArray.getAllocatedSpace() << std::endl;
-	
+	std::cout << "Size after 257 additions = " << testArray.capacity() << std::endl;
+	*/
 	// GRAPHICS TESTS //
 	// :( //
 	
 	// AUDIO TESTS //
 	Module::AudioInterface ai;
-	Module::SoundData* sound = ai.loadSoundData("explosion",NULL);
-	ai.loadSoundData("laser",NULL);
-	ai.loadSoundData("murmur",NULL);
-	ai.loadSoundData("music",NULL);
-	ai.loadSoundData("murmur",NULL);
+	std::cout << ai.soundData.size() << " Start size = " << ai.soundData.capacity() << std::endl;
+	Module::SoundData* sound = ai.loadSoundData("explosion");
+	std::cout << ai.soundData.size() << " End size = " << ai.soundData.capacity() << std::endl;
+	std::cout << " Name = " << sound->getName() << std::endl;
+	ai.loadSoundData("laser");
+	ai.loadSoundData("murmur");
+	ai.loadSoundData("music");
+	ai.loadSoundData("murmur");
 	ai.playSound(sound);
 	ai.playSound(sound);
 	ai.printSounds();
