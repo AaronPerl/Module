@@ -4,7 +4,8 @@ Module::Sound* Module::AudioInterface::playSound(SoundData* soundData)
 {
 	if(soundData)
 	{
-		sounds.add(Sound(soundData));
+		std::cout << "Playing sound from data named : " << soundData->getName() << std::endl;
+		sounds.push_back(Sound(soundData));
 		sounds.back().replay();
 	}
 	else
@@ -13,7 +14,7 @@ Module::Sound* Module::AudioInterface::playSound(SoundData* soundData)
 	}
 	return &sounds.back();
 }
-Module::SoundData* Module::AudioInterface::loadSoundData(std::string name)
+Module::SoundData* Module::AudioInterface::loadSoundData(const std::string& name)
 {
 	for(unsigned int i = 0; i < soundData.size(); i++)
 	{
@@ -23,7 +24,7 @@ Module::SoundData* Module::AudioInterface::loadSoundData(std::string name)
 			return NULL;
 		}
 	}
-	soundData.add(SoundData(name,data));
+	soundData.push_back(SoundData(name,std::vector<uint16_t>()));
 	return &soundData.back();
 }
 //TODO: Link this up in such a way that unloading SoundData removes all Sounds pointing to it.

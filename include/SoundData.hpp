@@ -3,7 +3,7 @@
 
 #include <string>
 #include <stdint.h>
-#include "DynamicArray.hpp"
+#include <vector>
 
 namespace Module
 {
@@ -21,8 +21,8 @@ class SoundData
 		uint16_t numInstances;	// The number of instances (Sounds) of this SoundData
 		
 		// CONSTRUCTOR
-		SoundData(std::string n, DynamicArray<uint16_t> d): name(n), numInstances(0) {}
-		
+		SoundData(std::string n, std::vector<uint16_t> d): name(n), numInstances(0) {}
+		SoundData() : numInstances(0) {}
 	public:
 		// GETTERS
 		const std::string getName();		// Gets the name of this SoundData

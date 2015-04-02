@@ -1,6 +1,7 @@
 #ifndef __MODULE__DYNAMIC_data_HPP__
 #define __MODULE__DYNAMIC_data_HPP__
 
+#include <cstring>
 #include <cstddef>
 #include <iostream>
 
@@ -53,21 +54,18 @@ template <class T>
 DynamicArray<T>::DynamicArray() : usedSize(0)
 {
 	allocSize = INIT_SIZE;
-	data = (T*)::operator new(sizeof(T) * INIT_SIZE);
+	data = new T[INIT_SIZE];
 }
 template <class T>
 DynamicArray<T>::DynamicArray(size_type initSize) : usedSize(0)
 {
 	allocSize = initSize;
-	data = (T*)::operator new(sizeof(T) * initSize);
+	data = new T[initSize];
 }
 
 template <class T>
 void DynamicArray<T>::add(const T& newVal)
 {
-	std::cout << &newVal << std::endl;
-	std:: cout << "ASDF" << std::endl;
-	std::cout << data << std::endl;
 	if (usedSize == allocSize)
 	{
 		if (usedSize != 0)
@@ -83,7 +81,7 @@ void DynamicArray<T>:: resize(size_type newSize)
 {
 	if (newSize > allocSize) // If we're expanding the data
 	{
-		T* newdata = (T*)::operator new(sizeof(T) * newSize);
+		T* newdata = new T[newSize];
 		for (size_type i = 0; i < usedSize; i++)
 		{
 			newdata[i] = data[i];
@@ -94,7 +92,7 @@ void DynamicArray<T>:: resize(size_type newSize)
 	}
 	else if (newSize < allocSize)
 	{
-		T* newdata = (T*)::operator new(sizeof(T) * newSize);
+		T* newdata = new T[newSize];
 		for (size_type i = newSize; i < usedSize; i++)
 		{
 			data[i].~T();

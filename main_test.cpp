@@ -57,12 +57,13 @@ int main()
 	// AUDIO TESTS //
 	Module::AudioInterface ai;
 	std::cout << ai.soundData.size() << " Start size = " << ai.soundData.capacity() << std::endl;
-	Module::SoundData* sound = ai.loadSoundData("explosion",NULL);
+	Module::SoundData* sound = ai.loadSoundData("explosion");
 	std::cout << ai.soundData.size() << " End size = " << ai.soundData.capacity() << std::endl;
-	ai.loadSoundData("laser",NULL);
-	ai.loadSoundData("murmur",NULL);
-	ai.loadSoundData("music",NULL);
-	ai.loadSoundData("murmur",NULL);
+	std::cout << " Name = " << sound->getName() << std::endl;
+	ai.loadSoundData("laser");
+	ai.loadSoundData("murmur");
+	ai.loadSoundData("music");
+	ai.loadSoundData("murmur");
 	ai.playSound(sound);
 	ai.playSound(sound);
 	ai.printSounds();

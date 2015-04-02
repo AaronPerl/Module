@@ -2,9 +2,9 @@
 #define __MODULE__GRAPHICSINTERFACE_HPP__
 
 #include "ThreadObject.hpp"
-#include "DynamicArray.hpp"
 #include "ModuleGame.hpp"
 #include <string>
+#include <vector>
 
 namespace Module
 {
@@ -19,8 +19,8 @@ namespace Module
 			unsigned int fps;
 			ModuleGame* game;
 			
-			DynamicArray<Vector3> allVertices;	// all vertices stored in a contiguous array to improve caching
-			DynamicArray<Mesh> allMeshes;		// same for meshes, though they matter less
+			std::vector<Vector3> allVertices;	// all vertices stored in a contiguous array to improve caching
+			std::vector<Mesh> allMeshes;		// same for meshes, though they matter less
 			
 			void start();
 			void run(); //overrides ThreadObject::run()
@@ -35,7 +35,7 @@ namespace Module
 			GraphicsInterface(unsigned int set_fps);
 			
 			virtual Mesh* createMesh(Vector3* vertices, unsigned int num_vertices, const std::string& name);
-			virtual Mesh* createMesh(const DynamicArray<Vector3>& vertices, const std::string& name);
+			virtual Mesh* createMesh(const std::vector<Vector3>& vertices, const std::string& name);
 			
 			virtual Mesh* copyMesh(Mesh* other);
 			

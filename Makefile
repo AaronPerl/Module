@@ -36,7 +36,7 @@ ifeq ($(OS), Windows_NT)
 	PATH32 := $(addsuffix /windows/mingw, $(PATH32))
 else
 	PATH64 := $(addsuffix /linux, $(PATH64))
-	PATH32 := $(addsuffix /linux, $(PATH32))	
+	PATH32 := $(addsuffix /linux, $(PATH32))
 endif
 
 all: 64bit 32bit

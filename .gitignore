@@ -1,3 +1,4 @@
-/lib
-/build
+lib
+build
 main_test.exe
+main_test
