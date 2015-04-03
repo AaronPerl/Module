@@ -3,6 +3,7 @@
 
 #include "ThreadObject.hpp"
 #include "ModuleGame.hpp"
+#include "Book.hpp"
 #include <string>
 #include <vector>
 
@@ -19,8 +20,8 @@ namespace Module
 			unsigned int fps;
 			ModuleGame* game;
 			
-			std::vector<Vector3> allVertices;	// all vertices stored in a contiguous array to improve caching
-			std::vector<Mesh> allMeshes;		// same for meshes, though they matter less
+			Book<Vector3> allVertices;	// all vertices stored in a contiguous array to improve caching
+			Book<Mesh> allMeshes;		// same for meshes, though they matter less
 			
 			void start();
 			void run(); //overrides ThreadObject::run()

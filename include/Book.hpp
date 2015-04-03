@@ -6,12 +6,16 @@
 
 namespace Module
 {
+	// The Book class is a data structure that consists of a growing vector
+	// of fixed-size "pages" of memory. These pages are static and will not change address
+	// allowing for pointers to objects in this data structure to remain valid as long as the
+	// book itself still exists.
 	template <class T>
 	class Book
 	{
 		public:		
-			typedef typename std::vector<T*>::size_type page_size_type;	// The size type for Books
-			typedef unsigned long size_type;
+			typedef typename std::vector<T*>::size_type page_size_type;	// The size type for the page vector and pages
+			typedef unsigned long size_type;							// The size type for the Book itself
 			static const page_size_type maxPageSize = 4 * 1024; // 4 kilobyte pages
 				
 			Book();
@@ -22,14 +26,14 @@ namespace Module
 			T& get(size_type index);
 			const T& get(size_type index) const;
 		
-			T& front()									{ return pageVec[0][0];	}	// The first element in the data
-			const T& front() const						{ return pageVec[0][0];	}	// The first element in the data
-			T& back()									{ return pageVec.back()[(usedSize-1) % pageSize];	}	// The last element in the data
-			const T& back()	const						{ return pageVec.back()[(usedSize-1) % pageSize];	}	// The last element in the data
+			T& front()									{ return pageVec[0][0];	}	// The first element in the first page
+			const T& front() const						{ return pageVec[0][0];	}	// The first element in the first page
+			T& back()									{ return pageVec.back()[(usedSize-1) % pageSize];	}	// The last stored element in the last page
+			const T& back()	const						{ return pageVec.back()[(usedSize-1) % pageSize];	}	// The last stored element in the last page
 			
-			T* getPage(page_size_type index) { return pageVec[index]; }
-			page_size_type getPageSize() { return pageSize; }
-			page_size_type getNumPages() { return pageVec.size(); }
+			T* getPage(page_size_type index) { return pageVec[index]; }		// Returns the address of the index-th page
+			page_size_type getPageSize() { return pageSize; }				// The number of objects in a single page
+			page_size_type getNumPages() { return pageVec.size(); }			// The number of allocated pages
 			
 			size_type size() { return usedSize; }
 			size_type capacity() { return (size_type)pageSize * pageVec.size(); }
@@ -61,8 +65,8 @@ Module::Book<T>::~Book()
 template <class T>
 T& Module::Book<T>::get(size_type index)
 {
-	page_size_type page = index / pageSize;
-	page_size_type pageIndex = index % pageSize;
+	page_size_type page = index / pageSize;			// The page to read from
+	page_size_type pageIndex = index % pageSize;	// The index in that page to return
 	return pageVec[page][pageIndex];
 }
 
@@ -73,7 +77,7 @@ void Module::Book<T>::push_back(const T& newVal)
 	{
 		pageVec.back()[usedSize%pageSize] = newVal;
 	}
-	else
+	else // allocate a new page
 	{
 		pageVec.push_back(new T[pageSize]);
 		pageVec.back()[0] = newVal;
