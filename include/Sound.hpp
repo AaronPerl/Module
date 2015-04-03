@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include "AudioInterface.hpp"
 #include "SoundData.hpp"
+#include "Book.hpp"
 
 namespace Module
 {
@@ -15,6 +16,7 @@ namespace Module
 class Sound
 {
 	friend class AudioInterface;
+	friend class Book<Sound>;
 	
 	private:
 		// REPRESENTATION
@@ -24,6 +26,7 @@ class Sound
 		
 		// CONSTRUCTOR
 		Sound(SoundData* sd): uid(sd->getNextUID()), time(0), soundData(sd) {}
+		Sound() : uid(0), time(0), soundData(NULL) {}
 		
 	public:
 		// FUNCTIONS
@@ -32,8 +35,8 @@ class Sound
 		void pause();							// Pauses this Sound
 		
 		// GETTERS
-		std::string getName();					// Gets the name of this Sound
-		unsigned long getTime();				// Gets the time of this Sound
+		const std::string getName() const;		// Gets the name of this Sound
+		unsigned long getTime() const;			// Gets the time of this Sound
 		
 		// SETTERS
 		void setTime(const unsigned long t);	// Sets the time of this Sound

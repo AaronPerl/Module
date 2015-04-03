@@ -4,6 +4,7 @@
 #include <string>
 #include <stdint.h>
 #include <vector>
+#include "Book.hpp"
 
 namespace Module
 {
@@ -14,6 +15,7 @@ class AudioInterface;
 class SoundData
 {
 	friend class AudioInterface;
+	friend class Book<SoundData>;
 	
 	protected:
 		// REPRESENTATION
@@ -22,11 +24,11 @@ class SoundData
 		
 		// CONSTRUCTOR
 		SoundData(std::string n, std::vector<uint16_t> d): name(n), numInstances(0) {}
-		SoundData() : numInstances(0) {}
+		SoundData() : name(""), numInstances(0) {}
 	public:
 		// GETTERS
-		const std::string getName();		// Gets the name of this SoundData
-		const uint16_t getNextUID();		// Gets the next up UID (from the number of instances)
+		const std::string& getName() const;	// Gets the name of this SoundData
+		uint16_t getNextUID();				// Gets the next up UID (from the number of instances)
 };
 
 }

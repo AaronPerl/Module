@@ -6,6 +6,7 @@
 #include <vector>
 #include "Sound.hpp"
 #include "SoundData.hpp"
+#include "Book.hpp"
 
 namespace Module
 {
@@ -18,8 +19,8 @@ class AudioInterface
 {
 	public: //protected:
 		// REPRESENTATION
-		std::vector<Sound> sounds;				// The collection of all playing sounds
-		std::vector<SoundData> soundData;		// The collection of all loaded sounds
+		Book<Sound> sounds;				// The collection of all playing sounds
+		Book<SoundData> soundData;		// The collection of all loaded sounds
 		
 	public:
 		// FUNCTIONS

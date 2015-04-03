@@ -1,10 +1,10 @@
 #include "SoundData.hpp"
 
-const std::string Module::SoundData::getName()
+const std::string& Module::SoundData::getName() const
 {
 	return name;
 }
-const uint16_t Module::SoundData::getNextUID()
+uint16_t Module::SoundData::getNextUID()
 {
 	return numInstances++;
 }

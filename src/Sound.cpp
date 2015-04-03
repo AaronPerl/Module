@@ -17,14 +17,14 @@ void Module::Sound::setTime(const unsigned long t)
 	// Set time code
 	time = t;
 }
-std::string Module::Sound::getName()
+const std::string Module::Sound::getName() const
 {
 	char name[20];
 	sprintf(name,"%u", uid);
 	std::string s(name);
 	return soundData->getName() + "_" + s;
 }
-unsigned long Module::Sound::getTime()
+unsigned long Module::Sound::getTime() const
 {
 	// Get time code
 	return time;
