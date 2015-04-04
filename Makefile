@@ -14,15 +14,22 @@ FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
 LIBRARY_NAME = Module
 FULL_NAME = lib$(LIBRARY_NAME).a
 
-#Debug mode
-FLAGS += -g -DDEBUG -ggdb
-PATH64 = build/debug/64bit
-PATH32 = build/debug/32bit
+DEBUG ?= 1
 
-#Release mode
-#FLAGS += -DNDEBUG -mwindows
-#PATH64 = build/release/64bit
-#PATH32 = build/release/32bit
+ifeq ($(DEBUG), 1)
+	#Debug mode
+	FLAGS += -g -DDEBUG -ggdb3
+	PATH64 = build/debug/64bit
+	PATH32 = build/debug/32bit
+else
+	#Release mode
+	FLAGS += -DNDEBUG
+	ifeq ($(OS), Windows_NT)
+		FLAGS += -mwindows
+	endif
+	PATH64 = build/release/64bit
+	PATH32 = build/release/32bit
+endif
 
 DEP_PATH = depend
 SRCS = $(wildcard src/*.cpp)
