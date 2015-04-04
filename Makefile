@@ -9,7 +9,7 @@ LIB_PATHS_32 = -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
 LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
 LIB_INC_PATHS = -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
 LIB_INC_PATHS_32 = -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
-FLAGS = -Wall-fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
+FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
 
 LIBRARY_NAME = Module
 FULL_NAME = lib$(LIBRARY_NAME).a
