@@ -1,4 +1,5 @@
 lib
 build
+depend
 main_test.exe
 main_test
