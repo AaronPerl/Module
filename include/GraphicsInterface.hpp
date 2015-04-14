@@ -2,7 +2,6 @@
 #define __MODULE__GRAPHICSINTERFACE_HPP__
 
 #include "ThreadObject.hpp"
-#include "ModuleGame.hpp"
 #include "Book.hpp"
 #include <string>
 #include <vector>
@@ -11,6 +10,7 @@ namespace Module
 {
 	class Mesh;
 	class Vector3;
+	class ModuleGame;
 
 	class GraphicsInterface : ThreadObject
 	{
@@ -21,6 +21,7 @@ namespace Module
 			ModuleGame* game;
 			
 			Book<Vector3> allVertices;	// all vertices stored in a contiguous array to improve caching
+			Book<Vector3> allNormals;	// all vertex normals, 1 to 1 with vertices
 			Book<Mesh> allMeshes;		// same for meshes, though they matter less
 			
 			void start();
@@ -35,10 +36,10 @@ namespace Module
 			GraphicsInterface();
 			GraphicsInterface(unsigned int set_fps);
 			
-			virtual Mesh* createMesh(Vector3* vertices, unsigned int num_vertices, const std::string& name);
-			virtual Mesh* createMesh(const std::vector<Vector3>& vertices, const std::string& name);
+			virtual Mesh* createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name);
+			virtual Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name);
 			
-			virtual Mesh* copyMesh(Mesh* other);
+			//virtual Mesh* copyMesh(Mesh* other);
 			
 	};
 }

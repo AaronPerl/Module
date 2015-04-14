@@ -7,9 +7,11 @@
 namespace Module
 {
 	// The Book class is a data structure that consists of a growing vector
-	// of fixed-size "pages" of memory. These pages are static and will not change address
-	// allowing for pointers to objects in this data structure to remain valid as long as the
-	// book itself still exists.
+	// of fixed-size "pages" of memory resembling an unrolled linked list.
+	// These pages are static and will not change address, allowing for
+	// pointers to objects in this data structure to remain valid as long as the
+	// book itself still exists. Books should NOT be used to store objects that are frequently removed.
+	// They should be used for data that persists for a long time, such as vertices and sound data.
 	template <class T>
 	class Book
 	{

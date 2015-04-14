@@ -1,21 +1,27 @@
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
-#include "PhysicsObject.hpp"
+#include "TransformObject.hpp"
 
 #include "GameObject.hpp"
 
 using Module::Vector3;
 using Module::Quaternion;
-using Module::PhysicsObject;
+using Module::TransformObject;
 
 using Module::GameObject;
 
-Vector3 GameObject::getPosition()
+void GameObject::setPosition(const Vector3& newPos)
 {
-	return pObj->getPosition();
-};
+	if (tObj)
+		tObj->setPosition(newPos);
+	else
+		pos = newPos;
+}
 
-Quaternion GameObject::getRotation()
+void GameObject::setRotation(const Quaternion& newRot)
 {
-	return pObj->getRotation();
+	if (tObj)
+		tObj->setRotation(newRot);
+	else
+		rot = newRot;
 }

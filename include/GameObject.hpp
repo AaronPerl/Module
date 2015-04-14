@@ -5,15 +5,28 @@ namespace Module {
 
 class Vector3;
 class Quaternion;
-class PhysicsObject;
+class TransformObject;
+class Mesh;
 
+// One of the core classes in Module. The GameObject represents any object in the game world (though not terrain).
+// Being that Module is a component-based engine, the GameObject class can have contain of many different components.
+// At the current moment, this list is finite and hard-coded, being represented by pointers to objects. In the future,
+// with the addition of an extension system, this list could be joined with a dynamic container of generic components used by extensions.
 class GameObject {
 protected:
-	PhysicsObject* pObj;
+	TransformObject* tObj;
+	Mesh* mesh;
+	Vector3 pos;
+	Quaternion rot;
 public:
-	Vector3 getPosition();
-	Quaternion getRotation();
-
+	GameObject() : tObj(0), mesh(0) {}
+	const Vector3& getPosition() const		{ return tObj ? tObj->getPosition() : pos; }
+	const Quaternion& getRotation() const	{ return tObj ? tObj->getRotation() : rot; }
+	void setPosition(const Vector3& newPos);
+	void setRotation(const Quaternion& newRot);
+	
+	TransformObject* getTransform() { return tObj; }
+	void setTransform(TransformObject* t) { tObj = t; }
 };
 
 }

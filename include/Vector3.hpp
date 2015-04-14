@@ -7,6 +7,7 @@ namespace Module {
 
 class Quaternion;
 
+// A simple 3D Vector class. Not optimized and may be replaced in the future to use a faster alternative.
 class Vector3 {
 private:
 	float x,y,z;

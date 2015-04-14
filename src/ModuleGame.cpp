@@ -1,6 +1,4 @@
 #include "ModuleGame.hpp"
-#include "GraphicsInterface.hpp"
-#include "ThreadingInterface.hpp"
 #include <cassert>
 
 Module::ModuleGame::ModuleGame() : graphics(0), threading(0)
@@ -9,11 +7,13 @@ Module::ModuleGame::ModuleGame() : graphics(0), threading(0)
 
 void Module::ModuleGame::attachGraphicsInterface(GraphicsInterface* newGraphics)
 {
+	newGraphics->game = this;
 	graphics = newGraphics;
 }
 
 void Module::ModuleGame::attachThreadingInterface(ThreadingInterface* newThreading)
 {
+	newThreading->game = this;
 	threading = newThreading;
 }
 
