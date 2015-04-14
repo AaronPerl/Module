@@ -7,7 +7,7 @@
 
 namespace Module {
 
-// The main class of Module. The ModuleGame class represents the core of Module. It's functionality ties together
+// The main class of Module. The ModuleGame class represents the core of Module. Its functionality ties together
 // that of the different interfaces. End users of Module (game developers) control Module through this class and not
 // by accessing interfaces, as those are meant to be abstracted away from users. Setting up a ModuleGame instance should
 // be the first thing done in a game that uses Module.
