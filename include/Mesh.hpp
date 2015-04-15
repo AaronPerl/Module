@@ -28,8 +28,8 @@ private:
 		unsigned int num, std::string meshName) : 
 			vertexBook(vb), normalBook(nb), vertexIndex(vi), normalIndex(ni), numVertices(num), name(meshName) {}
 public:
-	const Vector3& getVertex(unsigned int i) { return vertexBook[vertexIndex + i]; }
-	const Vector3& getNormal(unsigned int i) { return normalBook[normalIndex + i]; }
+	const Vector3& getVertex(unsigned int i) { return (*vertexBook)[vertexIndex + i]; }
+	const Vector3& getNormal(unsigned int i) { return (*normalBook)[normalIndex + i]; }
 	
 	friend class GraphicsInterface;
 };
