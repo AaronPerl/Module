@@ -23,6 +23,8 @@ public:
 	
 	void startThread(ThreadObject* obj);
 	
+	void start();
+	
 	Mutex* createMutex() { return threading->createMutex(); }
 };
 

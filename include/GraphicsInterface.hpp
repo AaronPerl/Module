@@ -1,15 +1,16 @@
 #ifndef __MODULE__GRAPHICSINTERFACE_HPP__
 #define __MODULE__GRAPHICSINTERFACE_HPP__
 
+#include "Mesh.hpp"
 #include "ThreadObject.hpp"
 #include "Book.hpp"
+#include "Vector3.hpp"
 #include <string>
 #include <vector>
 
 namespace Module
 {
 	class Mesh;
-	class Vector3;
 	class ModuleGame;
 
 	class GraphicsInterface : ThreadObject
@@ -20,8 +21,8 @@ namespace Module
 			unsigned int fps;
 			ModuleGame* game;
 			
-			Book<Vector3> allVertices;	// all vertices stored in a contiguous array to improve caching
-			Book<Vector3> allNormals;	// all vertex normals, 1 to 1 with vertices
+			Book<float> allVertices;	// all vertices (x, y then z) stored in a contiguous array to improve caching
+			Book<float> allNormals;		// all vertex normals, 1 to 1 with vertices
 			Book<Mesh> allMeshes;		// same for meshes, though they matter less
 			
 			void start();
@@ -31,6 +32,13 @@ namespace Module
 			virtual void createWindow() = 0; 				// initialization and window creation
 			virtual void renderFrame() = 0;					// render individual frame
 			virtual unsigned long getMilliseconds() = 0;	// get time since initialization
+			
+			// FRIENDSHIP WRAPPERS
+			Book<float>* getVertexBook(Mesh* m) { return m->vertexBook; }
+			Book<float>* getNormalBook(Mesh* m) { return m->normalBook; }
+			unsigned int getVertexIndex(Mesh* m) { return m->vertexIndex; }
+			unsigned int getNormalIndex(Mesh* m) { return m->normalIndex; }
+			unsigned int getNumVertices(Mesh* m) { return m->numVertices; }
 			
 		public:
 			GraphicsInterface();

@@ -22,3 +22,8 @@ void Module::ModuleGame::startThread(ThreadObject* obj)
 	assert(threading!=0);
 	threading->startThread(obj);
 }
+
+void Module::ModuleGame::start()
+{
+	graphics->start();
+}
