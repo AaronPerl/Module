@@ -19,7 +19,6 @@ float timesTwo(float x)
 int main()
 {
 	Module::ModuleGame g;
-	
 	// UTILITY TESTS //
 	Module::Vector3 vec(0,10,0);
 	

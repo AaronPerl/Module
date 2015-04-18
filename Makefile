@@ -14,6 +14,14 @@ FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
 LIBRARY_NAME = Module
 FULL_NAME = lib$(LIBRARY_NAME).a
 
+INTERFACE_PATH = interfaces
+INTERFACES = $(wildcard $(INTERFACE_PATH)/*)
+INTERFACE_LIB_NAMES = $(addprefix lib, $(addsuffix .a, $(notdir $(INTERFACES))))
+INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACES)), $(INTERFACE_LIB_NAMES))
+
+include $(addsuffix /Makefile, $(INTERFACES))
+
+
 DEBUG ?= 1
 
 ifeq ($(DEBUG), 1)
@@ -66,6 +74,9 @@ test: 64bit
 .PHONY: clean
 clean:
 	rm -rf build
+	
+.PHONY: interfaces
+interfaces: $(INTERFACE_LIBS)
 
 $(PATH64):
 	@echo Making 64-bit build directory
