@@ -15,6 +15,7 @@
 
 // Library includes
 #define GLM_FORCE_RADIANS
+#define SDL_MAIN_HANDLED
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>

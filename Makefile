@@ -18,6 +18,9 @@ INTERFACE_PATH = interfaces
 INTERFACES = $(wildcard $(INTERFACE_PATH)/*)
 INTERFACE_LIB_NAMES = $(addprefix lib, $(addsuffix .a, $(notdir $(INTERFACES))))
 INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACES)), $(INTERFACE_LIB_NAMES))
+INTERFACE_INC = $(addprefix -I,$(INTERFACES))
+INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACES))
+INTERFACE_LINKS = $(addprefix -l, $(notdir $(INTERFACES)))
 
 include $(addsuffix /Makefile, $(INTERFACES))
 
@@ -69,7 +72,7 @@ depends: $(FULL_DEPS)
 
 .PHONY: test
 test: 64bit
-	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(FLAGS) -o main_test
+	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(FLAGS) -lSDL2main -lSDL2 -lopengl32 -lglew32  -o main_test
 
 .PHONY: clean
 clean:

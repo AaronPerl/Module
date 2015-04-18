@@ -4,6 +4,7 @@
 #include "AudioInterface.hpp"
 #include "Sound.hpp"
 #include "SoundData.hpp"
+#include <SDLOpenGLInterface.hpp>
 
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
@@ -16,9 +17,12 @@ float timesTwo(float x)
 	return 2*x;
 }
 
-int main()
+int main(int argc, char ** argv)
 {
 	Module::ModuleGame g;
+	Module::SDLOpenGLInterface graphics;
+	g.attachGraphicsInterface(&graphics);
+	g.start();
 	// UTILITY TESTS //
 	Module::Vector3 vec(0,10,0);
 	
