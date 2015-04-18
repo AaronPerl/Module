@@ -42,6 +42,9 @@ namespace Module
 			
 			void push_back(const T& newVal);
 			
+			// Returns the number of elements after index in the page containing index (including index itself)
+			page_size_type remainingElementsInPage(size_type index) const { return pageSize - (index % pageSize); }
+			
 			const std::vector<T*>& getPageVec() { return pageVec; }
 		private:
 			size_type usedSize;

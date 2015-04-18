@@ -47,14 +47,23 @@ else
 	PATH32 := $(addsuffix /linux, $(PATH32))
 endif
 
+.PHONY: all
 all: 64bit 32bit
 
+.PHONY: depends
 depends: $(FULL_DEPS)
+
+.PHONY: 64bit
 64bit: $(PATH64)/$(FULL_NAME)
+
+.PHONY: 32bit
 32bit: $(PATH32)/$(FULL_NAME)
+
+.PHONY: test
 test: 64bit
 	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(FLAGS) -o main_test
-	
+
+.PHONY: clean
 clean:
 	rm -rf build
 

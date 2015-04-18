@@ -5,7 +5,6 @@
 #include "Sound.hpp"
 #include "SoundData.hpp"
 
-#include "DynamicArray.hpp"
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
 #include <cfloat>
