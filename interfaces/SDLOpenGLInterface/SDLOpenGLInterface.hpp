@@ -16,6 +16,11 @@
 // Library includes
 #define GLM_FORCE_RADIANS
 #define SDL_MAIN_HANDLED
+
+#ifdef _WIN32
+#include <windef.h>
+#endif
+
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
