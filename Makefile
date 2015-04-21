@@ -10,7 +10,26 @@ LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBullet
 LIB_INC_PATHS = -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
 LIB_INC_PATHS_32 = -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
 
-ifeq ($(OS), Windows_NT)
+DUMPNAME = $(shell gcc -dumpmachine)
+
+IS_CYGWIN = false
+NEEDS_PTHREADS_WIN32 = true
+
+ifneq ($(OS), Windows_NT)
+	NEEDS_PTHREADS_WIN32 = false
+endif
+
+ifeq ($(DUMPNAME), x86_64-pc-cygwin)
+	NEEDS_PTHREADS_WIN32 = false
+	IS_CYGWIN = true
+endif
+
+ifeq ($(DUMPNAME), i686-pc-cygwin)
+	NEEDS_PTHREADS_WIN32 = false
+	IS_CYGWIN = true
+endif
+
+ifeq ($(NEEDS_PTHREADS_WIN32), true)
 	PTHREADS = lib/pthreads-win32
 	LIB_PATHS += -L$(PTHREADS)/x64
 	LIB_PATHS_32 += -L$(PTHREADS)/x32
@@ -32,6 +51,7 @@ INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACES)), $(INTERFACE_LIB_NAMES))
 INTERFACE_INC = $(addprefix -I,$(INTERFACES))
 INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACES))
 INTERFACE_LINKS = $(addprefix -l, $(notdir $(INTERFACES)))
+
 
 include $(addsuffix /Makefile, $(INTERFACES))
 
@@ -62,8 +82,13 @@ FULL_OBJS32 = $(addprefix $(PATH32)/,$(OBJS))
 FULL_DEPS = $(addprefix $(DEP_PATH)/,$(DEPS))
 
 ifeq ($(OS), Windows_NT)
-	PATH64 := $(addsuffix /windows/mingw, $(PATH64))
-	PATH32 := $(addsuffix /windows/mingw, $(PATH32))
+	ifeq ($(IS_CYGWIN), false)
+		PATH64 := $(addsuffix /windows/mingw-w64, $(PATH64))
+		PATH32 := $(addsuffix /windows/mingw-w64, $(PATH32))
+	else
+		PATH64 := $(addsuffix /windows/cygwin, $(PATH64))
+		PATH32 := $(addsuffix /windows/cygwin, $(PATH32))
+	endif
 else
 	PATH64 := $(addsuffix /linux, $(PATH64))
 	PATH32 := $(addsuffix /linux, $(PATH32))
@@ -92,6 +117,9 @@ test: 64bit interfaces
 clean:
 	rm -rf build
 	
+.PHONY: dumpmachine
+dumpmachine:
+	echo 
 
 $(PATH64):
 	@echo Making 64-bit build directory
