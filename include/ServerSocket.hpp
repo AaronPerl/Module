@@ -5,6 +5,7 @@
 #include "ThreadObject.hpp"
 
 #include <string>
+#include <vector>
 
 namespace Module
 {
@@ -12,9 +13,9 @@ namespace Module
 class ServerSocket : ThreadObject
 {
 protected:
-	ModuleGame* game;
 	NetworkInterface* network;
 	unsigned short portNumber;
+	std::vector<NetworkCallback*> callbacks;
 
 	virtual void run();//When run, the port calls listen to wait for connections. Each connection is passed off to a new client socket.
 

@@ -15,21 +15,25 @@ class NetworkInterface
 {
 protected:
 	ModuleGame* game;
-	ServerSocket* servers;
-	ClientSocket* clients;
-	NetworkCallback* callbacks;
+	Book<ServerSocket*> servers;
+	Book<ClientSocket*> clients;
 
 public:
 	//FUNCTIONS
-	virtual void openServer(unsigned short port);//Opens server port with the given port number.
-	virtual void openClient(unsigned short port);//Opens client port with the given port number.
-	virtual void connectClient(unsigned short clientPort, std::string serverIP, unsigned short serverPort);
+	virtual void sendMessageUDP(unsigned short port, std::string distantIP, unsigned short distantPort, std::string message);
+	//Sends a message to a distant IP and port, message must be less than 256 bytes.
+	virtual void listenPortUDP(unsigned short port);//Instructs interface to listen to the given port for UDP datagrams
+	virtual void openServerTCP(unsigned short port);//Opens server port with the given port number.
+	virtual void closeServerTCP(unsigned short port);//Closes server port with given port number.
+	virtual void connectClientTCP(unsigned short clientPort, std::string distantIP, unsigned short distantPort);
 	//Has the client port with the given number connect to a server port at the target IP.
-	virtual void sendMessage(unsigned short port, std::string serverIP, unsigned short serverPort, char* message, int len);
+	virtual void disconnectClientTCP(unsigned short clientPort, std::string distantIP, unsigned short distantPort);
+	//Disconnects the client port with the given settings
+	virtual void sendMessageTCP(unsigned short port, std::string serverIP, unsigned short serverPort, std::string message);
 	//Sends a message from this port to a specified IP and port.
-	virtual void receiveConnection(unsigned short port,std::string clientIP);//Called by sockets to call onReceiveConnection for all callback objects
-	virtual void receiveMessage(unsigned short port,char* message, int len);
-
+	void attachCallback(NetworkCallback* callback, unsigned short serverPort);//Attaches callback to server port
+	void attachCallback(NetworkCallback* callback, unsigned short clientPort, unsigned short distantPort, std::string distantIP);
+	//Attaches callback to client port
 	friend class ModuleGame;
 };
 

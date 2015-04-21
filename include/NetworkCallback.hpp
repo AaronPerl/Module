@@ -9,13 +9,15 @@ namespace Module
 class NetworkCallback
 {
 protected:
+	ClientSocket* client;
+	ServerSocket* server;
 
 public:
-	virtual void onReceiveConnection(unsigned short port,std::string clientip) {};
+	virtual void onReceiveConnection(std::string distantIP, unsigned short distantPort) {};
 	//Called when a server port receives a connection.
-	virtual void onReceiveMessage(unsigned short port,char* message,int len) {};
-	//Called when a client or server port receives a message.
-}
+	virtual void onReceiveMessage(std::string message) {};
+	//Called when a client port receives a message.
+};
 
 }
 #endif
