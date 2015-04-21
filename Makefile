@@ -84,10 +84,10 @@ FULL_DEPS = $(addprefix $(DEP_PATH)/,$(DEPS))
 
 ifeq ($(OS), Windows_NT)
 	ifeq ($(IS_CYGWIN), false)
+		LIBS   :=  -lmingw32 $(LIBS)
 		PATH64 := $(addsuffix /windows/mingw-w64, $(PATH64))
 		PATH32 := $(addsuffix /windows/mingw-w64, $(PATH32))
 	else
-		LIBS   :=  -lmingw32 $(LIBS)
 		PATH64 := $(addsuffix /windows/cygwin, $(PATH64))
 		PATH32 := $(addsuffix /windows/cygwin, $(PATH32))
 	endif
