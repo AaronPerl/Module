@@ -6,7 +6,8 @@ BULLET = lib/bullet3
 
 LIB_PATHS = -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib
 LIB_PATHS_32 = -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
-LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
+#LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
+LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32
 LIB_INC_PATHS = -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
 LIB_INC_PATHS_32 = -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
 
@@ -19,7 +20,7 @@ ifneq ($(OS), Windows_NT)
 	NEEDS_PTHREADS_WIN32 = false
 endif
 
-ifeq ($(DUMPNAME), x86_64-pc-cygwin)
+ifneq ($(DUMPNAME), x86_64-pc-cygwin)
 	NEEDS_PTHREADS_WIN32 = false
 	IS_CYGWIN = true
 endif
@@ -111,7 +112,7 @@ interfaces: $(INTERFACE_LIBS)
 
 .PHONY: test
 test: 64bit interfaces
-	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(FLAGS) -lSDL2main -lSDL2 -lopengl32 -lglew32  -o main_test
+	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
 
 .PHONY: clean
 clean:
