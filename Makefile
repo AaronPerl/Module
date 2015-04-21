@@ -14,10 +14,10 @@ LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)
 DUMPNAME = $(shell gcc -dumpmachine)
 
 IS_CYGWIN = false
-NEEDS_PTHREADS_WIN32 = true
+NEEDS_PTHREADS_WIN32 = false
 
 ifeq ($(OS), Windows_NT)
-	NEEDS_PTHREADS_WIN32 = false
+	NEEDS_PTHREADS_WIN32 = true
 endif
 
 ifeq ($(DUMPNAME), x86_64-pc-cygwin)
@@ -32,8 +32,8 @@ endif
 
 ifeq ($(NEEDS_PTHREADS_WIN32), true)
 	PTHREADS = lib/pthreads-win32
-	LIB_PATHS += -L$(PTHREADS)/x64
-	LIB_PATHS_32 += -L$(PTHREADS)/x32
+	LIB_PATHS += -L$(PTHREADS)/lib/x64
+	LIB_PATHS_32 += -L$(PTHREADS)/lib/x32
 	LIBS += -lpthreadGC2
 	LIB_INC_PATHS += -I$(PTHREADS)/include
 	LIB_INC_PATHS32 += -I$(PTHREADS)/include
