@@ -17,7 +17,7 @@
 #define GLM_FORCE_RADIANS
 #define SDL_MAIN_HANDLED
 
-#ifdef _WIN32
+#ifdef __CYGWIN__
 #include <windef.h>
 #endif
 
