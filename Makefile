@@ -4,12 +4,12 @@ SDL2_32 = $(SDL2)/../i686-w64-mingw32
 GLEW = lib/glew-1.11.0
 BULLET = lib/bullet3
 
-LIB_PATHS = -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib
-LIB_PATHS_32 = -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
+LIB_PATHS 			:= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib
+LIB_PATHS_32 		:= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
 #LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
-LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32
-LIB_INC_PATHS = -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
-LIB_INC_PATHS_32 = -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
+LIBS 				:= -lSDL2main -lSDL2 -lopengl32 -lglew32
+LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
+LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
 
 DUMPNAME = $(shell gcc -dumpmachine)
 
@@ -87,6 +87,7 @@ ifeq ($(OS), Windows_NT)
 		PATH64 := $(addsuffix /windows/mingw-w64, $(PATH64))
 		PATH32 := $(addsuffix /windows/mingw-w64, $(PATH32))
 	else
+		LIBS   :=  -lmingw32 $(LIBS)
 		PATH64 := $(addsuffix /windows/cygwin, $(PATH64))
 		PATH32 := $(addsuffix /windows/cygwin, $(PATH32))
 	endif
