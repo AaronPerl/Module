@@ -16,11 +16,11 @@ DUMPNAME = $(shell gcc -dumpmachine)
 IS_CYGWIN = false
 NEEDS_PTHREADS_WIN32 = true
 
-ifneq ($(OS), Windows_NT)
+ifeq ($(OS), Windows_NT)
 	NEEDS_PTHREADS_WIN32 = false
 endif
 
-ifneq ($(DUMPNAME), x86_64-pc-cygwin)
+ifeq ($(DUMPNAME), x86_64-pc-cygwin)
 	NEEDS_PTHREADS_WIN32 = false
 	IS_CYGWIN = true
 endif
