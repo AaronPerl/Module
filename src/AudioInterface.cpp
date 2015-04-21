@@ -1,42 +1,42 @@
 #include "AudioInterface.hpp"
 
-Module::Sound* Module::AudioInterface::playSound(SoundData* soundData)
+Module::Sound* Module::AudioInterface::playSound(SoundClip* clips)
 {
-	if(soundData)
+	if(clips)
 	{
-		std::cout << "Playing sound from data named : " << soundData->getName() << std::endl;
-		sounds.push_back(Sound(soundData));
+		std::cout << "Playing sound from data named : " << clips->getName() << std::endl;
+		sounds.push_back(Sound(clips));
 		sounds.back().replay();
 	}
 	else
 	{
-		std::cerr << "AudioInterface: This SoundData is NULL!" << std::endl;
+		std::cerr << "AudioInterface: This clips is NULL!" << std::endl;
 	}
 	return &sounds.back();
 }
-Module::SoundData* Module::AudioInterface::loadSoundData(const std::string& name)
+Module::SoundClip* Module::AudioInterface::loadclips(const std::string& name)
 {
-	for(unsigned int i = 0; i < soundData.size(); i++)
+	for(unsigned int i = 0; i < clips.size(); i++)
 	{
-		if(soundData[i].getName() == name)
+		if(clips[i].getName() == name)
 		{
 			std::cerr << "AudioInterface: The name \"" << name << "\" has already been used." << std::endl;
 			return NULL;
 		}
 	}
-	soundData.push_back(SoundData(name,std::vector<uint16_t>()));
-	return &soundData.back();
+	clips.push_back(clips(name,std::vector<uint16_t>()));
+	return &clips.back();
 }
-//TODO: Link this up in such a way that unloading SoundData removes all Sounds pointing to it.
+//TODO: Link this up in such a way that unloading clips removes all Sounds pointing to it.
 /*
-void Module::AudioInterface::unloadSoundData(Module::SoundData* sD)
+void Module::AudioInterface::unloadclips(Module::SoundClip* sD)
 {
-	for(unsigned int i = 0; i < soundData.size(); i++)
+	for(unsigned int i = 0; i < clips.size(); i++)
 	{
-		if(soundData[i] == sD)
+		if(clips[i] == sD)
 		{
 			std::cerr << "AudioInterface: The name \"" << sD->getName() << "\" has already been used." << std::endl;
-			soundData.erase(soundData.begin()+i);
+			clips.erase(clips.begin()+i);
 			return;
 		}
 	}
@@ -45,10 +45,10 @@ void Module::AudioInterface::unloadSoundData(Module::SoundData* sD)
 void Module::AudioInterface::printSounds()
 {
 	std::cout << "Sound Collection:" << std::endl;
-	std::cout << " There are " << soundData.size() << "." << std::endl;
-	for(unsigned int i = 0; i < soundData.size(); ++i)
+	std::cout << " There are " << clips.size() << "." << std::endl;
+	for(unsigned int i = 0; i < clips.size(); ++i)
 	{
-		std::cout << " " << i << ") " << soundData[i].getName() << std::endl;
+		std::cout << " " << i << ") " << clips[i].getName() << std::endl;
 	}
 	std::cout << "Currently-playing Sounds:" << std::endl;
 	std::cout << " There are " << sounds.size() << "." << std::endl;

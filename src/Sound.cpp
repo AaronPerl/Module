@@ -22,7 +22,7 @@ const std::string Module::Sound::getName() const
 	char name[20];
 	sprintf(name,"%u", uid);
 	std::string s(name);
-	return soundData->getName() + "_" + s;
+	return soundClip->getName() + "_" + s;
 }
 unsigned long Module::Sound::getTime() const
 {

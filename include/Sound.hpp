@@ -5,14 +5,14 @@
 #include <string>
 #include <stdint.h>
 #include "AudioInterface.hpp"
-#include "SoundData.hpp"
+#include "SoundClip.hpp"
 #include "Book.hpp"
 
 namespace Module
 {
 // A Sound represents a single playing of a sound, or,
 // in some instances, the looping of that sound. It points
-// to the specific SoundData being played.
+// to the specific SoundClip being played.
 class Sound
 {
 	friend class AudioInterface;
@@ -22,11 +22,11 @@ class Sound
 		// REPRESENTATION
 		uint16_t uid;			// The UID of this Sound
 		unsigned long time;		// The time of this Sound
-		SoundData* soundData;	// The data this Sound is playing
+		SoundClip* soundClip;	// The data this Sound is playing
 		
 		// CONSTRUCTOR
-		Sound(SoundData* sd): uid(sd->getNextUID()), time(0), soundData(sd) {}
-		Sound() : uid(0), time(0), soundData(NULL) {}
+		Sound(SoundClip* sd): uid(sd->getNextUID()), time(0), soundClip(sd) {}
+		Sound() : uid(0), time(0), soundClip(NULL) {}
 		
 	public:
 		// FUNCTIONS
