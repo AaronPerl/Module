@@ -3,11 +3,12 @@ SDL2 = lib/SDL2-2.0.3/x86_64-w64-mingw32
 SDL2_32 = $(SDL2)/../i686-w64-mingw32
 GLEW = lib/glew-1.11.0
 BULLET = lib/bullet3
+OPENAL_SOFT = lib/openal-soft-1.16.0
 
 #LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
 LIBS 			:= -lSDL2main -lSDL2
-LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
-LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
+LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include
+LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include
 
 DUMPNAME = $(shell gcc -dumpmachine)
 
@@ -70,9 +71,9 @@ FULL_OBJS32 = $(addprefix $(PATH32)/,$(OBJS))
 FULL_DEPS = $(addprefix $(DEP_PATH)/,$(DEPS))
 
 ifeq ($(OS), Windows_NT)
-	LIB_PATHS 	:= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib
-	LIB_PATHS_32 	:= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
-	LIBS		+= -lopengl32 -lglew32
+	LIB_PATHS 	:= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib -L$(OPENAL_SOFT)/libs/Win64
+	LIB_PATHS_32 	:= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32 -L$(OPENAL_SOFT)/libs/Win32
+	LIBS		+= -lopengl32 -lglew32 -lOpenAL32.dll
 	ifeq ($(IS_CYGWIN), false)
 		LIBS   :=  -lmingw32 $(LIBS)
 		PATH64 := $(addsuffix /windows/mingw-w64, $(PATH64))

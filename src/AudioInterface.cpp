@@ -14,7 +14,7 @@ Module::Sound* Module::AudioInterface::playSound(SoundClip* clips)
 	}
 	return &sounds.back();
 }
-Module::SoundClip* Module::AudioInterface::loadclips(const std::string& name)
+Module::SoundClip* Module::AudioInterface::loadSoundClip(const std::string& name)
 {
 	for(unsigned int i = 0; i < clips.size(); i++)
 	{
@@ -24,7 +24,7 @@ Module::SoundClip* Module::AudioInterface::loadclips(const std::string& name)
 			return NULL;
 		}
 	}
-	clips.push_back(clips(name,std::vector<uint16_t>()));
+	clips.push_back(SoundClip(name,std::vector<uint16_t>()));
 	return &clips.back();
 }
 //TODO: Link this up in such a way that unloading clips removes all Sounds pointing to it.

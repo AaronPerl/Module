@@ -3,9 +3,7 @@
 #include <csignal>
 #include <iostream>
 #include "ModuleGame.hpp"
-#include "AudioInterface.hpp"
-#include "Sound.hpp"
-#include "SoundData.hpp"
+#include <OpenALInterface.hpp>
 #include <SDLOpenGLInterface.hpp>
 #include <PthreadsInterface.hpp>
 
@@ -72,6 +70,7 @@ int main(int argc, char ** argv)
 	// :( //
 	
 	// AUDIO TESTS //
+	/*
 	Module::AudioInterface ai;
 	std::cout << ai.soundData.size() << " Start size = " << ai.soundData.capacity() << std::endl;
 	Module::SoundData* sound = ai.loadSoundData("explosion");
@@ -84,7 +83,7 @@ int main(int argc, char ** argv)
 	ai.playSound(sound);
 	ai.playSound(sound);
 	ai.printSounds();
-	
+	*/
 	
 	signal(SIGINT, sigterm_handler);
 	

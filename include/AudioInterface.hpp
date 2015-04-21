@@ -25,7 +25,7 @@ class AudioInterface
 	public:
 		// FUNCTIONS
 		Module::Sound* playSound(SoundClip*);			// Plays a Sound
-		SoundClip* loadSoundData(const std::string&);	// Loads SoundClip
+		SoundClip* loadSoundClip(const std::string&);	// Loads SoundClip
 		//void unloadSoundData(SoundClip*);				// Unloads SoundClip
 		
 		// DEBUG FUNCTIONS
