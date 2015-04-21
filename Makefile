@@ -4,10 +4,8 @@ SDL2_32 = $(SDL2)/../i686-w64-mingw32
 GLEW = lib/glew-1.11.0
 BULLET = lib/bullet3
 
-LIB_PATHS 			:= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib
-LIB_PATHS_32 		:= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
 #LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
-LIBS 				:= -lSDL2main -lSDL2 -lopengl32 -lglew32
+LIBS 			:= -lSDL2main -lSDL2
 LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
 LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
 
@@ -28,17 +26,6 @@ endif
 ifeq ($(DUMPNAME), i686-pc-cygwin)
 	NEEDS_PTHREADS_WIN32 = false
 	IS_CYGWIN = true
-endif
-
-ifeq ($(NEEDS_PTHREADS_WIN32), true)
-	PTHREADS = lib/pthreads-win32
-	LIB_PATHS += -L$(PTHREADS)/lib/x64
-	LIB_PATHS_32 += -L$(PTHREADS)/lib/x32
-	LIBS += -lpthreadGC2
-	LIB_INC_PATHS += -I$(PTHREADS)/include
-	LIB_INC_PATHS32 += -I$(PTHREADS)/include
-else
-	LIBS += -lpthread
 endif
 
 LIBRARY_NAME = Module
@@ -83,6 +70,9 @@ FULL_OBJS32 = $(addprefix $(PATH32)/,$(OBJS))
 FULL_DEPS = $(addprefix $(DEP_PATH)/,$(DEPS))
 
 ifeq ($(OS), Windows_NT)
+	LIB_PATHS 	:= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib
+	LIB_PATHS_32 	:= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
+	LIBS		+= -lopengl32 -lglew32
 	ifeq ($(IS_CYGWIN), false)
 		LIBS   :=  -lmingw32 $(LIBS)
 		PATH64 := $(addsuffix /windows/mingw-w64, $(PATH64))
@@ -92,8 +82,20 @@ ifeq ($(OS), Windows_NT)
 		PATH32 := $(addsuffix /windows/cygwin, $(PATH32))
 	endif
 else
+	LIBS		+= -lGL -lGLEW
 	PATH64 := $(addsuffix /linux, $(PATH64))
 	PATH32 := $(addsuffix /linux, $(PATH32))
+endif
+
+ifeq ($(NEEDS_PTHREADS_WIN32), true)
+	PTHREADS = lib/pthreads-win32
+	LIB_PATHS += -L$(PTHREADS)/lib/x64
+	LIB_PATHS_32 += -L$(PTHREADS)/lib/x32
+	LIBS += -lpthreadGC2
+	LIB_INC_PATHS += -I$(PTHREADS)/include
+	LIB_INC_PATHS32 += -I$(PTHREADS)/include
+else
+	LIBS += -lpthread
 endif
 
 .PHONY: all

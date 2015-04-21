@@ -7,7 +7,7 @@
 #include "Sound.hpp"
 #include "SoundData.hpp"
 #include <SDLOpenGLInterface.hpp>
-#include <PThreadsInterface.hpp>
+#include <PthreadsInterface.hpp>
 
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
