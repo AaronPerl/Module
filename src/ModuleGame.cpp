@@ -27,3 +27,9 @@ void Module::ModuleGame::start()
 {
 	graphics->start();
 }
+
+bool Module::ModuleGame::isRunning()
+{
+	assert(graphics!=0);
+	return graphics->isRunning();
+}

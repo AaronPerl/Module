@@ -1,7 +1,7 @@
 #include "SDLOpenGLInterface.hpp"
 
 Module::SDLOpenGLInterface::SDLOpenGLInterface() : 
-	window(0), context(0), vShader(0), fShader(0), program(0)
+	window(0), context(0), vShader(0), fShader(0), program(0), running(false), terminated(false)
 {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -9,10 +9,25 @@ Module::SDLOpenGLInterface::SDLOpenGLInterface() :
 
 Module::SDLOpenGLInterface::~SDLOpenGLInterface()
 {
-	glDeleteProgram(program);
-	SDL_GL_DeleteContext(context);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+	if (!terminated)
+	{
+		throw std::runtime_error("SDLOpenGLInterface not properly destroyed!");
+	}
+}
+
+void Module::SDLOpenGLInterface::terminate()
+{
+	if (program)
+	{
+		glDeleteProgram(program);
+	}
+	if (window)
+	{
+		SDL_GL_DeleteContext(context);
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+	}
+	terminated = true;
 }
 
 std::string Module::SDLOpenGLInterface::readSource(const char * path)
@@ -102,6 +117,7 @@ void Module::SDLOpenGLInterface::setupShaders()
 
 void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
 {
+	running = true;
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	window = SDL_CreateWindow("SDL Program",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
@@ -129,6 +145,21 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 
 void Module::SDLOpenGLInterface::renderFrame()
 {
+	SDL_Event event;
+	SDL_PumpEvents();
+
+	if (SDL_PollEvent(&event))
+	{
+		switch (event.type)
+		{
+			case SDL_QUIT:
+				std::cout << "SDL Program closed!" << std::endl;
+				terminate();
+				running = false;
+				break;
+		}
+	}
+	
 	while (allMeshes.size() > vertexBuffers.size()) // make sure any new meshes have buffer objects
 	{
 		createVNBuffers(&allMeshes[vertexBuffers.size()]);

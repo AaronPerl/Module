@@ -9,10 +9,21 @@ LIB_PATHS_32 = -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32
 LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
 LIB_INC_PATHS = -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src
 LIB_INC_PATHS_32 = -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src
-FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
+
+ifeq ($(OS), Windows_NT)
+	PTHREADS = lib/pthreads-win32
+	LIB_PATHS += -L$(PTHREADS)/x64
+	LIB_PATHS_32 += -L$(PTHREADS)/x32
+	LIBS += -lpthreadGC2
+	LIB_INC_PATHS += -I$(PTHREADS)/include
+	LIB_INC_PATHS32 += -I$(PTHREADS)/include
+else
+	LIBS += -lpthread
+endif
 
 LIBRARY_NAME = Module
 FULL_NAME = lib$(LIBRARY_NAME).a
+FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
 
 INTERFACE_PATH = interfaces
 INTERFACES = $(wildcard $(INTERFACE_PATH)/*)
@@ -70,16 +81,17 @@ depends: $(FULL_DEPS)
 .PHONY: 32bit
 32bit: $(PATH32)/$(FULL_NAME)
 
+.PHONY: interfaces
+interfaces: $(INTERFACE_LIBS)
+
 .PHONY: test
-test: 64bit
+test: 64bit interfaces
 	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(FLAGS) -lSDL2main -lSDL2 -lopengl32 -lglew32  -o main_test
 
 .PHONY: clean
 clean:
 	rm -rf build
 	
-.PHONY: interfaces
-interfaces: $(INTERFACE_LIBS)
 
 $(PATH64):
 	@echo Making 64-bit build directory

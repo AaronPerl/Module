@@ -3,6 +3,7 @@
 
 #include "Mutex.hpp"
 #include "ThreadObject.hpp"
+#include "ThreadData.hpp"
 
 namespace Module {
 
@@ -14,14 +15,16 @@ class ThreadingInterface {
 protected:
 	ModuleGame* game;
 	
-	void* getMutexPtr(Mutex& m);				// returns Mutex's object pointer, used to get permission from ThreadingInterface subclasses
-	void runThreadObject(ThreadObject* obj);	// run's ThreadObject's run method, used to get permission from ThreadingInterface subclasses
+	static void runThreadObject(ThreadObject* obj) 	{ obj->run(); }			// runs ThreadObject's run method, used to get permission from ThreadingInterface subclasses
+	static ThreadData*& getData(ThreadObject* obj)	{ return obj->data; } 	// returns ThreadObject's ThreadData pointer, subclass ModuleThread to store per-thread data
 	
 	// IMPLEMENT THESE //
 	virtual void startThread(ThreadObject* obj) = 0;	// start ThreadObject's thread, call runThreadObject from new thread
+	virtual void stopThread(ThreadObject* obj) = 0;		// stop ThreadObject's thread
 	virtual Mutex* createMutex() = 0;					// create mutex
-	virtual void lock(Mutex& m) = 0;					// lock mutex
-	virtual void unlock(Mutex& m) = 0;					// unlock mutex
+	virtual void destroyMutex(Mutex* m) = 0;			// free mutex from memory
+	virtual void lock(Mutex* m) = 0;					// lock mutex
+	virtual void unlock(Mutex* m) = 0;					// unlock mutex
 public:
 
 	friend class ModuleGame;

@@ -25,6 +25,8 @@ public:
 	
 	void start();
 	
+	bool isRunning();
+	
 	Mutex* createMutex() { return threading->createMutex(); }
 };
 

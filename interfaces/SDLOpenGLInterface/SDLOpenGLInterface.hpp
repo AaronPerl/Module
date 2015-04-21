@@ -36,10 +36,13 @@ namespace Module
 			unsigned int fShader;
 			//unsigned int gShader;
 			unsigned int program;
+			bool running;
+			bool terminated;
 	
 			unsigned int initShader(const char * path, unsigned int shaderType);
 			std::string readSource(const char * path);
 			void setupShaders();
+			void terminate();
 	
 			void createWindow(int width, int height, int fps);
 			void createVNBuffers(Mesh* mesh);
@@ -48,6 +51,7 @@ namespace Module
 			void createWindow() { createWindow(800, 600, 60); }
 			void renderFrame();
 			unsigned long getMilliseconds() { return SDL_GetTicks(); }
+			bool isRunning() { return running; }
 			
 			
 		public:

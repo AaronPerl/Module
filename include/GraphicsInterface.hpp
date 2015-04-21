@@ -32,6 +32,7 @@ namespace Module
 			virtual void createWindow() = 0; 				// initialization and window creation
 			virtual void renderFrame() = 0;					// render individual frame
 			virtual unsigned long getMilliseconds() = 0;	// get time since initialization
+			virtual bool isRunning() = 0;
 			
 			// FRIENDSHIP WRAPPERS
 			Book<float>* getVertexBook(Mesh* m) { return m->vertexBook; }

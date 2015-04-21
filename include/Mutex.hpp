@@ -5,11 +5,10 @@ namespace Module {
 
 class ThreadingInterface;
 
+// Subclass in ThreadingInterface implementations to store per-mutex data
 class Mutex {
 protected:
-	void* mutex_obj;
 public:
-
 	friend class ThreadingInterface;
 };
 
