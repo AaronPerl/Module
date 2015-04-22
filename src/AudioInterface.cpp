@@ -10,14 +10,14 @@ void AudioInterface::start()
 void AudioInterface::run()
 {
 	setDevice();
-	setListener();
+	setListener(NULL);
 }
 Sound* AudioInterface::playSound(SoundClip* clip)
 {
 	if(clip)
 	{
 		std::cout << "[AudioInterface] Playing sound from data named : " << clip->getName() << std::endl;
-		sounds.push_back(Sound(clip));
+		sounds.push_back(Sound(clip,this));
 		sounds.back().replay();
 	}
 	else
@@ -36,10 +36,10 @@ SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::str
 			return NULL;
 		}
 	}
-	clips.push_back(SoundClip(name,std::vector<uint16_t>()));
+	clips.push_back(SoundClip(name,this));
 	return &clips.back();
 }
-void AudioInterface::printSounds()
+void AudioInterface::debugAudio()
 {
 	std::cout << "Sound Collection:" << std::endl;
 	std::cout << " There are " << clips.size() << "." << std::endl;

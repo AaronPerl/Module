@@ -14,15 +14,18 @@ void OpenALInterface::setDevice()
 	}
 	std::cout << "[AudioInterface] Opened a device successfully." << std::endl;
 }
-void OpenALInterface::setListener()
+void OpenALInterface::setListener(GameObject* gameObject)
 {
-	// Initialize the context
-	context = alcCreateContext(device, NULL);
-	if (!alcMakeContextCurrent(context))
+	if(gameObject == NULL)
 	{
-		std::cerr << "[AudioInterface] Could not make context current" << std::endl;
+		// Initialize the context
+		context = alcCreateContext(device, NULL);
+		if (!alcMakeContextCurrent(context))
+		{
+			std::cerr << "[AudioInterface] Could not make context current" << std::endl;
+		}
+		std::cout << "[AudioInterface] Created a context successfully." << std::endl;
 	}
-	std::cout << "[AudioInterface] Created a context successfully." << std::endl;
 }
 Sound* OpenALInterface::playSound(SoundClip* clip)
 {
@@ -52,6 +55,7 @@ Sound* OpenALInterface::playSound(SoundClip* clip)
 		}		
 		alSourcei(source, AL_BUFFER, buffer);
 		soundNames.push_back(source);
+		alSourcePlay(source);
 	}
 	return toReturn;
 }
@@ -61,13 +65,14 @@ SoundClip* OpenALInterface::loadSoundClip(const std::string& name, const std::st
 	// Ensure we actually can create this SoundClip
 	if(toReturn)
 	{
+		//ALuint buffer = alutCreateBufferFromFile(fileName.c_str());
 		ALuint buffer;
-		alGenBuffers(1, &buffer);
-		
+		alGenBuffers((ALuint)1, &buffer);
+		clipNames.push_back(buffer);
 	}
 	return toReturn;
 }
-void OpenALInterface::unloadSoundData(SoundClip* clip)
+void OpenALInterface::unloadSoundClip(SoundClip* clip)
 {
 	
 }

@@ -1,9 +1,12 @@
 #ifndef __MODULE__AUDIOINTERFACE_HPP__
 #define __MODULE__AUDIOINTERFACE_HPP__
 
+// C++ standard library includes
 #include <iostream>
 #include <string>
 #include <vector>
+
+// Module includes
 #include "Sound.hpp"
 #include "SoundClip.hpp"
 #include "Book.hpp"
@@ -22,34 +25,41 @@ class ModuleGame;
 // or play sounds.
 class AudioInterface : ThreadObject
 {
+	// This is a very amiable interface
+	friend class Sound;
+	friend class SoundClip;
 	friend class ModuleGame;
 	
 	protected:
 		// REPRESENTATION
-		ModuleGame* game;
-		GameObject* listener;
+		ModuleGame* game;		// The game that this is a part of
+		GameObject* listener;	// The listener GameObject
 		Book<Sound> sounds;		// The collection of all playing sounds
 		Book<SoundClip> clips;	// The collection of all loaded sounds
 		
-		void start();			// Called by run()
-		void run(); 			// Overrides ThreadObject::run()
+		// FUNCTIONS
+		void start();	// Starts the thread for run.
+		void run(); 	// Overrides ThreadObject::run()
 		
-		virtual void setDevice() = 0;
-		virtual void setListener() = 0;
-		virtual void setListener(GameObject*) = 0;
+		// IMPLEMENT THESE
+		virtual void replaySound(Sound*) = 0;		// Replays a Sound
+		virtual void resumeSound(Sound*) = 0;		// Resumes a Sound
+		virtual void pauseSound(Sound*) = 0;		// Pauses a Sound
+		virtual void stopSound(Sound*) = 0;			// Stops a Sound
+		virtual void setDevice() = 0;				// Sets the device
+		virtual void setListener(GameObject*) = 0;	// Sets the listener object
 		
 	public:
 		// CONSTRUCTOR
-		AudioInterface(){}
+		AudioInterface(){}	// Necessary evil
+		
+		// DEBUG FUNCTIONS
+		void debugAudio();	// A function for debugging the sound collection
 		
 		// IMPLEMENT THESE
 		virtual Sound* playSound(SoundClip*) = 0;										// Plays a Sound
 		virtual SoundClip* loadSoundClip(const std::string&, const std::string&) = 0;	// Loads SoundClip
-		virtual void unloadSoundData(SoundClip*) = 0;									// Unloads SoundClip
-		
-		// DEBUG FUNCTIONS
-		void printSounds();		// A function for debugging the sound collection
-		
+		virtual void unloadSoundClip(SoundClip*) = 0;									// Unloads SoundClip		
 };
 
 }
