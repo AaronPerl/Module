@@ -3,6 +3,7 @@
 
 // C++ standard library includes
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -28,8 +29,9 @@ namespace Module
 			ALCdevice* device;
 			ALCcontext* context;
 			
-			void start();
-			void run();
+			void setDevice();
+			void setListener();
+			void setListener(GameObject*) {};
 			
 		public:
 			OpenALInterface() {};

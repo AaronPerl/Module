@@ -14,6 +14,7 @@ namespace Module
 	
 class Sound;
 class SoundClip;
+class GameObject;
 class ModuleGame;
 
 // The AudioInterface is one of Module's four core interfaces,
@@ -26,24 +27,29 @@ class AudioInterface : ThreadObject
 	protected:
 		// REPRESENTATION
 		ModuleGame* game;
+		GameObject* listener;
 		Book<Sound> sounds;		// The collection of all playing sounds
 		Book<SoundClip> clips;	// The collection of all loaded sounds
-		void start(){};
-		void run(){}; 			// Overrides ThreadObject::run()
+		
+		void start();			// Called by run()
+		void run(); 			// Overrides ThreadObject::run()
+		
+		virtual void setDevice() = 0;
+		virtual void setListener() = 0;
+		virtual void setListener(GameObject*) = 0;
 		
 	public:
 		// CONSTRUCTOR
 		AudioInterface(){}
 		
-		// FUNCTIONS
-		Sound* playSound(SoundClip* clip);												// Plays a Sound
-		SoundClip* loadSoundClip(const std::string& name, const std::string& fileName);	// Loads SoundClip
-		void unloadSoundData(SoundClip* clip);											// Unloads SoundClip
+		// IMPLEMENT THESE
+		virtual Sound* playSound(SoundClip*) = 0;										// Plays a Sound
+		virtual SoundClip* loadSoundClip(const std::string&, const std::string&) = 0;	// Loads SoundClip
+		virtual void unloadSoundData(SoundClip*) = 0;									// Unloads SoundClip
 		
 		// DEBUG FUNCTIONS
 		void printSounds();		// A function for debugging the sound collection
 		
-		// CONSTRUCTOR (Temporary, before this becomes pure virtual)
 };
 
 }
