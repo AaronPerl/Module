@@ -1,7 +1,7 @@
 #include "ModuleGame.hpp"
 #include <cassert>
 
-Module::ModuleGame::ModuleGame() : graphics(0), threading(0)
+Module::ModuleGame::ModuleGame() : graphics(0), audio(0), threading(0)
 {
 }
 
@@ -9,6 +9,12 @@ void Module::ModuleGame::attachGraphicsInterface(GraphicsInterface* newGraphics)
 {
 	newGraphics->game = this;
 	graphics = newGraphics;
+}
+
+void Module::ModuleGame::attachAudioInterface(AudioInterface* newAudio)
+{
+	newAudio->game = this;
+	audio = newAudio;
 }
 
 void Module::ModuleGame::attachThreadingInterface(ThreadingInterface* newThreading)
@@ -26,6 +32,7 @@ void Module::ModuleGame::startThread(ThreadObject* obj)
 void Module::ModuleGame::start()
 {
 	graphics->start();
+	audio->start();
 }
 
 bool Module::ModuleGame::isRunning()

@@ -17,19 +17,26 @@
 
 namespace Module
 {
-class Sound;
-class SoundClip;
-// The AudioInterface is one of Module's four core interfaces,
-// and handles its titular audio. It may be used to load and
-// or play sounds.
-class OpenALInterface : AudioInterface
-{
-	protected:
-		// REPRESENTATION
-		Book<ALuint> soundNames;	// The "names" of all playing sounds
-		Book<ALuint> clipNames;		// The "names" of all loaded sounds
-		
-};
+	// The OpenAL implementation of the AudioInterface
+	class OpenALInterface : public AudioInterface
+	{
+		protected:
+			// REPRESENTATION
+			Book<ALuint> soundNames;	// The "names" of all playing sounds
+			Book<ALuint> clipNames;		// The "names" of all loaded sounds
+			
+			ALCdevice* device;
+			ALCcontext* context;
+			
+			void start();
+			void run();
+			
+		public:
+			OpenALInterface() {};
+			Sound* playSound(SoundClip* clip);												// Plays a Sound
+			SoundClip* loadSoundClip(const std::string& name, const std::string& fileName);	// Loads SoundClip
+			void unloadSoundData(SoundClip* clip);											// Unloads SoundClip
+	};
 
 }
 

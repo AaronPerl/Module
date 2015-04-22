@@ -14,11 +14,13 @@ namespace Module {
 class ModuleGame {
 private:
 	GraphicsInterface* graphics;
+	AudioInterface* audio;
 	ThreadingInterface* threading;
 public:
 	ModuleGame();
 	
-	void attachGraphicsInterface(GraphicsInterface* newGraphcis);
+	void attachGraphicsInterface(GraphicsInterface* newGraphics);
+	void attachAudioInterface(AudioInterface* newAudio);
 	void attachThreadingInterface(ThreadingInterface* newThreading);
 	
 	void startThread(ThreadObject* obj);
