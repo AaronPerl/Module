@@ -138,13 +138,48 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 {
 	GLuint vertexVBO;
 	GLuint normalVBO;
+	float* buffer;
 	glGenBuffers(1, &vertexVBO);
 	glGenBuffers(1, &normalVBO);
 	
+	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+	//glBufferStorage(GL_ARRAY_BUFFER, mesh->getNumVertices() * 3 * sizeof(float), NULL, GL_DYNAMIC_STORAGE_BIT);
+	glBufferData(GL_ARRAY_BUFFER, mesh->getNumVertices() * 3 * sizeof(float), NULL, GL_STATIC_DRAW); // allocate buffer
+	buffer = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	for (unsigned int i = 0; i < mesh->getNumVertices(); i++)
+	{
+		Vector3 curVec = mesh->getVertex(i);
+		buffer[3*i+0] = curVec.getX();
+		buffer[3*i+1] = curVec.getY();
+		buffer[3*i+2] = curVec.getZ();
+	}
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
+	//glBufferStorage(GL_ARRAY_BUFFER, mesh->getNumVertices() * sizeof(float), NULL, GL_DYNAMIC_STORAGE_BIT);
+	glBufferData(GL_ARRAY_BUFFER, mesh->getNumVertices() * 3 * sizeof(float), NULL, GL_STATIC_DRAW); // allocate buffer
+	buffer = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	for (unsigned int i = 0; i < mesh->getNumVertices(); i++)
+	{
+		Vector3 curVec = mesh->getNormal(i);
+		buffer[3*i+0] = curVec.getX();
+		buffer[3*i+1] = curVec.getY();
+		buffer[3*i+2] = curVec.getZ();
+	}
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	vertexBuffers.push_back(vertexVBO);
+	vertexBuffers.push_back(normalVBO);
+	
+	std::cout << "Made vertex/normal buffers!" << std::endl;
 }
 
 void Module::SDLOpenGLInterface::renderFrame()
 {
+	
+	// SDL stuff
+
 	SDL_Event event;
 	SDL_PumpEvents();
 
@@ -160,10 +195,100 @@ void Module::SDLOpenGLInterface::renderFrame()
 		}
 	}
 	
+	int width;
+	int height;
+	
+	SDL_GetWindowSize(window,&width,&height);
+	
+	// create new VBOs
+	
 	while (allMeshes.size() > vertexBuffers.size()) // make sure any new meshes have buffer objects
 	{
 		createVNBuffers(&allMeshes[vertexBuffers.size()]);
 	}
 	
+	// OpenGL stuff now
 	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
+	// projection matrix
+	glm::mat4 projectionMat = glm::perspective(1.0472f, width/(float)height, 0.1f, 100.0f);
+	
+	// view matrix
+	glm::mat4 viewMat = glm::lookAt(	glm::vec3(0,0,3),
+										glm::vec3(0,0,0),
+										glm::vec3(0,1,0));
+										
+	// model matrix
+	glm::mat4 modelMat;
+	
+	glUseProgram(program);
+	
+	// get locations of uniforms
+	GLuint vloc = 	glGetUniformLocation(program, "view_matrix");
+	GLuint mloc = 	glGetUniformLocation(program, "model_matrix");
+	GLuint prloc = 	glGetUniformLocation(program, "projection_matrix");
+	GLuint mvploc = glGetUniformLocation(program, "mvp_matrix");
+	GLuint nmloc = 	glGetUniformLocation(program, "norm_matrix");
+	GLuint eploc = 	glGetUniformLocation(program, "eye_position");
+	GLuint enloc = 	glGetUniformLocation(program, "eye_normal");
+	
+	// pass uniforms
+	glUniformMatrix4fv(vloc,1,GL_FALSE,&viewMat[0][0]);
+	glUniformMatrix4fv(prloc,1,GL_FALSE,&projectionMat[0][0]);
+	glUniform4fv(eploc,1,&viewMat[3][0]);
+	glUniform4fv(enloc,1,&viewMat[2][0]);
+	
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+	
+	for (Book<GameObject>::size_type i = 0; i < game->numObjects(); i++)
+	{
+		std::cout << "GameObject: " << i << std::endl;
+		GLuint vertexVBO = 0;
+		GLuint normalVBO = 0;
+		GameObject* curObj = game->getGameObject(i);
+		Mesh* curMesh = curObj->getMesh();
+		Vector3 curPos = curObj->getPosition();
+		Quaternion curRot = curObj->getRotation();
+		std::cout << "  hasMesh: " << curMesh << std::endl;
+		if (curMesh == NULL) // Nothing to see here, literally (no mesh)
+			continue;
+		for (Book<Mesh>::size_type j = 0; j < allMeshes.size(); j++) // find the index of this mesh, TODO make better
+		{
+			if (&allMeshes[j] == curMesh)
+			{
+				vertexVBO = vertexBuffers[2*j+0];
+				normalVBO = vertexBuffers[2*j+1];
+				break;
+			}
+		}
+		if (vertexVBO == 0 || normalVBO == 0) // This mesh is not in our book/invalid or the buffer for this mesh hasn't been generated yet
+			continue;
+		
+		std::cout << "  vertexVBO: " << vertexVBO << "  normalVBO: " << normalVBO << std::endl;
+		
+		modelMat = 	glm::translate(	glm::mat4(1.0f),	glm::vec3(curPos.getX(), curPos.getY(), curPos.getZ())	)*
+					glm::toMat4(	glm::quat(curRot.getW(), curRot.getX(), curRot.getY(), curRot.getZ())		)*
+					glm::scale(		glm::mat4(1.0f),	glm::vec3(1.0,1.0,1.0)									);
+		
+		// modelview projection matrix
+		glm::mat4 mvp = projectionMat * viewMat * modelMat;
+		// normal matrix (inverse transpose of model matrix)
+		glm::mat4 normMat = glm::transpose(glm::inverse(modelMat));
+		
+		glUniformMatrix4fv(mloc,1,GL_FALSE,&modelMat[0][0]);
+		glUniformMatrix4fv(mvploc,1,GL_FALSE,&mvp[0][0]);
+		glUniformMatrix4fv(nmloc,1,GL_FALSE,&normMat[0][0]);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		
+		glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
+		
+		SDL_GL_SwapWindow(window);
+	}
 }

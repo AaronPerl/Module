@@ -47,7 +47,6 @@ namespace Module
 			
 			virtual Mesh* createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name);
 			virtual Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name);
-			
 			//virtual Mesh* copyMesh(Mesh* other);
 			
 	};

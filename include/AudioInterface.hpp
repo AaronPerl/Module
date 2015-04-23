@@ -11,13 +11,13 @@
 #include "SoundClip.hpp"
 #include "Book.hpp"
 #include "ThreadObject.hpp"
+#include "GameObject.hpp"
 
 namespace Module
 {
 	
 class Sound;
 class SoundClip;
-class GameObject;
 class ModuleGame;
 
 // The AudioInterface is one of Module's four core interfaces,

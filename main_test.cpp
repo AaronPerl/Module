@@ -45,11 +45,24 @@ int main(int argc, char ** argv)
 	// Starts the game
 	game.start();
 	
+	// Create a game object
+	Module::GameObject* gameobj = game.createGameObject();
+	
 	// GRAPHICS TESTS
-	// : (
+	std::vector<Module::Vector3> vertices(3);
+	std::vector<Module::Vector3> normals(3);
+	vertices.push_back(Module::Vector3(0,1,0));
+	vertices.push_back(Module::Vector3(-1,0,0));
+	vertices.push_back(Module::Vector3(1,0,0));
+	normals.push_back(Module::Vector3(0,0,1));
+	normals.push_back(Module::Vector3(0,0,1));
+	normals.push_back(Module::Vector3(0,0,1));
+	Module::Mesh* myMesh = graphics.createMesh(vertices, normals, "triangle");
+	std::cout << "Created mesh: " << myMesh << std::endl;
+	game.setMesh(gameobj, myMesh);
+	std::cout << "GameObject's mesh: " << gameobj->getMesh() << std::endl;
 	
 	// AUDIO TESTS
-	// : )
 	Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
 	Module::SoundClip* musicClip = audio.loadSoundClip("chopinScherzo","sounds/chopin_scherzo.wav");
 	audio.playSound(boilClip);

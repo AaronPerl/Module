@@ -24,15 +24,18 @@ private:
 	unsigned int normalIndex; // the index of this mesh's first normal in the normalBook
 	unsigned int numVertices; // the number of vertices/normals that this mesh has
 	std::string name;
-	
+	Mesh() :
+		vertexBook(0), normalBook(0), vertexIndex(0), normalIndex(0), numVertices(0), name("") {}
 	Mesh(Book<float>* vb, Book<float>* nb, unsigned int vi, unsigned int ni,
 		unsigned int num, std::string meshName) : 
 			vertexBook(vb), normalBook(nb), vertexIndex(vi), normalIndex(ni), numVertices(num), name(meshName) {}
 public:
 	Vector3 getVertex(unsigned int i) { return Vector3((*vertexBook)[vertexIndex + 3 * i], (*vertexBook)[vertexIndex + 3 * i + 1], (*vertexBook)[vertexIndex + 3 * i + 2]); }
 	Vector3 getNormal(unsigned int i) { return Vector3((*normalBook)[normalIndex + 3 * i], (*normalBook)[normalIndex + 3 * i + 1], (*normalBook)[normalIndex + 3 * i + 2]); }
+	unsigned int getNumVertices() { return numVertices; }
 	
 	friend class GraphicsInterface;
+	friend class Book<Mesh>;
 };
 	
 }

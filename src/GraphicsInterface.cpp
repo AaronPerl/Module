@@ -40,8 +40,8 @@ Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, unsigne
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
 	}
-	Mesh* retVal = new Mesh(&allVertices, &allNormals, firstIndex, firstIndex, num_vertices, name);
-	return retVal;
+	allMeshes.push_back(Mesh(&allVertices, &allNormals, firstIndex, firstIndex, num_vertices, name));
+	return &allMeshes.back();
 }
 
 Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name)
@@ -56,8 +56,8 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
 	}
-	Mesh* retVal = new Mesh(&allVertices, &allNormals, firstIndex, firstIndex, vertices.size(), name);
-	return retVal;
+	allMeshes.push_back(Mesh(&allVertices, &allNormals, firstIndex, firstIndex, vertices.size(), name));
+	return &allMeshes.back();
 }
 
 

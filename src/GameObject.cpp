@@ -1,7 +1,3 @@
-#include "Vector3.hpp"
-#include "Quaternion.hpp"
-#include "TransformObject.hpp"
-
 #include "GameObject.hpp"
 
 using Module::Vector3;

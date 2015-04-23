@@ -1,11 +1,14 @@
 #ifndef __MODULE__GAMEOBJECT_HPP__
 #define __MODULE__GAMEOBJECT_HPP__
 
+#include "Book.hpp"
+#include "TransformObject.hpp"
+#include "Vector3.hpp"
+#include "Quaternion.hpp"
+
 namespace Module {
 
-class Vector3;
-class Quaternion;
-class TransformObject;
+class ModuleGame;
 class Mesh;
 
 // One of the core classes in Module. The GameObject represents any object in the game world (though not terrain).
@@ -18,8 +21,8 @@ protected:
 	Mesh* mesh;
 	Vector3 pos;
 	Quaternion rot;
-public:
 	GameObject() : tObj(0), mesh(0) {}
+public:
 	const Vector3& getPosition() const		{ return tObj ? tObj->getPosition() : pos; }
 	const Quaternion& getRotation() const	{ return tObj ? tObj->getRotation() : rot; }
 	void setPosition(const Vector3& newPos);
@@ -27,6 +30,11 @@ public:
 	
 	TransformObject* getTransform() { return tObj; }
 	void setTransform(TransformObject* t) { tObj = t; }
+	
+	Mesh* getMesh() { return mesh; }
+	
+	friend class ModuleGame;
+	friend class Book<GameObject>;
 };
 
 }

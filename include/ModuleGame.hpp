@@ -16,6 +16,8 @@ private:
 	GraphicsInterface* graphics;
 	AudioInterface* audio;
 	ThreadingInterface* threading;
+	
+	Book<GameObject> objects; // The book of all GameObjects
 public:
 	ModuleGame();
 	
@@ -30,6 +32,12 @@ public:
 	bool isRunning();
 	
 	Mutex* createMutex() { return threading->createMutex(); }
+	GameObject* createGameObject();
+	
+	Book<GameObject>::size_type numObjects() { return objects.size(); }
+	GameObject* getGameObject(Book<GameObject>::size_type index) { return &objects[index]; }
+	
+	void setMesh(GameObject* obj, Mesh* mesh) { obj->mesh = mesh; }
 };
 
 }

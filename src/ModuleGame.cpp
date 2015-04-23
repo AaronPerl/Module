@@ -5,6 +5,12 @@ Module::ModuleGame::ModuleGame() : graphics(0), audio(0), threading(0)
 {
 }
 
+Module::GameObject* Module::ModuleGame::createGameObject()
+{
+	objects.push_back(GameObject());
+	return &objects.back();
+}
+
 void Module::ModuleGame::attachGraphicsInterface(GraphicsInterface* newGraphics)
 {
 	newGraphics->game = this;

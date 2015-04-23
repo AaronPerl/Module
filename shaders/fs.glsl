@@ -57,4 +57,5 @@ void main()
 	gl_FragColor = 	scene_ambient * frontMaterial.ambient +
 					diffFactor * frontMaterial.diffuse 	* vec4(light0.diffuse,1) + 
 					specFactor * frontMaterial.specular * vec4(light0.specular,1);
+	//gl_FragColor = vec4(1,0,0,1);
 }
