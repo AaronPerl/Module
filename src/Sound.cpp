@@ -1,31 +1,39 @@
 #include "Sound.hpp"
 
-void Module::Sound::replay()
+using namespace Module;
+
+void Sound::replay()
 {
-	// Replaying code
+	audio->replaySound(this);
 }
-void Module::Sound::resume()
+void Sound::resume()
 {
-	// Replaying code
+	audio->resumeSound(this);
 }
-void Module::Sound::pause()
+void Sound::pause()
 {
-	// Pause code
+	audio->pauseSound(this);
 }
-void Module::Sound::setTime(const unsigned long t)
+void Sound::stop()
 {
-	// Set time code
+	audio->stopSound(this);
+}
+void Sound::setTime(const unsigned long t)
+{
 	time = t;
 }
-const std::string Module::Sound::getName() const
+const std::string Sound::getName() const
 {
 	char name[20];
 	sprintf(name,"%u", uid);
 	std::string s(name);
 	return soundClip->getName() + "_" + s;
 }
-unsigned long Module::Sound::getTime() const
+unsigned long Sound::getTime() const
 {
-	// Get time code
 	return time;
+}
+SoundClip* Sound::getSoundClip() const
+{
+	return soundClip;
 }

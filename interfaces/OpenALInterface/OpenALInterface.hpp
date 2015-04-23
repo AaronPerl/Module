@@ -15,6 +15,7 @@
 // Library includes
 #include <AL/al.h>
 #include <AL/alc.h>
+//#include <alut.h>
 
 namespace Module
 {
@@ -29,15 +30,18 @@ namespace Module
 			ALCdevice* device;
 			ALCcontext* context;
 			
+			void replaySound(Sound*) {};	// Replays a Sound
+			void resumeSound(Sound*) {};	// Resumes a Sound
+			void pauseSound(Sound*) {};		// Pauses a Sound
+			void stopSound(Sound*) {};		// Stops a Sound
 			void setDevice();
-			void setListener();
-			void setListener(GameObject*) {};
+			void setListener(GameObject*);
 			
 		public:
 			OpenALInterface() {};
 			Sound* playSound(SoundClip* clip);												// Plays a Sound
 			SoundClip* loadSoundClip(const std::string& name, const std::string& fileName);	// Loads SoundClip
-			void unloadSoundData(SoundClip* clip);											// Unloads SoundClip
+			void unloadSoundClip(SoundClip* clip);											// Unloads SoundClip
 	};
 
 }

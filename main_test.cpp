@@ -3,6 +3,8 @@
 #include <csignal>
 #include <iostream>
 #include "ModuleGame.hpp"
+#include "Sound.hpp"
+#include "SoundClip.hpp"
 #include <OpenALInterface.hpp>
 #include <SDLOpenGLInterface.hpp>
 #include <PthreadsInterface.hpp>
@@ -23,32 +25,28 @@ void sigterm_handler(int signal)
 	}
 }
 
-float timesTwo(float x)
-{
-	return 2*x;
-}
-
 int main(int argc, char ** argv)
 {
-	Module::ModuleGame g;
+	Module::ModuleGame game;
 	Module::SDLOpenGLInterface graphics;
 	Module::OpenALInterface audio;
 	Module::PthreadsInterface threads;
-	g.attachThreadingInterface(&threads);
-	g.attachGraphicsInterface(&graphics);
-	g.attachAudioInterface(&audio);
-	g.start();
+	game.attachThreadingInterface(&threads);
+	game.attachGraphicsInterface(&graphics);
+	game.attachAudioInterface(&audio);
+	game.start();
 	
 	// GRAPHICS TESTS
 	// : (
 	
 	// AUDIO TESTS
 	// : )
-	
+	//Module::SoundClip* clip = audio.loadSoundClip("ASDF","ASDF");
+	//audio.playSound(clip);
 	
 	signal(SIGINT, sigterm_handler);
 	
-	while (g.isRunning());
+	while (game.isRunning());
 	
 	return 0;
 }
