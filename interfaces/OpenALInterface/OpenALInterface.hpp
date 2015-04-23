@@ -6,6 +6,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <stdexcept>
 
 // Module includes
 #include <ModuleGame.hpp>
@@ -15,7 +16,7 @@
 // Library includes
 #include <AL/al.h>
 #include <AL/alc.h>
-//#include <alut.h>
+#include <AL/alut.h>
 
 namespace Module
 {
@@ -26,6 +27,7 @@ namespace Module
 			// REPRESENTATION
 			Book<ALuint> soundNames;	// The "names" of all playing sounds
 			Book<ALuint> clipNames;		// The "names" of all loaded sounds
+			Book<uint16_t> pcmData;		// The underlying PCM data
 			
 			ALCdevice* device;
 			ALCcontext* context;
@@ -38,10 +40,11 @@ namespace Module
 			void setListener(GameObject*);
 			
 		public:
-			OpenALInterface() {};
-			Sound* playSound(SoundClip* clip);												// Plays a Sound
-			SoundClip* loadSoundClip(const std::string& name, const std::string& fileName);	// Loads SoundClip
-			void unloadSoundClip(SoundClip* clip);											// Unloads SoundClip
+			OpenALInterface();
+			Sound* playSound(SoundClip*);					// Plays a Sound
+			SoundClip* loadSoundClip(const std::string&, 
+									 const std::string&);	// Loads SoundClip
+			void unloadSoundClip(SoundClip*);				// Unloads SoundClip	
 	};
 
 }

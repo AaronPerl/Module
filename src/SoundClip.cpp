@@ -1,10 +1,16 @@
 #include "SoundClip.hpp"
 
-const std::string& Module::SoundClip::getName() const
+using namespace Module;
+
+const std::string& SoundClip::getName() const
 {
 	return name;
 }
-uint16_t Module::SoundClip::getNextUID()
+unsigned int SoundClip::getFrequency() const
+{
+	return frequency;
+}
+uint16_t SoundClip::getNextUID()
 {
 	return numInstances++;
 }

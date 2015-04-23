@@ -27,6 +27,10 @@ void OpenALInterface::setListener(GameObject* gameObject)
 		std::cout << "[AudioInterface] Created a context successfully." << std::endl;
 	}
 }
+OpenALInterface::OpenALInterface() : AudioInterface()
+{
+	alutInit(NULL,NULL);
+}
 Sound* OpenALInterface::playSound(SoundClip* clip)
 {
 	Sound* toReturn = AudioInterface::playSound(clip);
@@ -65,10 +69,28 @@ SoundClip* OpenALInterface::loadSoundClip(const std::string& name, const std::st
 	// Ensure we actually can create this SoundClip
 	if(toReturn)
 	{
-		//ALuint buffer = alutCreateBufferFromFile(fileName.c_str());
+		ALfloat frequency;
+		ALsizei size;
+		std::cout <<fileName.c_str() << std::endl;
+		uint16_t* temp = (uint16_t*)alutLoadMemoryFromFile(fileName.c_str(), NULL, &size, &frequency);
+		if(!temp)
+		{
+			std::cerr << "[Audio Interface] Not a valid file!" << std::endl;
+			std::cerr << "[Audio Interface] : ALUT :" << alutGetErrorString(alutGetError()) << std::endl;
+			return NULL;
+		}
+		unsigned int dataSize = size/2;
+		for(unsigned int i = 0; i < dataSize; i++)
+		{
+			pcmData.push_back(temp[i]);
+		}
+		
 		ALuint buffer;
 		alGenBuffers((ALuint)1, &buffer);
 		clipNames.push_back(buffer);
+		
+		alBufferData(buffer, AL_FORMAT_MONO16, temp, (ALsizei)size, (ALsizei)frequency); // bind data to buffer
+		toReturn->setFrequency(frequency*1000);
 	}
 	return toReturn;
 }

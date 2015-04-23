@@ -31,8 +31,10 @@ void Module::ModuleGame::startThread(ThreadObject* obj)
 
 void Module::ModuleGame::start()
 {
-	graphics->start();
-	audio->start();
+	if(graphics)
+		graphics->start();
+	if(audio)
+		audio->start();
 }
 
 bool Module::ModuleGame::isRunning()

@@ -12,6 +12,10 @@ void AudioInterface::run()
 	setDevice();
 	setListener(NULL);
 }
+void AudioInterface::setFrequency(SoundClip* soundClip, unsigned int frequency)
+{
+	soundClip->setFrequency(frequency);
+}
 Sound* AudioInterface::playSound(SoundClip* clip)
 {
 	if(clip)

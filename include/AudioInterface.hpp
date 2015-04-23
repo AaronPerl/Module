@@ -41,13 +41,16 @@ class AudioInterface : ThreadObject
 		void start();	// Starts the thread for run.
 		void run(); 	// Overrides ThreadObject::run()
 		
-		// IMPLEMENT THESE
+		// IMPLEMENT THESE FOR SOUND
 		virtual void replaySound(Sound*) = 0;		// Replays a Sound
 		virtual void resumeSound(Sound*) = 0;		// Resumes a Sound
 		virtual void pauseSound(Sound*) = 0;		// Pauses a Sound
 		virtual void stopSound(Sound*) = 0;			// Stops a Sound
 		virtual void setDevice() = 0;				// Sets the device
 		virtual void setListener(GameObject*) = 0;	// Sets the listener object
+		
+		// IMPLEMENT THESE FOR SOUNDCLIPS
+		virtual void setFrequency(SoundClip*, unsigned int);	// Sets the frequency
 		
 	public:
 		// CONSTRUCTOR
@@ -57,9 +60,10 @@ class AudioInterface : ThreadObject
 		void debugAudio();	// A function for debugging the sound collection
 		
 		// IMPLEMENT THESE
-		virtual Sound* playSound(SoundClip*) = 0;										// Plays a Sound
-		virtual SoundClip* loadSoundClip(const std::string&, const std::string&) = 0;	// Loads SoundClip
-		virtual void unloadSoundClip(SoundClip*) = 0;									// Unloads SoundClip		
+		virtual Sound* playSound(SoundClip*) = 0;					// Plays a Sound
+		virtual SoundClip* loadSoundClip(const std::string&, 
+										 const std::string&);		// Loads SoundClip
+		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip		
 };
 
 }
