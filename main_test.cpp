@@ -49,9 +49,9 @@ int main(int argc, char ** argv)
 	Module::GameObject* gameobj = game.createGameObject();
 	Module::GameObject* camera = game.createGameObject();
 	
-	// camera->setPosition(Module::Vector3(0,1.732f,3));
-	camera->setPosition(Module::Vector3(0,0,3));
-	// camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-3.141592f/6.0f));
+	camera->setPosition(Module::Vector3(0,1.732f,3));
+	// camera->setPosition(Module::Vector3(0,0,3));
+	camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-3.141592f/6.0f));
 	
 	// GRAPHICS TESTS
 	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);
