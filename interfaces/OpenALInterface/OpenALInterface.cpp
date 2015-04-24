@@ -63,6 +63,38 @@ Sound* OpenALInterface::playSound(SoundClip* clip)
 	}
 	return toReturn;
 }
+Sound* OpenALInterface::playSound(SoundClip* clip, float pitch, float gain)
+{
+	Sound* toReturn = AudioInterface::playSound(clip);
+	// Ensure we actually can create this Sound
+	if(toReturn)
+	{
+		// Create source
+		ALuint source;
+		alGenSources((ALuint)1, &source);
+		
+		alSourcef(source, AL_PITCH, (ALfloat)pitch);// Sets pitch
+		alSourcef(source, AL_GAIN, (ALfloat)gain);	// Sets gain
+		alSource3f(source, AL_POSITION, 0, 0, 0);	// Position = (0,0,0)
+		alSource3f(source, AL_VELOCITY, 0, 0, 0);	// Velocity = (0,0,0)
+		alSourcei(source, AL_LOOPING, AL_FALSE);	// Looping off
+		
+		// Look up what buffer "name" this SoundClip represents
+		ALuint buffer;
+		for(unsigned int i = 0; i < clips.size(); ++i)
+		{
+			if(&clips[i] == clip)
+			{
+				buffer = clipNames[i];
+				break;
+			}
+		}		
+		alSourcei(source, AL_BUFFER, buffer);
+		soundNames.push_back(source);
+		alSourcePlay(source);
+	}
+	return toReturn;
+}
 SoundClip* OpenALInterface::loadSoundClip(const std::string& name, const std::string& fileName)
 {
 	SoundClip* toReturn = AudioInterface::loadSoundClip(name,fileName);
@@ -71,12 +103,12 @@ SoundClip* OpenALInterface::loadSoundClip(const std::string& name, const std::st
 	{
 		ALfloat frequency;
 		ALsizei size;
-		std::cout <<fileName.c_str() << std::endl;
+		std::cout << "[AudioInterface] Loading \"" << fileName.c_str() << "\"." << std::endl;
 		uint16_t* temp = (uint16_t*)alutLoadMemoryFromFile(fileName.c_str(), NULL, &size, &frequency);
 		if(!temp)
 		{
-			std::cerr << "[Audio Interface] Not a valid file!" << std::endl;
-			std::cerr << "[Audio Interface] : ALUT :" << alutGetErrorString(alutGetError()) << std::endl;
+			std::cerr << "[AudioInterface] Not a valid file!" << std::endl;
+			std::cerr << "[AudioInterface] : ALUT :" << alutGetErrorString(alutGetError()) << std::endl;
 			return NULL;
 		}
 		unsigned int dataSize = size/2;

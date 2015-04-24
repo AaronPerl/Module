@@ -42,6 +42,7 @@ namespace Module
 		public:
 			OpenALInterface();
 			Sound* playSound(SoundClip*);					// Plays a Sound
+			Sound* playSound(SoundClip*, float, float);		// Plays a Sound
 			SoundClip* loadSoundClip(const std::string&, 
 									 const std::string&);	// Loads SoundClip
 			void unloadSoundClip(SoundClip*);				// Unloads SoundClip	

@@ -60,7 +60,8 @@ class AudioInterface : ThreadObject
 		void debugAudio();	// A function for debugging the sound collection
 		
 		// IMPLEMENT THESE
-		virtual Sound* playSound(SoundClip*) = 0;					// Plays a Sound
+		virtual Sound* playSound(SoundClip*);						// Plays a Sound
+		virtual Sound* playSound(SoundClip*, float, float) = 0;		// Plays a Sound
 		virtual SoundClip* loadSoundClip(const std::string&, 
 										 const std::string&);		// Loads SoundClip
 		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip		

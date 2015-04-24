@@ -20,7 +20,7 @@ Sound* AudioInterface::playSound(SoundClip* clip)
 {
 	if(clip)
 	{
-		std::cout << "[AudioInterface] Playing sound from data named : " << clip->getName() << std::endl;
+		std::cout << "[AudioInterface] Playing sound from data named \"" << clip->getName() << "\"." << std::endl;
 		sounds.push_back(Sound(clip,this));
 		sounds.back().replay();
 	}
@@ -45,16 +45,14 @@ SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::str
 }
 void AudioInterface::debugAudio()
 {
-	std::cout << "Sound Collection:" << std::endl;
-	std::cout << " There are " << clips.size() << "." << std::endl;
+	std::cout << "[AudioInterface] Sound Collection (" << sounds.size() << "):" << std::endl;
 	for(unsigned int i = 0; i < clips.size(); ++i)
 	{
-		std::cout << " " << i << ") " << clips[i].getName() << std::endl;
+		std::cout << "                  " << i+1 << ") " << clips[i].getName() << std::endl;
 	}
-	std::cout << "Currently-playing Sounds:" << std::endl;
-	std::cout << " There are " << sounds.size() << "." << std::endl;
+	std::cout << "                 Currently-playing Sounds (" << sounds.size() << "):" << std::endl;
 	for(unsigned int i = 0; i < sounds.size(); ++i)
 	{
-		std::cout << " " << i << ") " << sounds[i].getName() << std::endl;
+		std::cout << "                  " << i+1 << ") " << sounds[i].getName() << std::endl;
 	}
 }
