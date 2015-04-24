@@ -28,16 +28,19 @@ public:
 	void startThread(ThreadObject* obj);
 	
 	void start();
-	
 	bool isRunning();
 	
-	Mutex* createMutex() { return threading->createMutex(); }
+	// Game Objects
 	GameObject* createGameObject();
-	
 	Book<GameObject>::size_type numObjects() { return objects.size(); }
 	GameObject* getGameObject(Book<GameObject>::size_type index) { return &objects[index]; }
 	
+	// Threading
+	Mutex* createMutex() { return threading->createMutex(); }
+	
+	// Graphics
 	void setMesh(GameObject* obj, Mesh* mesh) { obj->mesh = mesh; }
+	unsigned long getMilliseconds() { return graphics->getMilliseconds(); }
 };
 
 }

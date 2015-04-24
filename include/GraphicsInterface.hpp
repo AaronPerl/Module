@@ -49,6 +49,8 @@ namespace Module
 			virtual Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name);
 			//virtual Mesh* copyMesh(Mesh* other);
 			
+			virtual Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false) = 0;
+			
 	};
 }
 

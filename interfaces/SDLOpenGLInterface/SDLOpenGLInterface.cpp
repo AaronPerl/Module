@@ -11,7 +11,7 @@ Module::SDLOpenGLInterface::~SDLOpenGLInterface()
 {
 	if (!terminated)
 	{
-		throw std::runtime_error("SDLOpenGLInterface not properly destroyed!");
+		throw std::runtime_error("[GraphicsInterface] : SDLOpenGLInterface not properly destroyed!");
 	}
 }
 
@@ -32,7 +32,7 @@ void Module::SDLOpenGLInterface::terminate()
 
 std::string Module::SDLOpenGLInterface::readSource(const char * path)
 {
-	std::cout << "Reading shader source file: " << path << std::endl;
+	std::cout << "[GraphicsInterface] : OpenGL :   Reading shader source file: " << path << std::endl;
 
 	std::ifstream inputFile;
 	inputFile.open(path);
@@ -40,14 +40,14 @@ std::string Module::SDLOpenGLInterface::readSource(const char * path)
 	sStream << inputFile.rdbuf();
 	std::string outString = sStream.str();
 
-	std::cout << "Done reading shader source file: " << path<< std::endl;
+	std::cout << "[GraphicsInterface] : OpenGL :   Done reading shader source file: " << path<< std::endl;
 
 	return outString;
 }
 
 unsigned int Module::SDLOpenGLInterface::initShader(const char * path, unsigned int shaderType)
 {
-	std::cout << "Creating shader from file " << path << std::endl;
+	std::cout << "[GraphicsInterface] : OpenGL : Creating shader from file " << path << std::endl;
 
 	std::string sourceString = readSource(path);
 	unsigned int newShader = glCreateShader(shaderType);
@@ -72,10 +72,10 @@ unsigned int Module::SDLOpenGLInterface::initShader(const char * path, unsigned 
 		logFile.close ();
 		delete log;
 		std::cout.flush();
-		throw std::runtime_error("Failed to compile shader: "+std::string(path));
+		throw std::runtime_error("[GraphcisInterface] : OpenGL :   Failed to compile shader: "+std::string(path));
 	}
 
-	std::cout << "Shader compiled : " << path << std::endl;
+	std::cout << "[GraphicsInterface] : OpenGL :   Shader compiled : " << path << std::endl;
 
 	return newShader;
 }
@@ -108,7 +108,7 @@ void Module::SDLOpenGLInterface::setupShaders()
 		logFile.close ();
 		delete log;
 		std::cout.flush();
-		throw std::runtime_error("Failed to link program");
+		throw std::runtime_error("[GraphicsInterface] : OpenGL : Failed to link shader program");
 	}
 
 	glDeleteShader(vShader);
@@ -128,7 +128,7 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
     glClear(GL_COLOR_BUFFER_BIT);
     if (glewInit())
     {
-    	throw std::runtime_error("Error initializing glew!");
+    	throw std::runtime_error("[GraphicsInterface] : glew : Error initializing glew!");
     }
     setupShaders();
     SDL_GL_SwapWindow(window);
@@ -171,8 +171,140 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	
 	vertexBuffers.push_back(vertexVBO);
 	vertexBuffers.push_back(normalVBO);
+}
+
+Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces)
+{
+	std::cout << "[GraphicsInterface] Loading mesh [" << meshname << "] from file: " << filename << std::endl;
+	std::size_t periodIndex = filename.rfind('.');
+	if (periodIndex == std::string::npos)
+	{
+		std::cerr << "[GraphicsInterface]   File extension not found!" << std::endl;
+		return NULL;
+	}
+	std::string extension = filename.substr(periodIndex);
+	if (extension != ".obj")
+	{
+		std::cerr << "[GraphicsInterface]   Unsupported file format: " << extension << std::endl;
+		return NULL;
+	}
+	std::cout << "[GraphicsInterface]   Recognized file type: " << extension << std::endl;
 	
-	std::cout << "Made vertex/normal buffers!" << std::endl;
+	std::ifstream modelFile(filename.c_str());
+	
+	if (!modelFile.is_open())
+	{
+		std::cerr << "[GraphicsInterface]   Invalid file name: " << filename << std::endl;
+		return NULL;
+	}
+	
+	std::string element;
+	std::vector<Vector3> indexedVertices;
+	std::vector<Vector3> indexedNormals;
+	std::vector<Vector3> vertices;
+	std::vector<Vector3> normals;
+	
+	while (!modelFile.eof())
+	{
+		int firstChar = modelFile.peek();
+		if (firstChar == EOF)
+			break;
+		if (firstChar == '#')
+		{
+			modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+		else
+		{
+			modelFile >> element;
+			if (element == "v")
+			{
+				float x,y,z;
+				modelFile >> x >> y >> z;
+				indexedVertices.push_back(Vector3(x,y,z));
+			} //endif v
+			else if (element == "vn")
+			{
+				float x,y,z;
+				modelFile >> x >> y >> z;
+				indexedNormals.push_back(Vector3(x,y,z));
+			} //endif vn
+			else if (element == "f")
+			{
+				for (unsigned short i = 0; i < 3; i++)
+				{
+					std::string indexStr;
+					modelFile >> indexStr;
+					std::size_t slashIndex1 = indexStr.find('/');
+					std::size_t slashIndex2 = std::string::npos;
+					if (slashIndex1 != std::string::npos) // f v//n v//n v//n
+					{
+						slashIndex2 = indexStr.find('/', slashIndex1+1);
+						if (slashIndex2 == std::string::npos)
+						{
+							std::cerr << "[GraphicsInterface]   Unsupported obj file" << std::endl;
+							return NULL;
+						}
+						std::size_t slashIndex3 = indexStr.find('/', slashIndex2+1);
+						if (slashIndex3 != std::string::npos)
+						{
+							std::cerr << "[GraphicsInterface]   Invalid file data" << std::endl;
+							return NULL;
+						}
+						indexStr.replace(slashIndex1, slashIndex2 - slashIndex1 + 1, slashIndex2 - slashIndex1 + 1, ' ');
+						std::size_t vi, ni;					
+						std::stringstream indexStream(indexStr);
+						indexStream >> vi >> ni;
+						
+						if (vi > indexedVertices.size() || ni > indexedNormals.size())
+						{
+							std::cerr << "[GraphicsInterface]   Unsupported/invalid obj file" << std::endl;
+							return NULL;
+						}
+						vertices.push_back(indexedVertices[vi-1]);
+						normals.push_back(indexedNormals[ni-1]);
+					}
+					else // f v v v
+					{
+						std::size_t vi;					
+						std::stringstream indexStream(indexStr);
+						indexStream >> vi;
+						
+						if (vi > indexedVertices.size() || vi > indexedNormals.size())
+						{
+							std::cerr << "[GraphicsInterface]   Unsupported/invalid obj file" << std::endl;
+							return NULL;
+						}
+						
+						vertices.push_back(indexedVertices[vi-1]);
+						normals.push_back(indexedNormals[vi-1]);
+					}
+				} //endfor i from 0 to 3
+				if (flipFaces)
+				{
+					Vector3 third  = vertices.back();
+					vertices.pop_back();
+					Vector3 second = vertices.back();
+					vertices.pop_back();
+					vertices.push_back(third);
+					vertices.push_back(second);
+					
+					third  = normals.back();
+					normals.pop_back();
+					second = normals.back();
+					normals.pop_back();
+					normals.push_back(third);
+					normals.push_back(second);
+				}
+			} // endif f
+			modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+	
+	std::cout << "[GraphcisInterface]   Num vertices/normals: " << vertices.size() << " " << normals.size() << std::endl;
+	
+	std::cout << "[GraphicsInterface]   Successfully loaded file!" << std::endl;
+	
+	return createMesh(vertices, normals, meshname);
 }
 
 void Module::SDLOpenGLInterface::renderFrame()
@@ -244,14 +376,12 @@ void Module::SDLOpenGLInterface::renderFrame()
 	
 	for (Book<GameObject>::size_type i = 0; i < game->numObjects(); i++)
 	{
-		std::cout << "GameObject: " << i << std::endl;
 		GLuint vertexVBO = 0;
 		GLuint normalVBO = 0;
 		GameObject* curObj = game->getGameObject(i);
 		Mesh* curMesh = curObj->getMesh();
 		Vector3 curPos = curObj->getPosition();
 		Quaternion curRot = curObj->getRotation();
-		std::cout << "  hasMesh: " << curMesh << std::endl;
 		if (curMesh == NULL) // Nothing to see here, literally (no mesh)
 			continue;
 		for (Book<Mesh>::size_type j = 0; j < allMeshes.size(); j++) // find the index of this mesh, TODO make better
@@ -263,14 +393,15 @@ void Module::SDLOpenGLInterface::renderFrame()
 				break;
 			}
 		}
+		
 		if (vertexVBO == 0 || normalVBO == 0) // This mesh is not in our book/invalid or the buffer for this mesh hasn't been generated yet
+		{
 			continue;
+		}
 		
-		std::cout << "  vertexVBO: " << vertexVBO << "  normalVBO: " << normalVBO << std::endl;
-		
-		modelMat = 	glm::translate(	glm::mat4(1.0f),	glm::vec3(curPos.getX(), curPos.getY(), curPos.getZ())	)*
-					glm::toMat4(	glm::quat(curRot.getW(), curRot.getX(), curRot.getY(), curRot.getZ())		)*
-					glm::scale(		glm::mat4(1.0f),	glm::vec3(1.0,1.0,1.0)									);
+		modelMat = 	glm::translate(	glm::mat4(1.0f),	glm::vec3(curPos.getX(), curPos.getY(), curPos.getZ())					)*
+					glm::toMat4(	glm::quat(curRot.getW(), curRot.getX(), curRot.getY(), curRot.getZ())						)*
+					glm::scale(		glm::mat4(1.0f),	glm::vec3(curMesh->getScale(),curMesh->getScale(),curMesh->getScale())	);
 		
 		// modelview projection matrix
 		glm::mat4 mvp = projectionMat * viewMat * modelMat;

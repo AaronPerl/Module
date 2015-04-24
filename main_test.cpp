@@ -49,18 +49,38 @@ int main(int argc, char ** argv)
 	Module::GameObject* gameobj = game.createGameObject();
 	
 	// GRAPHICS TESTS
-	std::vector<Module::Vector3> vertices(3);
-	std::vector<Module::Vector3> normals(3);
-	vertices.push_back(Module::Vector3(0,1,0));
-	vertices.push_back(Module::Vector3(-1,0,0));
-	vertices.push_back(Module::Vector3(1,0,0));
-	normals.push_back(Module::Vector3(0,0,1));
-	normals.push_back(Module::Vector3(0,0,1));
-	normals.push_back(Module::Vector3(0,0,1));
-	Module::Mesh* myMesh = graphics.createMesh(vertices, normals, "triangle");
-	std::cout << "Created mesh: " << myMesh << std::endl;
-	game.setMesh(gameobj, myMesh);
-	std::cout << "GameObject's mesh: " << gameobj->getMesh() << std::endl;
+	// std::vector<Module::Vector3> vertices(3);
+	// std::vector<Module::Vector3> normals(3);
+	// vertices.push_back(Module::Vector3(0,1,0));
+	// vertices.push_back(Module::Vector3(-1,0,0));
+	// vertices.push_back(Module::Vector3(1,0,0));
+	// vertices.push_back(Module::Vector3(-1,0,0));
+	// vertices.push_back(Module::Vector3(0,1,0));
+	// vertices.push_back(Module::Vector3(1,0,0));
+	// normals.push_back(Module::Vector3(0,0,1));
+	// normals.push_back(Module::Vector3(0,0,1));
+	// normals.push_back(Module::Vector3(0,0,1));
+	// normals.push_back(Module::Vector3(0,0,-1));
+	// normals.push_back(Module::Vector3(0,0,-1));
+	// normals.push_back(Module::Vector3(0,0,-1));
+	
+	// Module::Mesh* myMesh = graphics.createMesh(vertices, normals, "triangle");
+	
+	
+	// Module::Mesh* cube = graphics.loadMeshFromFile("cube", "models/cube.obj");
+	// cube->setScale(0.5f);
+	
+	// for (unsigned int i = 0; i < cube->getNumVertices(); i++)
+	// {
+		// Module::Vector3 curVec = cube->getVertex(i);
+		// std::cout << curVec.getX() << "," << curVec.getY() << "," << curVec.getZ() << std::endl;
+	// }
+	
+	
+	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);
+	teapot->setScale(1/60.0f);
+	game.setMesh(gameobj, teapot);
+	
 	
 	// AUDIO TESTS
 	Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
@@ -72,7 +92,11 @@ int main(int argc, char ** argv)
 	std::cout << "Test" << std::endl;
 	signal(SIGINT, sigterm_handler);
 	
-	while (game.isRunning());
+	while (game.isRunning())
+	{
+		unsigned long millis = game.getMilliseconds();
+		gameobj->setRotation(Module::Quaternion(Module::Vector3(0,1,0), millis/1000.0f));
+	}
 	
 	return 0;
 }

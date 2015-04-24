@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
+#include <limits>
 
 // Module includes
 #include <ModuleGame.hpp>
@@ -57,12 +58,13 @@ namespace Module
 			void createWindow() { createWindow(800, 600, 60); }
 			void renderFrame();
 			unsigned long getMilliseconds() { return SDL_GetTicks(); }
-			bool isRunning() { return running; }
-			
+			bool isRunning() { return running; }		
 			
 		public:
 			SDLOpenGLInterface();
 			~SDLOpenGLInterface();
+			
+			Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false);
 			
 	};
 }

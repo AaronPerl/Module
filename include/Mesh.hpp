@@ -23,16 +23,19 @@ private:
 	unsigned int vertexIndex; // the index of this mesh's first vertex in the vertexBook
 	unsigned int normalIndex; // the index of this mesh's first normal in the normalBook
 	unsigned int numVertices; // the number of vertices/normals that this mesh has
+	float scale; // scalar to multiply all vertices by for rendering, etc.
 	std::string name;
 	Mesh() :
-		vertexBook(0), normalBook(0), vertexIndex(0), normalIndex(0), numVertices(0), name("") {}
+		vertexBook(0), normalBook(0), vertexIndex(0), normalIndex(0), numVertices(0), scale(1.0f), name("") {}
 	Mesh(Book<float>* vb, Book<float>* nb, unsigned int vi, unsigned int ni,
 		unsigned int num, std::string meshName) : 
-			vertexBook(vb), normalBook(nb), vertexIndex(vi), normalIndex(ni), numVertices(num), name(meshName) {}
+			vertexBook(vb), normalBook(nb), vertexIndex(vi), normalIndex(ni), numVertices(num), scale(1.0f), name(meshName) {}
 public:
 	Vector3 getVertex(unsigned int i) { return Vector3((*vertexBook)[vertexIndex + 3 * i], (*vertexBook)[vertexIndex + 3 * i + 1], (*vertexBook)[vertexIndex + 3 * i + 2]); }
 	Vector3 getNormal(unsigned int i) { return Vector3((*normalBook)[normalIndex + 3 * i], (*normalBook)[normalIndex + 3 * i + 1], (*normalBook)[normalIndex + 3 * i + 2]); }
 	unsigned int getNumVertices() { return numVertices; }
+	float getScale() const { return scale; }
+	void setScale(float newScale) { scale = newScale; }
 	
 	friend class GraphicsInterface;
 	friend class Book<Mesh>;
