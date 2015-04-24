@@ -126,6 +126,7 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
     	SDL_GL_SetSwapInterval(1);
     glClearColor(0,0,0,1);
     glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_CULL_FACE);
     if (glewInit())
     {
     	throw std::runtime_error("[GraphicsInterface] : glew : Error initializing glew!");
@@ -347,9 +348,21 @@ void Module::SDLOpenGLInterface::renderFrame()
 	glm::mat4 projectionMat = glm::perspective(1.0472f, width/(float)height, 0.1f, 100.0f);
 	
 	// view matrix
-	glm::mat4 viewMat = glm::lookAt(	glm::vec3(0,0,3),
-										glm::vec3(0,0,0),
-										glm::vec3(0,1,0));
+	Vector3 cameraPos(0,0,3);
+	Vector3 lookVec(0,0,0);
+	Vector3 upVec(0,1,0);
+	if (camera != NULL)
+	{
+		Quaternion cameraRot = camera->getRotation();
+		cameraPos = camera->getPosition();
+		lookVec = Vector3(0,0,-1.0).rotate(cameraRot);
+		upVec = Vector3(0,1.0,0).rotate(cameraRot);
+	}
+	Vector3 lookAt = cameraPos + lookVec;
+	
+	glm::mat4 viewMat = glm::lookAt(	glm::vec3(cameraPos.getX(),	cameraPos.getY(),	cameraPos.getZ()),
+										glm::vec3(lookAt.getX(),	lookAt.getY(),		lookAt.getZ()	),
+										glm::vec3(upVec.getX(),		upVec.getY(),		upVec.getZ())	);
 										
 	// model matrix
 	glm::mat4 modelMat;

@@ -7,9 +7,9 @@
 
 using namespace Module;
 
-GraphicsInterface::GraphicsInterface() : fps(60) {}
+GraphicsInterface::GraphicsInterface() : fps(60), game(NULL), camera(NULL) {}
 
-GraphicsInterface::GraphicsInterface(unsigned int set_fps) : fps(set_fps) {}
+GraphicsInterface::GraphicsInterface(unsigned int set_fps) : fps(set_fps), game(NULL), camera(NULL) {}
 
 void GraphicsInterface::start()
 {

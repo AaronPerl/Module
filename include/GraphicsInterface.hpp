@@ -12,6 +12,7 @@ namespace Module
 {
 	class Mesh;
 	class ModuleGame;
+	class GameObject;
 
 	class GraphicsInterface : ThreadObject
 	{
@@ -20,6 +21,7 @@ namespace Module
 		protected:
 			unsigned int fps;
 			ModuleGame* game;
+			GameObject* camera;
 			
 			Book<float> allVertices;	// all vertices (x, y then z) stored in a contiguous array to improve caching
 			Book<float> allNormals;		// all vertex normals, 1 to 1 with vertices
@@ -48,8 +50,9 @@ namespace Module
 			virtual Mesh* createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name);
 			virtual Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name);
 			//virtual Mesh* copyMesh(Mesh* other);
-			
 			virtual Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false) = 0;
+			
+			virtual void setCamera(GameObject* obj) { camera = obj; }
 			
 	};
 }
