@@ -20,32 +20,36 @@
 
 namespace Module
 {
+	
 	// The OpenAL implementation of the AudioInterface
 	class OpenALInterface : public AudioInterface
 	{
 		protected:
 			// REPRESENTATION
+			ALCdevice* device;			// The current OpenAL device
+			ALCcontext* context;		// The current OpenAL context
 			Book<ALuint> soundNames;	// The "names" of all playing sounds
 			Book<ALuint> clipNames;		// The "names" of all loaded sounds
 			Book<uint16_t> pcmData;		// The underlying PCM data
 			
-			ALCdevice* device;
-			ALCcontext* context;
+			// IMPLEMENTED
+			void replaySound(Sound*);		// Replays a Sound
+			void resumeSound(Sound*);		// Resumes a Sound
+			void pauseSound(Sound*);		// Pauses a Sound
+			void stopSound(Sound*);			// Stops a Sound
+			void setDevice();				// Sets the device
+			void setListener(GameObject*);	// Sets the listener GameObject
 			
-			void replaySound(Sound*) {};	// Replays a Sound
-			void resumeSound(Sound*) {};	// Resumes a Sound
-			void pauseSound(Sound*) {};		// Pauses a Sound
-			void stopSound(Sound*) {};		// Stops a Sound
-			void setDevice();
-			void setListener(GameObject*);
+			ALuint getSoundName(Sound*) const;		// Gets the OpenAL "name" of a Sound
+			ALuint getClipName(SoundClip*) const;	// Gets the OpenAL "name" of a SoundClip
 			
 		public:
-			OpenALInterface();
+			OpenALInterface();								// Constructor
 			Sound* playSound(SoundClip*);					// Plays a Sound
 			Sound* playSound(SoundClip*, float, float);		// Plays a Sound
 			SoundClip* loadSoundClip(const std::string&, 
 									 const std::string&);	// Loads SoundClip
-			void unloadSoundClip(SoundClip*);				// Unloads SoundClip	
+			void unloadSoundClip(SoundClip*);				// Unloads SoundClip
 	};
 
 }

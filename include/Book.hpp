@@ -37,7 +37,7 @@ namespace Module
 			page_size_type getPageSize() { return pageSize; }				// The number of objects in a single page
 			page_size_type getNumPages() { return pageVec.size(); }			// The number of allocated pages
 			
-			size_type size() { return usedSize; }
+			size_type size() const { return usedSize; }
 			size_type capacity() { return (size_type)pageSize * pageVec.size(); }
 			
 			void push_back(const T& newVal);
@@ -69,6 +69,14 @@ Module::Book<T>::~Book()
 
 template <class T>
 T& Module::Book<T>::get(size_type index)
+{
+	page_size_type page = index / pageSize;			// The page to read from
+	page_size_type pageIndex = index % pageSize;	// The index in that page to return
+	return pageVec[page][pageIndex];
+}
+
+template <class T>
+const T& Module::Book<T>::get(size_type index) const
 {
 	page_size_type page = index / pageSize;			// The page to read from
 	page_size_type pageIndex = index % pageSize;	// The index in that page to return

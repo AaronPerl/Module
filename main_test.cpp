@@ -75,15 +75,16 @@ int main(int argc, char ** argv)
 	graphics.setCamera(camera);
 	
 	// AUDIO TESTS
-	Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
+	//Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
 	Module::SoundClip* musicClip = audio.loadSoundClip("chopinScherzo","sounds/chopin_scherzo.wav");
-	audio.playSound(boilClip,1.0f,0.1f);
-	audio.playSound(musicClip,1.0f,1.0f);
+	//audio.playSound(boilClip,1.0f,0.1f);
+	Module::Sound* music = audio.playSound(musicClip,1.0f,1.0f);
 	audio.debugAudio();
 	
 	signal(SIGINT, sigterm_handler);
 	
 	unsigned long millisStart = game.getMilliseconds();
+	bool temp = false;
 	
 	while (game.isRunning())
 	{
@@ -91,6 +92,16 @@ int main(int argc, char ** argv)
 		for (unsigned int i = 0; i < objects.size(); i++)
 		{
 			objects[i]->setRotation(Module::Quaternion(Module::Vector3(0,1,0), std::sin(2 * 3.1415926535 * millis / 1000.0f) + (2 * 3.141592f * i / teapots)));
+		}
+		if(temp == false && millis >= 3000 && millis < 4000)
+		{
+			music->pause();
+			temp = true;
+		}
+		if(temp == true && millis >= 4000)
+		{
+			music->resume();
+			temp = false;
 		}
 	}
 	

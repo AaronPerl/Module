@@ -3,32 +3,38 @@
 
 using namespace Module;
 
+// Starts the thread for run.
 void AudioInterface::start()
 {
 	game->startThread(this);
 }
+// Overrides ThreadObject::run()
 void AudioInterface::run()
 {
 	setDevice();
 	setListener(NULL);
 }
+// Sets the frequency
 void AudioInterface::setFrequency(SoundClip* soundClip, unsigned int frequency)
 {
 	soundClip->setFrequency(frequency);
 }
+// Plays a Sound
 Sound* AudioInterface::playSound(SoundClip* clip)
 {
 	if(clip)
 	{
-		std::cout << "[AudioInterface] Playing sound from data named \"" << clip->getName() << "\"." << std::endl;
+		#ifdef DEBUG
+		std::cerr << "[AudioInterface] Now playing the Sound: " << clip->getName() << std::endl;
+		#endif
 		sounds.push_back(Sound(clip,this));
-		sounds.back().replay();
 	}
 	else
 	{
+		#ifdef DEBUG
 		std::cerr << "[AudioInterface] This SoundClip is NULL!" << std::endl;
-	}
-	return &sounds.back();
+		#endif
+	}	return &sounds.back();
 }
 SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::string& fileName)
 {
@@ -36,7 +42,9 @@ SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::str
 	{
 		if(clips[i].getName() == name)
 		{
+			#ifdef DEBUG
 			std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+			#endif
 			return NULL;
 		}
 	}
@@ -45,6 +53,7 @@ SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::str
 }
 void AudioInterface::debugAudio()
 {
+	#ifdef DEBUG
 	std::cout << "[AudioInterface] Sound Collection (" << sounds.size() << "):" << std::endl;
 	for(unsigned int i = 0; i < clips.size(); ++i)
 	{
@@ -55,4 +64,5 @@ void AudioInterface::debugAudio()
 	{
 		std::cout << "                  " << i+1 << ") " << sounds[i].getName() << std::endl;
 	}
+	#endif
 }
