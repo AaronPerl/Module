@@ -47,24 +47,24 @@ class AudioInterface : ThreadObject
 		virtual void pauseSound(Sound*) = 0;		// Pauses a Sound
 		virtual void stopSound(Sound*) = 0;			// Stops a Sound
 		virtual void setDevice() = 0;				// Sets the device
-		virtual void setListener(GameObject*) = 0;	// Sets the listener object
+		virtual void setListener(GameObject*) = 0;	// Sets the listener GameObject
 		
 		// IMPLEMENT THESE FOR SOUNDCLIPS
 		virtual void setFrequency(SoundClip*, unsigned int);	// Sets the frequency
 		
 	public:
 		// CONSTRUCTOR
-		AudioInterface(){}	// Necessary evil
-		
-		// DEBUG FUNCTIONS
-		void debugAudio();	// A function for debugging the sound collection
+		AudioInterface(){}	// A blank constructor
 		
 		// IMPLEMENT THESE
 		virtual Sound* playSound(SoundClip*);						// Plays a Sound
 		virtual Sound* playSound(SoundClip*, float, float) = 0;		// Plays a Sound
 		virtual SoundClip* loadSoundClip(const std::string&, 
 										 const std::string&);		// Loads SoundClip
-		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip		
+		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip
+		
+		// DEBUG FUNCTIONS
+		void debugAudio();	// A function for debugging the sound collection
 };
 
 }

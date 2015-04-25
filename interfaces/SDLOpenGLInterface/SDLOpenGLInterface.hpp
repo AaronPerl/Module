@@ -22,6 +22,8 @@
 #include <windows.h>
 #endif
 
+#undef APIENTRY
+
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>

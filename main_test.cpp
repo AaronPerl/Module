@@ -60,20 +60,32 @@ int main(int argc, char ** argv)
 	graphics.setCamera(camera);
 	
 	// AUDIO TESTS
-	Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
+	//Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
 	Module::SoundClip* musicClip = audio.loadSoundClip("chopinScherzo","sounds/chopin_scherzo.wav");
-	audio.playSound(boilClip,1.0f,0.1f);
-	audio.playSound(musicClip,1.0f,1.0f);
+	//audio.playSound(boilClip,1.0f,0.1f);
+	Module::Sound* music = audio.playSound(musicClip,1.0f,1.0f);
 	audio.debugAudio();
 	
 	signal(SIGINT, sigterm_handler);
 	
 	unsigned long millisStart = game.getMilliseconds();
+	bool temp = false;
 	
 	while (game.isRunning())
 	{
 		unsigned long millis = game.getMilliseconds() - millisStart;
 		gameobj->setRotation(Module::Quaternion(Module::Vector3(0,1,0), millis/1000.0f));
+		
+		if(temp == false && millis >= 3000 && millis < 4000)
+		{
+			music->pause();
+			temp = true;
+		}
+		if(temp == true && millis >= 4000)
+		{
+			music->resume();
+			temp = false;
+		}
 	}
 	
 	return 0;
