@@ -46,17 +46,32 @@ int main(int argc, char ** argv)
 	game.start();
 	
 	// Create a game object
-	Module::GameObject* gameobj = game.createGameObject();
 	Module::GameObject* camera = game.createGameObject();
 	
-	camera->setPosition(Module::Vector3(0,1.732f,3));
+	// camera->setPosition(Module::Vector3(0,1.732f,3));
+	camera->setPosition(Module::Vector3(0,15.0f, 0.0f));
 	// camera->setPosition(Module::Vector3(0,0,3));
-	camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-3.141592f/6.0f));
+	// camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-3.141592f/4.0f));
+	camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-3.141592f/2.0f));
+	
 	
 	// GRAPHICS TESTS
-	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);
+	int teapots = 10;
+	
+	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);	
 	teapot->setScale(1/60.0f);
-	game.setMesh(gameobj, teapot);
+	
+	std::vector<Module::GameObject*> objects;
+		
+	for (unsigned int i = 0; i < teapots; i++)
+	{
+		float theta = 2 * 3.141592 * i / teapots;
+		Module::GameObject* gameobj = game.createGameObject();
+		game.setMesh(gameobj, teapot);
+		// gameobj->setPosition(Module::Vector3(i * 0.5f, 0.0f, i * 0.0f));
+		gameobj->setPosition(Module::Vector3(6 * std::sin(theta), 0.0f, 6 * std::cos(theta)));
+		objects.push_back(gameobj);
+	}
 	graphics.setCamera(camera);
 	
 	// AUDIO TESTS
@@ -73,7 +88,10 @@ int main(int argc, char ** argv)
 	while (game.isRunning())
 	{
 		unsigned long millis = game.getMilliseconds() - millisStart;
-		gameobj->setRotation(Module::Quaternion(Module::Vector3(0,1,0), millis/1000.0f));
+		for (unsigned int i = 0; i < objects.size(); i++)
+		{
+			objects[i]->setRotation(Module::Quaternion(Module::Vector3(0,1,0), std::sin(2 * 3.1415926535 * millis / 1000.0f) + (2 * 3.141592f * i / teapots)));
+		}
 	}
 	
 	return 0;

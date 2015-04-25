@@ -20,10 +20,11 @@ void GraphicsInterface::run()
 {
 	unsigned long prevTime = getMilliseconds();
 	createWindow();
-	while (1)
+	while (isRunning())
 	{
 		renderFrame();
-		while (getMilliseconds() - prevTime < 1000/fps);
+		// while (getMilliseconds() - prevTime < 1000.0/fps);
+		// prevTime = getMilliseconds();
 	}
 }
 
@@ -40,7 +41,7 @@ Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, unsigne
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
 	}
-	allMeshes.push_back(Mesh(&allVertices, &allNormals, firstIndex, firstIndex, num_vertices, name));
+	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, firstIndex, firstIndex, num_vertices, name));
 	return &allMeshes.back();
 }
 
@@ -56,7 +57,7 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
 	}
-	allMeshes.push_back(Mesh(&allVertices, &allNormals, firstIndex, firstIndex, vertices.size(), name));
+	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, firstIndex, firstIndex, vertices.size(), name));
 	return &allMeshes.back();
 }
 

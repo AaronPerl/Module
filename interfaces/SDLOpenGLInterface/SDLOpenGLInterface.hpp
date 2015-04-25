@@ -43,6 +43,8 @@ namespace Module
 			unsigned int fShader;
 			//unsigned int gShader;
 			unsigned int program;
+			unsigned int frames;
+			unsigned long prevMillis;
 			bool running;
 			bool terminated;
 	

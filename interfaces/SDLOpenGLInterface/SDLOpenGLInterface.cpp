@@ -1,7 +1,7 @@
 #include "SDLOpenGLInterface.hpp"
 
 Module::SDLOpenGLInterface::SDLOpenGLInterface() : 
-	window(0), context(0), vShader(0), fShader(0), program(0), running(false), terminated(false)
+	window(0), context(0), vShader(0), fShader(0), program(0), frames(0), prevMillis(0), running(false), terminated(false)
 {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -122,8 +122,9 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	window = SDL_CreateWindow("SDL Program",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
 	context = SDL_GL_CreateContext(window);
-    if (SDL_GL_SetSwapInterval(-1)==-1) // TODO change this to -1 for release
-    	SDL_GL_SetSwapInterval(1);
+    // if (SDL_GL_SetSwapInterval(-1)==-1) // TODO change this to -1 for release
+		// SDL_GL_SetSwapInterval(1);
+    SDL_GL_SetSwapInterval(0);
     glClearColor(0,0,0,1);
     glClear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_CULL_FACE);
@@ -133,6 +134,7 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
     }
     setupShaders();
     SDL_GL_SwapWindow(window);
+	prevMillis = getMilliseconds();
 }
 
 void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
@@ -310,21 +312,31 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 
 void Module::SDLOpenGLInterface::renderFrame()
 {
-	
-	// SDL stuff
-
-	SDL_Event event;
-	SDL_PumpEvents();
-
-	if (SDL_PollEvent(&event))
+	frames++;
+	if (getMilliseconds() - prevMillis > 5000)
 	{
-		switch (event.type)
+		std::cout << "[GraphicsInterface] FPS: " << (frames/5.0f) << std::endl;
+		prevMillis = getMilliseconds();
+		frames = 0;
+	}
+	
+	//	SDL stuff
+
+	if (frames % 5 == 0)
+	{
+		SDL_Event event;
+		SDL_PumpEvents();
+
+		while (SDL_PollEvent(&event))
 		{
-			case SDL_QUIT:
-				std::cout << "SDL Program closed!" << std::endl;
-				terminate();
-				running = false;
-				break;
+			switch (event.type)
+			{
+				case SDL_QUIT:
+					std::cout << "SDL Program closed!" << std::endl;
+					terminate();
+					running = false;
+					break;
+			}
 		}
 	}
 	
@@ -387,6 +399,8 @@ void Module::SDLOpenGLInterface::renderFrame()
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	
+	// std::cout << "[GraphicsInterface] NumObjects = " << game->numObjects() << std::endl;
+		
 	for (Book<GameObject>::size_type i = 0; i < game->numObjects(); i++)
 	{
 		GLuint vertexVBO = 0;
@@ -396,19 +410,17 @@ void Module::SDLOpenGLInterface::renderFrame()
 		Vector3 curPos = curObj->getPosition();
 		Quaternion curRot = curObj->getRotation();
 		if (curMesh == NULL) // Nothing to see here, literally (no mesh)
-			continue;
-		for (Book<Mesh>::size_type j = 0; j < allMeshes.size(); j++) // find the index of this mesh, TODO make better
 		{
-			if (&allMeshes[j] == curMesh)
-			{
-				vertexVBO = vertexBuffers[2*j+0];
-				normalVBO = vertexBuffers[2*j+1];
-				break;
-			}
+			// std::cout << "[GraphicsInterface] No mesh, skipping GameObject" << std::endl;
+			continue;
 		}
+		
+		vertexVBO = vertexBuffers[2 * curMesh->getIndex() + 0];
+		normalVBO = vertexBuffers[2 * curMesh->getIndex() + 1];
 		
 		if (vertexVBO == 0 || normalVBO == 0) // This mesh is not in our book/invalid or the buffer for this mesh hasn't been generated yet
 		{
+			// std::cout << "[GraphicsInterface] No VBOs found" << std::endl;
 			continue;
 		}
 		
@@ -433,6 +445,6 @@ void Module::SDLOpenGLInterface::renderFrame()
 		
 		glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
 		
-		SDL_GL_SwapWindow(window);
 	}
+	SDL_GL_SwapWindow(window);
 }
