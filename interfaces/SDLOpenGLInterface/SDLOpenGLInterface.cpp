@@ -176,6 +176,15 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
+	// get locations of uniforms
+	vloc = 	glGetUniformLocation(program, "view_matrix");
+	// mloc = 	glGetUniformLocation(program, "model_matrix");
+	prloc = 	glGetUniformLocation(program, "projection_matrix");
+	// mvploc = glGetUniformLocation(program, "mvp_matrix");
+	// nmloc = 	glGetUniformLocation(program, "norm_matrix");
+	eploc = 	glGetUniformLocation(program, "eye_position");
+	enloc = 	glGetUniformLocation(program, "eye_normal");
+	
 	vertexBuffers.push_back(vertexVBO);
 	vertexBuffers.push_back(normalVBO);
 }
@@ -381,15 +390,6 @@ void Module::SDLOpenGLInterface::renderFrame()
 										glm::vec3(upVec.getX(),		upVec.getY(),		upVec.getZ())	);
 	
 	glUseProgram(program);
-	
-	// get locations of uniforms
-	GLuint vloc = 	glGetUniformLocation(program, "view_matrix");
-	// GLuint mloc = 	glGetUniformLocation(program, "model_matrix");
-	GLuint prloc = 	glGetUniformLocation(program, "projection_matrix");
-	// GLuint mvploc = glGetUniformLocation(program, "mvp_matrix");
-	// GLuint nmloc = 	glGetUniformLocation(program, "norm_matrix");
-	GLuint eploc = 	glGetUniformLocation(program, "eye_position");
-	GLuint enloc = 	glGetUniformLocation(program, "eye_normal");
 	
 	// pass uniforms
 	glUniformMatrix4fv(vloc,1,GL_FALSE,&viewMat[0][0]);

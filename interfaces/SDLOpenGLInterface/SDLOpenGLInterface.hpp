@@ -44,6 +44,13 @@ namespace Module
 			GLuint batchModelVBO;
 			GLuint batchMVPVBO;
 			GLuint batchNormalVBO;
+			GLuint vloc;
+			// GLuint mloc;
+			GLuint prloc;
+			// GLuint mvploc;
+			// GLuint nmloc;
+			GLuint eploc;
+			GLuint enloc;
 			
 			SDL_Window *window;
 			SDL_GLContext context;
