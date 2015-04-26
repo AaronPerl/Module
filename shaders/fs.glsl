@@ -2,9 +2,9 @@
 
 uniform mat4       view_matrix;
 uniform mat4 projection_matrix;
-uniform mat4      model_matrix;
-uniform mat4        mvp_matrix;
-uniform mat4	   norm_matrix;
+//uniform mat4      model_matrix;
+//uniform mat4        mvp_matrix;
+//uniform mat4	   norm_matrix;
 uniform vec4	  eye_position;
 uniform vec4		eye_normal;
 
@@ -57,5 +57,5 @@ void main()
 	gl_FragColor = 	scene_ambient * frontMaterial.ambient +
 					diffFactor * frontMaterial.diffuse 	* vec4(light0.diffuse,1) + 
 					specFactor * frontMaterial.specular * vec4(light0.specular,1);
-	//gl_FragColor = vec4(1,0,0,1);
+	// gl_FragColor = vec4(1,0,0,1);
 }

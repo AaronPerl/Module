@@ -13,8 +13,8 @@ class Mesh;
 
 // One of the core classes in Module. The GameObject represents any object in the game world (though not terrain).
 // Being that Module is a component-based engine, the GameObject class can have contain of many different components.
-// At the current moment, this list is finite and hard-coded, being represented by pointers to objects. In the future,
-// with the addition of an extension system, this list could be joined with a dynamic container of generic components used by extensions.
+// At the current moment, this list is finite and hard-coded, being represented by pointers to objects. In the future, with the
+// addition of an extension system, this list will be supplemented with a dynamic container of generic components to be used by extensions.
 class GameObject {
 protected:
 	TransformObject* tObj;

@@ -4,3 +4,5 @@ main_test.exe
 main_test
 *.o
 *.a
+logs/*
+main_test.exe.stackdump

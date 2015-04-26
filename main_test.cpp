@@ -56,10 +56,10 @@ int main(int argc, char ** argv)
 	
 	
 	// GRAPHICS TESTS
-	int teapots = 10;
+	int teapots = 10000;
 	
-	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);	
-	teapot->setScale(1/60.0f);
+	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/cube.obj", false);	
+	teapot->setScale(1/1.0f);
 	
 	std::vector<Module::GameObject*> objects;
 		
@@ -89,9 +89,10 @@ int main(int argc, char ** argv)
 	while (game.isRunning())
 	{
 		unsigned long millis = game.getMilliseconds() - millisStart;
+		float baseRot = std::sin(2 * 3.1415926535 * millis / 1000.0f);
 		for (unsigned int i = 0; i < objects.size(); i++)
 		{
-			objects[i]->setRotation(Module::Quaternion(Module::Vector3(0,1,0), std::sin(2 * 3.1415926535 * millis / 1000.0f) + (2 * 3.141592f * i / teapots)));
+			objects[i]->setRotation(Module::Quaternion(Module::Vector3(0,1,0), baseRot + (2 * 3.141592f * i / teapots)));
 		}
 		if(temp == false && millis >= 3000 && millis < 4000)
 		{

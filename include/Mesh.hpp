@@ -31,19 +31,20 @@ private:
 	float scale; // scalar to multiply all vertices by for rendering, etc.
 	std::string name;
 	Mesh() :
-		selfIndex(0), vertexBook(0), normalBook(0), vertexIndex(0), normalIndex(0), numVertices(0), scale(1.0f), name("") {}
+			selfIndex(0), vertexBook(0), normalBook(0), vertexIndex(0), normalIndex(0), numVertices(0), scale(1.0f), name("") {}
 	Mesh(Book<Mesh>::size_type index, Book<float>* vb, Book<float>* nb, 
 		 Book<int>::size_type vi, Book<int>::size_type ni,
 		 unsigned int num, std::string meshName) : 
 			selfIndex(index), vertexBook(vb), normalBook(nb), vertexIndex(vi), normalIndex(ni),
 			numVertices(num), scale(1.0f), name(meshName) {}
 public:
-	Book<Mesh>::size_type getIndex() 		const { return selfIndex; }
-	Vector3 getVertex(unsigned int i) 		const { return Vector3((*vertexBook)[vertexIndex + 3 * i], (*vertexBook)[vertexIndex + 3 * i + 1], (*vertexBook)[vertexIndex + 3 * i + 2]); }
-	Vector3 getNormal(unsigned int i) 		const { return Vector3((*normalBook)[normalIndex + 3 * i], (*normalBook)[normalIndex + 3 * i + 1], (*normalBook)[normalIndex + 3 * i + 2]); }
-	Book<int>::size_type getNumVertices() 	const { return numVertices; }
-	float getScale() 						const { return scale; }
-	void setScale(float newScale) { scale = newScale; }
+	Book<Mesh>::size_type getIndex() 				const { return selfIndex; }
+	const std::vector<GameObject*>& getInstances() 	const { return instances; }
+	Vector3 getVertex(unsigned int i) 				const { return Vector3((*vertexBook)[vertexIndex + 3 * i], (*vertexBook)[vertexIndex + 3 * i + 1], (*vertexBook)[vertexIndex + 3 * i + 2]); }
+	Vector3 getNormal(unsigned int i) 				const { return Vector3((*normalBook)[normalIndex + 3 * i], (*normalBook)[normalIndex + 3 * i + 1], (*normalBook)[normalIndex + 3 * i + 2]); }
+	Book<int>::size_type getNumVertices() 			const { return numVertices; }
+	float getScale() 								const { return scale; }
+	void setScale(float newScale) 						  { scale = newScale; }
 	
 	friend class GraphicsInterface;
 	friend class Book<Mesh>;

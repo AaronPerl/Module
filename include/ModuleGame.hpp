@@ -39,7 +39,7 @@ public:
 	Mutex* createMutex() { return threading->createMutex(); }
 	
 	// Graphics
-	void setMesh(GameObject* obj, Mesh* mesh) { obj->mesh = mesh; }
+	void setMesh(GameObject* obj, Mesh* m);
 	unsigned long getMilliseconds() { return graphics->getMilliseconds(); }
 };
 

@@ -28,6 +28,13 @@ void GraphicsInterface::run()
 	}
 }
 
+void GraphicsInterface::addObject(GameObject* obj, Mesh* m)
+{
+	if (obj->getMesh() != NULL)
+		std::remove(obj->getMesh()->instances.begin(), obj->getMesh()->instances.end(), obj);
+	m->instances.push_back(obj);
+}
+
 Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name)
 {
 	assert(num_vertices);

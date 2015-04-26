@@ -125,13 +125,19 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
     // if (SDL_GL_SetSwapInterval(-1)==-1) // TODO change this to -1 for release
 		// SDL_GL_SetSwapInterval(1);
     SDL_GL_SetSwapInterval(0);
-    glClearColor(0,0,0,1);
-    glClear(GL_COLOR_BUFFER_BIT);
-	glDisable(GL_CULL_FACE);
     if (glewInit())
     {
     	throw std::runtime_error("[GraphicsInterface] : glew : Error initializing glew!");
     }
+    
+	glClearColor(0,0,0,1);
+    glClear(GL_COLOR_BUFFER_BIT);
+	glDisable(GL_CULL_FACE);
+	
+	glGenBuffers(1, &batchModelVBO);
+	glGenBuffers(1, &batchMVPVBO);
+	glGenBuffers(1, &batchNormalVBO);
+	
     setupShaders();
     SDL_GL_SwapWindow(window);
 	prevMillis = getMilliseconds();
@@ -146,7 +152,6 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	glGenBuffers(1, &normalVBO);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
-	//glBufferStorage(GL_ARRAY_BUFFER, mesh->getNumVertices() * 3 * sizeof(float), NULL, GL_DYNAMIC_STORAGE_BIT);
 	glBufferData(GL_ARRAY_BUFFER, mesh->getNumVertices() * 3 * sizeof(float), NULL, GL_STATIC_DRAW); // allocate buffer
 	buffer = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	for (unsigned int i = 0; i < mesh->getNumVertices(); i++)
@@ -159,7 +164,6 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	glUnmapBuffer(GL_ARRAY_BUFFER);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
-	//glBufferStorage(GL_ARRAY_BUFFER, mesh->getNumVertices() * sizeof(float), NULL, GL_DYNAMIC_STORAGE_BIT);
 	glBufferData(GL_ARRAY_BUFFER, mesh->getNumVertices() * 3 * sizeof(float), NULL, GL_STATIC_DRAW); // allocate buffer
 	buffer = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 	for (unsigned int i = 0; i < mesh->getNumVertices(); i++)
@@ -313,9 +317,9 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 void Module::SDLOpenGLInterface::renderFrame()
 {
 	frames++;
-	if (getMilliseconds() - prevMillis > 5000)
+	if (getMilliseconds() - prevMillis > 1000)
 	{
-		std::cout << "[GraphicsInterface] FPS: " << (frames/5.0f) << std::endl;
+		std::cout << "[GraphicsInterface] FPS: " << (frames/1.0f) << std::endl;
 		prevMillis = getMilliseconds();
 		frames = 0;
 	}
@@ -375,18 +379,15 @@ void Module::SDLOpenGLInterface::renderFrame()
 	glm::mat4 viewMat = glm::lookAt(	glm::vec3(cameraPos.getX(),	cameraPos.getY(),	cameraPos.getZ()),
 										glm::vec3(lookAt.getX(),	lookAt.getY(),		lookAt.getZ()	),
 										glm::vec3(upVec.getX(),		upVec.getY(),		upVec.getZ())	);
-										
-	// model matrix
-	glm::mat4 modelMat;
 	
 	glUseProgram(program);
 	
 	// get locations of uniforms
 	GLuint vloc = 	glGetUniformLocation(program, "view_matrix");
-	GLuint mloc = 	glGetUniformLocation(program, "model_matrix");
+	// GLuint mloc = 	glGetUniformLocation(program, "model_matrix");
 	GLuint prloc = 	glGetUniformLocation(program, "projection_matrix");
-	GLuint mvploc = glGetUniformLocation(program, "mvp_matrix");
-	GLuint nmloc = 	glGetUniformLocation(program, "norm_matrix");
+	// GLuint mvploc = glGetUniformLocation(program, "mvp_matrix");
+	// GLuint nmloc = 	glGetUniformLocation(program, "norm_matrix");
 	GLuint eploc = 	glGetUniformLocation(program, "eye_position");
 	GLuint enloc = 	glGetUniformLocation(program, "eye_normal");
 	
@@ -396,24 +397,34 @@ void Module::SDLOpenGLInterface::renderFrame()
 	glUniform4fv(eploc,1,&viewMat[3][0]);
 	glUniform4fv(enloc,1,&viewMat[2][0]);
 	
+	// std::cout << "[GraphicsInterface] Enabling vertex attribute arrays" << std::endl;
+	
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	
+	for (unsigned int i = 0; i < 4; i++)
+	{
+			// Enable it
+			glEnableVertexAttribArray(2 + i);
+			glEnableVertexAttribArray(6 + i);
+			glEnableVertexAttribArray(10 + i);
+			// Make it instanced
+			glVertexAttribDivisor(2 + i, 1);
+			glVertexAttribDivisor(6 + i, 1);
+			glVertexAttribDivisor(10 + i, 1);
+	}
+	
 	// std::cout << "[GraphicsInterface] NumObjects = " << game->numObjects() << std::endl;
+	// std::cout << "[GraphicsInterface] Drawing meshes" << std::endl;
 		
-	for (Book<GameObject>::size_type i = 0; i < game->numObjects(); i++)
+	for (Book<Mesh>::size_type i = 0; i < allMeshes.size(); i++)
 	{
 		GLuint vertexVBO = 0;
 		GLuint normalVBO = 0;
-		GameObject* curObj = game->getGameObject(i);
-		Mesh* curMesh = curObj->getMesh();
-		Vector3 curPos = curObj->getPosition();
-		Quaternion curRot = curObj->getRotation();
+		Mesh* curMesh = &allMeshes[i];
+		
 		if (curMesh == NULL) // Nothing to see here, literally (no mesh)
-		{
-			// std::cout << "[GraphicsInterface] No mesh, skipping GameObject" << std::endl;
 			continue;
-		}
 		
 		vertexVBO = vertexBuffers[2 * curMesh->getIndex() + 0];
 		normalVBO = vertexBuffers[2 * curMesh->getIndex() + 1];
@@ -424,26 +435,81 @@ void Module::SDLOpenGLInterface::renderFrame()
 			continue;
 		}
 		
-		modelMat = 	glm::translate(	glm::mat4(1.0f),	glm::vec3(curPos.getX(), curPos.getY(), curPos.getZ())					)*
-					glm::toMat4(	glm::quat(curRot.getW(), curRot.getX(), curRot.getY(), curRot.getZ())						)*
-					glm::scale(		glm::mat4(1.0f),	glm::vec3(curMesh->getScale(),curMesh->getScale(),curMesh->getScale())	);
+		glm::mat4 meshScale = glm::scale(glm::mat4(1.0f),	glm::vec3(curMesh->getScale(), curMesh->getScale(), curMesh->getScale()));
 		
-		// modelview projection matrix
-		glm::mat4 mvp = projectionMat * viewMat * modelMat;
-		// normal matrix (inverse transpose of model matrix)
-		glm::mat4 normMat = glm::transpose(glm::inverse(modelMat));
+		const std::vector<GameObject*>& instances = curMesh->getInstances();
 		
-		glUniformMatrix4fv(mloc,1,GL_FALSE,&modelMat[0][0]);
-		glUniformMatrix4fv(mvploc,1,GL_FALSE,&mvp[0][0]);
-		glUniformMatrix4fv(nmloc,1,GL_FALSE,&normMat[0][0]);
+		glm::mat4* modelMats 	= new glm::mat4[instances.size()];
+		// glm::mat4* mvpMats 		= new glm::mat4[instances.size()];
+		glm::mat4* normalMats 	= new glm::mat4[instances.size()];
 		
+		// std::cout << "[GraphicsInterface] Constructing model matrices" << std::endl;
+		
+		for (std::vector<GameObject*>::size_type j = 0; j < instances.size(); j++)
+		{
+			const Vector3& curPos = instances[j]->getPosition();
+			const Quaternion& curRot = instances[j]->getRotation();
+			// model matrix
+			modelMats[j] = 	glm::translate(	glm::mat4(1.0f),	glm::vec3(curPos.getX(), curPos.getY(), curPos.getZ())	)*
+							glm::toMat4(	glm::quat(curRot.getW(), curRot.getX(), curRot.getY(), curRot.getZ())		)*
+							meshScale;
+			
+			// modelview projection matrix
+			// mvpMats[j] = projectionMat * viewMat * modelMats[j];
+			
+			// normal matrix (inverse transpose of model matrix)
+			normalMats[j] = glm::transpose(glm::inverse(modelMats[j]));
+		}
+				
 		glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		
-		glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
+		glBindBuffer(GL_ARRAY_BUFFER, batchModelVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instances.size(), modelMats, GL_STATIC_DRAW);
+		
+		for (int i = 0; i < 4; i++)
+		{
+			// Set up the vertex attribute
+			glVertexAttribPointer(2 + i,              // Location
+								  4, GL_FLOAT, GL_FALSE,       // vec4
+								  sizeof(glm::mat4),                // Stride
+								  (void *)(sizeof(glm::vec4) * i)); // Start offset
+		}
+		
+		// glBindBuffer(GL_ARRAY_BUFFER, batchNormalVBO);
+		// glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instances.size(), mvpMats, GL_STATIC_DRAW);
+		
+		// for (int i = 0; i < 4; i++)
+		// {
+			// // Set up the vertex attribute
+			// glVertexAttribPointer(6 + i,              // Location
+								  // 4, GL_FLOAT, GL_FALSE,       // vec4
+								  // sizeof(glm::mat4),                // Stride
+								  // (void *)(sizeof(glm::vec4) * i)); // Start offset
+		// }
+		
+		glBindBuffer(GL_ARRAY_BUFFER, batchMVPVBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(glm::mat4) * instances.size(), normalMats, GL_STATIC_DRAW);
+		
+		for (int i = 0; i < 4; i++)
+		{
+			// Set up the vertex attribute
+			glVertexAttribPointer(10 + i,              // Location
+								  4, GL_FLOAT, GL_FALSE,       // vec4
+								  sizeof(glm::mat4),                // Stride
+								  (void *)(sizeof(glm::vec4) * i)); // Start offset
+		}
+		
+		delete[] modelMats;
+		// delete[] mvpMats;
+		delete[] normalMats;
+		
+		// std::cout << "[GraphicsInterface] Drawing instances" << std::endl;
+		
+		glDrawArraysInstanced(GL_TRIANGLES, 0, curMesh->getNumVertices(), instances.size());
 		
 	}
 	SDL_GL_SwapWindow(window);

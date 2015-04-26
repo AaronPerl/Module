@@ -7,6 +7,7 @@
 #include "Vector3.hpp"
 #include <string>
 #include <vector>
+#include <algorithm>
 
 namespace Module
 {
@@ -42,6 +43,7 @@ namespace Module
 			unsigned int getVertexIndex(Mesh* m) { return m->vertexIndex; }
 			unsigned int getNormalIndex(Mesh* m) { return m->normalIndex; }
 			unsigned int getNumVertices(Mesh* m) { return m->numVertices; }
+			void addObject(GameObject* obj, Mesh* m); // Adds an object to a mesh's instances array, removing it from the previous mesh's if it exists
 			
 		public:
 			GraphicsInterface();

@@ -48,3 +48,9 @@ bool Module::ModuleGame::isRunning()
 	assert(graphics!=0);
 	return graphics->isRunning();
 }
+
+void Module::ModuleGame::setMesh(Module::GameObject* obj, Module::Mesh* m)
+{
+	graphics->addObject(obj, m);
+	obj->mesh = m;
+}

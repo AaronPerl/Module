@@ -4,14 +4,17 @@
 
 uniform mat4       view_matrix;
 uniform mat4 projection_matrix;
-uniform mat4      model_matrix;
-uniform mat4        mvp_matrix;
-uniform mat4	   norm_matrix;
+//uniform mat4      model_matrix;
+//uniform mat4        mvp_matrix;
+//uniform mat4	   norm_matrix;
 uniform vec4	  eye_position;
 uniform vec4		eye_normal;
 
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec4 normal;
+layout (location = 2) in mat4 model_matrix;
+// layout (location = 6) in mat4 mvp_matrix;
+layout (location = 10) in mat4 norm_matrix;
 
 out vec4 varyingPosition;
 out vec4 varyingNormal;
@@ -30,10 +33,13 @@ mat4 rotationMatrix(vec3 axis, float angle)
 
 void main()
 {
+	mat4 mvp_matrix = projection_matrix * view_matrix * model_matrix;
+	// mat4 norm_matrix = transpose(inverse(model_matrix));
 	vec4 tempPos = mvp_matrix * position;
     //gl_Position = tempPos*rotationMatrix(vec3(0,0,1),0.7*sqrt(tempPos.x*tempPos.x+tempPos.y*tempPos.y)); //twist
     //gl_Position = tempPos + .5*vec4(0,cos(tempPos.x*3),0,0); //dali
     gl_Position = tempPos;
     varyingPosition = model_matrix * position;
+    // varyingNormal = norm_matrix*normal;
     varyingNormal = normalize(norm_matrix*normal);
 }

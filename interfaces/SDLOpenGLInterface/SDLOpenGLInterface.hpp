@@ -8,6 +8,7 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
+#include <vector>
 
 // Module includes
 #include <ModuleGame.hpp>
@@ -37,7 +38,12 @@ namespace Module
 	class SDLOpenGLInterface : public GraphicsInterface
 	{
 		protected:
+			const static int MAX_INSTANCED_VERTICES 	= 1000;	// Maximum number of vertices in a Mesh to use instanced rendering
+			const static int MIN_INSTANCED_COUNT 		= 2000;	// Minimum number of instances of a Mesh to use instanced rendering
 			Book<GLuint> vertexBuffers;
+			GLuint batchModelVBO;
+			GLuint batchMVPVBO;
+			GLuint batchNormalVBO;
 			
 			SDL_Window *window;
 			SDL_GLContext context;

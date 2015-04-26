@@ -119,7 +119,7 @@ depends: $(FULL_DEPS)
 interfaces: $(INTERFACE_LIBS)
 
 .PHONY: test
-test: 64bit interfaces
+test: main_test.cpp 64bit interfaces
 	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
 
 .PHONY: clean
