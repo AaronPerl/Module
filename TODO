@@ -1,0 +1,15 @@
+Click Handlers:
+	Priority based (lower values are called first)
+	If a click handler returns true, the event was processed
+		Otherwise, continue by calling the next click handler by order of priority
+
+Rendering polygons
+	Polygon containers allowing for both textured and non-textured polygons
+	Clipping edges for polygon containers
+		Rectangular or arbitrary?
+	Origin position for polygon containers
+
+Textures
+	Texture class which has a pointer to a TextureData class
+	TextureData classes are extended by GraphicsInterface implementations
+		Contain implementation-specific texture data (i.e. Texture ID)
