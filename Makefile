@@ -7,7 +7,7 @@ OPENAL_SOFT = lib/openal-soft-1.16.0
 FREEALUT = lib/freealut
 
 #LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
-LIBS 			:= -lalut.dll -lSDL2main -lSDL2
+LIBS 			:= -lalut -lSDL2main -lSDL2
 LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include
 LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include
 LIB_PATHS		:= -L$(FREEALUT)/lib
