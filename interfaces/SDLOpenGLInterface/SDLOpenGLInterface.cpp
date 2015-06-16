@@ -176,6 +176,19 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	vertexBuffers.push_back(normalVBO);
 }
 
+std::vector<std::string> split(const std::string& toSplit)
+{
+	std::vector<std::string> retval;
+	int curPos = toSplit.find_first_not_of(" ", 0);
+	while (curPos != std::string::npos)
+	{
+		int nextPos = toSplit.find_first_of(" ", curPos);
+		retval.push_back(toSplit.substr(curPos, nextPos - curPos));
+		curPos = toSplit.find_first_not_of(" ", nextPos);
+	}
+	return retval;
+}
+
 Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces)
 {
 	std::cout << "[GraphicsInterface] Loading mesh [" << meshname << "] from file: " << filename << std::endl;
@@ -233,13 +246,27 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 			} //endif vn
 			else if (element == "f")
 			{
-				for (unsigned short i = 0; i < 3; i++)
+				char curLine[256];
+				modelFile.getline(curLine, 256);
+				if (modelFile.fail())
 				{
-					std::string indexStr;
-					modelFile >> indexStr;
+					std::cerr << "[GraphicsInterface]   File line too long" << std::endl;
+					return NULL;
+				}
+				unsigned int numVertices = 0;
+				std::vector<std::string> tokens = split(curLine);
+				if (tokens.size() < 3)
+				{
+					std::cerr << "[GraphicsInterface]   Not enough vertices in face!" << std::endl;
+					return NULL;
+				}
+				for (unsigned short i = 0; i < tokens.size(); i++)
+				{
+					std::string indexStr = tokens[i];
 					std::size_t slashIndex1 = indexStr.find('/');
 					std::size_t slashIndex2 = std::string::npos;
-					if (slashIndex1 != std::string::npos) // f v//n v//n v//n
+					std::cout << indexStr << std::endl;
+					if (slashIndex1 != std::string::npos) // f v//n v//n v//n or f v/t/n v/t/n v/t/n
 					{
 						slashIndex2 = indexStr.find('/', slashIndex1+1);
 						if (slashIndex2 == std::string::npos)
@@ -263,8 +290,22 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 							std::cerr << "[GraphicsInterface]   Unsupported/invalid obj file" << std::endl;
 							return NULL;
 						}
-						vertices.push_back(indexedVertices[vi-1]);
-						normals.push_back(indexedNormals[ni-1]);
+						if (i < 3)
+						{
+							vertices.push_back(indexedVertices[vi-1]);
+							normals.push_back(indexedNormals[ni-1]);
+						}
+						else
+						{
+							unsigned int firstIndex = vertices.size() - i;
+							unsigned int lastIndex = vertices.size() - 1;
+							vertices.push_back(vertices[firstIndex]);
+							vertices.push_back(vertices[lastIndex]);
+							vertices.push_back(indexedVertices[vi-1]);
+							normals.push_back(normals[firstIndex]);
+							normals.push_back(normals[lastIndex]);
+							normals.push_back(indexedNormals[ni-1]);
+						}
 					}
 					else // f v v v
 					{
@@ -281,7 +322,7 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 						vertices.push_back(indexedVertices[vi-1]);
 						normals.push_back(indexedNormals[vi-1]);
 					}
-				} //endfor i from 0 to 3
+				} //endfor i from 0 to tokens.size
 				if (flipFaces)
 				{
 					Vector3 third  = vertices.back();
@@ -299,7 +340,8 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 					normals.push_back(second);
 				}
 			} // endif f
-			modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			if (element != "f")
+				modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 	
