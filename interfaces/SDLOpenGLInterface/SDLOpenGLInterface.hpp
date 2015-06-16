@@ -24,6 +24,8 @@
 
 #undef APIENTRY
 
+#define GLEW_NO_GLU
+
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
