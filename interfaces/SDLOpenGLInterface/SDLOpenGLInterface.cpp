@@ -385,12 +385,13 @@ void Module::SDLOpenGLInterface::renderFrame()
 	int height;
 	
 	SDL_GetWindowSize(window,&width,&height);
+	glViewport(0,0,width,height);
 	
 	// create new VBOs
 	
-	while (allMeshes.size() > vertexBuffers.size()) // make sure any new meshes have buffer objects
+	while (allMeshes.size() * 2 > vertexBuffers.size()) // make sure any new meshes have buffer objects
 	{
-		createVNBuffers(&allMeshes[vertexBuffers.size()]);
+		createVNBuffers(&allMeshes[vertexBuffers.size()/2]);
 	}
 	
 	// OpenGL stuff now
