@@ -265,7 +265,6 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 					std::string indexStr = tokens[i];
 					std::size_t slashIndex1 = indexStr.find('/');
 					std::size_t slashIndex2 = std::string::npos;
-					std::cout << indexStr << std::endl;
 					if (slashIndex1 != std::string::npos) // f v//n v//n v//n or f v/t/n v/t/n v/t/n
 					{
 						slashIndex2 = indexStr.find('/', slashIndex1+1);

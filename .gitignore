@@ -2,6 +2,6 @@ build
 depend
 main_test.exe
 main_test
-*.o
-*.a
+interfaces/*/*.o
+interfaces/*/*.a
 logs/*
