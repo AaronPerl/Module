@@ -43,12 +43,15 @@ namespace Module
 			
 			SDL_Window *window;
 			SDL_GLContext context;
-			unsigned int vShader;
-			unsigned int fShader;
-			//unsigned int gShader;
-			unsigned int program;
-			unsigned int frames;
-			unsigned long prevMillis;
+			GLuint vShader;
+			GLuint fShader;
+			//GLuint gShader;
+			GLuint program;
+			GLuint vShader2D;
+			GLuint fShader2D;
+			GLuint program2D;
+			GLuint frames;
+			GLuint prevMillis;
 			bool running;
 			bool terminated;
 	
@@ -64,7 +67,7 @@ namespace Module
 			void createWindow() { createWindow(800, 600, 60); }
 			void renderFrame();
 			unsigned long getMilliseconds() { return SDL_GetTicks(); }
-			bool isRunning() { return running; }		
+			bool isRunning() { return running; }
 			
 		public:
 			SDLOpenGLInterface();

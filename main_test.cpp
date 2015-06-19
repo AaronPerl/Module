@@ -52,11 +52,11 @@ int main(int argc, char ** argv)
 	camera->setPosition(Module::Vector3(0,15.0f, 0.0f));
 	// camera->setPosition(Module::Vector3(0,0,3));
 	// camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-3.141592f/4.0f));
-	camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-3.141592f/2.0f));
+	camera->setRotation(Module::Quaternion(Module::Vector3(1,0,0),	-MATH_PI/2.0f));
 	
 	
 	// GRAPHICS TESTS
-	int teapots = 10;
+	unsigned int teapots = 10;
 	
 	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);	
 	teapot->setScale(1/60.0f);
@@ -65,7 +65,7 @@ int main(int argc, char ** argv)
 		
 	for (unsigned int i = 0; i < teapots; i++)
 	{
-		float theta = 2 * 3.141592 * i / teapots;
+		float theta = 2 * MATH_PI * i / teapots;
 		Module::GameObject* gameobj = game.createGameObject();
 		game.setMesh(gameobj, teapot);
 		// gameobj->setPosition(Module::Vector3(i * 0.5f, 0.0f, i * 0.0f));
@@ -91,7 +91,7 @@ int main(int argc, char ** argv)
 		unsigned long millis = game.getMilliseconds() - millisStart;
 		for (unsigned int i = 0; i < objects.size(); i++)
 		{
-			objects[i]->setRotation(Module::Quaternion(Module::Vector3(0,1,0), std::sin(2 * 3.1415926535 * millis / 1000.0f) + (2 * 3.141592f * i / teapots)));
+			objects[i]->setRotation(Module::Quaternion(Module::Vector3(0,1,0), std::sin(2 * MATH_PI * millis / 1000.0f) + (2 * MATH_PI * i / teapots)));
 		}
 		if(temp == false && millis >= 3000 && millis < 4000)
 		{
