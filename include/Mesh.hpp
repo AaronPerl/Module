@@ -69,14 +69,14 @@ inline void Mesh::setScale(float newScale)
 	scale = newScale;
 }
 
-Vector3 Mesh::getVertex(unsigned int i) const
+inline Vector3 Mesh::getVertex(unsigned int i) const
 {
 	return Vector3(	(*vertexBook)[vertexIndex + 3 * i],
 					(*vertexBook)[vertexIndex + 3 * i + 1],
 					(*vertexBook)[vertexIndex + 3 * i + 2]);
 }
 
-Vector3 Mesh::getNormal(unsigned int i) const
+inline Vector3 Mesh::getNormal(unsigned int i) const
 {
 	return Vector3(	(*normalBook)[normalIndex + 3 * i],
 					(*normalBook)[normalIndex + 3 * i + 1],
