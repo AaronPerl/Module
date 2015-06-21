@@ -25,9 +25,9 @@ private:
 	
 	Book<float>* vertexBook; // the book containing the vertices of this mesh
 	Book<float>* normalBook; // the book containing the normals of this mesh
-	Book<int>::size_type  vertexIndex; // the index of this mesh's first vertex in the vertexBook
-	Book<int>::size_type  normalIndex; // the index of this mesh's first normal in the normalBook
-	Book<int>::size_type  numVertices; // the number of vertices/normals that this mesh has
+	Book<float>::size_type  vertexIndex; // the index of this mesh's first vertex in the vertexBook
+	Book<float>::size_type  normalIndex; // the index of this mesh's first normal in the normalBook
+	Book<float>::size_type  numVertices; // the number of vertices/normals that this mesh has
 	float scale; // scalar to multiply all vertices by for rendering, etc.
 	std::string name;
 	Mesh() :
@@ -38,16 +38,50 @@ private:
 			selfIndex(index), vertexBook(vb), normalBook(nb), vertexIndex(vi), normalIndex(ni),
 			numVertices(num), scale(1.0f), name(meshName) {}
 public:
-	Book<Mesh>::size_type getIndex() 		const { return selfIndex; }
-	Vector3 getVertex(unsigned int i) 		const { return Vector3((*vertexBook)[vertexIndex + 3 * i], (*vertexBook)[vertexIndex + 3 * i + 1], (*vertexBook)[vertexIndex + 3 * i + 2]); }
-	Vector3 getNormal(unsigned int i) 		const { return Vector3((*normalBook)[normalIndex + 3 * i], (*normalBook)[normalIndex + 3 * i + 1], (*normalBook)[normalIndex + 3 * i + 2]); }
-	Book<int>::size_type getNumVertices() 	const { return numVertices; }
-	float getScale() 						const { return scale; }
-	void setScale(float newScale) { scale = newScale; }
+	Book<Mesh>::size_type getIndex() const;
+	Book<float>::size_type getNumVertices() const;
+	Vector3 getVertex(unsigned int i) const;
+	Vector3 getNormal(unsigned int i) const;
+	float getScale() const;
+	void setScale(float newScale);
 	
 	friend class GraphicsInterface;
 	friend class Book<Mesh>;
 };
+
+inline Book<Mesh>::size_type Mesh::getIndex() const
+{
+	return selfIndex;
+}
+
+inline Book<int>::size_type Mesh::getNumVertices() const
+{
+	return numVertices;
+}
+
+inline float Mesh::getScale() const
+{
+	return scale;
+}
+
+inline void Mesh::setScale(float newScale)
+{
+	scale = newScale;
+}
+
+Vector3 Mesh::getVertex(unsigned int i) const
+{
+	return Vector3(	(*vertexBook)[vertexIndex + 3 * i],
+					(*vertexBook)[vertexIndex + 3 * i + 1],
+					(*vertexBook)[vertexIndex + 3 * i + 2]);
+}
+
+Vector3 Mesh::getNormal(unsigned int i) const
+{
+	return Vector3(	(*normalBook)[normalIndex + 3 * i],
+					(*normalBook)[normalIndex + 3 * i + 1],
+					(*normalBook)[normalIndex + 3 * i + 2]);
+}
 	
 }
 

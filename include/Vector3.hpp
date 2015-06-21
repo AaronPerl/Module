@@ -28,15 +28,30 @@ public:
 	
 	Vector3 rotate(const Quaternion& other) const;	// quaternion rotation
 	
-	float getX() const { return x; }
-	float getY() const { return y; }
-	float getZ() const { return z; }
+	float getX() const;
+	float getY() const;
+	float getZ() const;
 	
 	Vector3 cross(const Vector3& other) const; 		// vector cross product	
 	float dot(const Vector3& other) const; 			// vector dot product	
 	
 	
 };
+
+inline float Vector3::getX() const
+{
+	return x;
+}
+
+inline float Vector3::getY() const
+{
+	return y;
+}
+
+inline float Vector3::getZ() const
+{
+	return z;
+}
 
 }
 

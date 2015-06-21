@@ -13,22 +13,28 @@ namespace Module
 	class Mesh;
 	class ModuleGame;
 	class GameObject;
+	class GraphicsContext;
+	class PolygonContainer;
+	class GraphicsCallback;
 
 	class GraphicsInterface : ThreadObject
 	{
 		friend class ModuleGame;
+		friend class GraphicsContext;
 		
 		protected:
 			unsigned int fps;
 			ModuleGame* game;
 			GameObject* camera;
 			
-			Book<float> allVertices;	// all vertices (x, y then z) stored in a contiguous array to improve caching
-			Book<float> allNormals;		// all vertex normals, 1 to 1 with vertices
-			Book<Mesh> allMeshes;		// same for meshes, though they matter less
+			Book<float> allVertices;				// all vertices (x, y then z) stored in a contiguous array to improve caching
+			Book<float> allNormals;					// all vertex normals, 1 to 1 with vertices
+			Book<Mesh> allMeshes;					// same for meshes, though they matter less
 			
 			void start();
 			void run(); //overrides ThreadObject::run()
+			void preRender();
+			void postRender();
 			
 			// IMPLEMENT THESE //
 			virtual void createWindow() = 0; 				// initialization and window creation
@@ -37,11 +43,11 @@ namespace Module
 			virtual bool isRunning() = 0;
 			
 			// FRIENDSHIP WRAPPERS
-			Book<float>* getVertexBook(Mesh* m) { return m->vertexBook; }
-			Book<float>* getNormalBook(Mesh* m) { return m->normalBook; }
-			unsigned int getVertexIndex(Mesh* m) { return m->vertexIndex; }
-			unsigned int getNormalIndex(Mesh* m) { return m->normalIndex; }
-			unsigned int getNumVertices(Mesh* m) { return m->numVertices; }
+			Book<float>* getVertexBook(Mesh* m) const;
+			Book<float>* getNormalBook(Mesh* m) const;
+			unsigned int getVertexIndex(Mesh* m) const;
+			unsigned int getNormalIndex(Mesh* m) const;
+			unsigned int getNumVertices(Mesh* m) const;
 			
 		public:
 			GraphicsInterface();
@@ -54,7 +60,34 @@ namespace Module
 			
 			virtual void setCamera(GameObject* obj) { camera = obj; }
 			
+			void addCallback(GraphicsCallback* g);
 	};
+
+inline Book<float>* GraphicsInterface::getVertexBook(Mesh* m) const
+{
+	return m->vertexBook;
+}
+
+inline Book<float>* GraphicsInterface::getNormalBook(Mesh* m) const
+{
+	return m->normalBook;
+}
+
+inline unsigned int GraphicsInterface::getVertexIndex(Mesh* m) const
+{
+	return m->vertexIndex;
+}
+
+inline unsigned int GraphicsInterface::getNormalIndex(Mesh* m) const
+{
+	return m->normalIndex;
+}
+
+inline unsigned int GraphicsInterface::getNumVertices(Mesh* m) const
+{
+	return m->numVertices;
+}
+
 }
 
 #endif
