@@ -36,6 +36,7 @@
 
 namespace Module
 {
+	// A GraphicsInterface implementation that uses SDL2 for window creation and user input and OpenGL for rendering.
 	class SDLOpenGLInterface : public GraphicsInterface
 	{
 		protected:

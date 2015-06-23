@@ -17,6 +17,9 @@ namespace Module
 	class PolygonContainer;
 	class GraphicsCallback;
 
+	// The GraphicsInterface is one of Module's four core interfaces. It manages rendering
+	// and user input. Implementations of the GraphicsInterface are responsible for drawing
+	// the world and triggering the attached graphics and input callbacks.
 	class GraphicsInterface : ThreadObject
 	{
 		friend class ModuleGame;
@@ -37,17 +40,17 @@ namespace Module
 			void postRender();
 			
 			// IMPLEMENT THESE //
-			virtual void createWindow() = 0; 				// initialization and window creation
-			virtual void renderFrame() = 0;					// render individual frame
+			virtual void createWindow() = 0;            	// initialization and window creation
+			virtual void renderFrame() = 0;             	// render individual frame
 			virtual unsigned long getMilliseconds() = 0;	// get time since initialization
-			virtual bool isRunning() = 0;
+			virtual bool isRunning() = 0;	
 			
-			// FRIENDSHIP WRAPPERS
-			Book<float>* getVertexBook(Mesh* m) const;
-			Book<float>* getNormalBook(Mesh* m) const;
-			unsigned int getVertexIndex(Mesh* m) const;
-			unsigned int getNormalIndex(Mesh* m) const;
-			unsigned int getNumVertices(Mesh* m) const;
+			// FRIENDSHIP WRAPPERS //
+			Book<float>* getVertexBook(Mesh* m) const;		// returns the book that contains the vertices the ones for this mesh
+			Book<float>* getNormalBook(Mesh* m) const;		// returns the book that contains the vertex normals for this mesh
+			unsigned int getVertexIndex(Mesh* m) const;		// returns this mesh's starting index in its book of vertices
+			unsigned int getNormalIndex(Mesh* m) const;		// returns this mesh's starting index in its book of vertex normals
+			unsigned int getNumVertices(Mesh* m) const;		// returns the number of vertices that compose this mesh
 			
 		public:
 			GraphicsInterface();
