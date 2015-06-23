@@ -110,9 +110,34 @@ void Module::SDLOpenGLInterface::setupShaders()
 		std::cout.flush();
 		throw std::runtime_error("[GraphicsInterface] : OpenGL : Failed to link shader program");
 	}
+	
+	vShader2D = initShader("shaders/vs2D.glsl",GL_VERTEX_SHADER);
+	fShader2D = initShader("shaders/fs2D.glsl",GL_FRAGMENT_SHADER);
+	
+	program2D = glCreateProgram();
+	glAttachShader(program2D,vShader2D);
+	glAttachShader(program2D,fShader2D);
+	glLinkProgram(program2D);
+	glGetProgramiv(program2D,GL_LINK_STATUS,&linked);
+
+	if (linked==GL_FALSE)
+	{
+		GLint logLen = 0;
+		glGetProgramiv(program2D, GL_INFO_LOG_LENGTH, &logLen);
+		char * log = new char[logLen];
+		glGetProgramInfoLog(program,logLen,NULL,log);
+		std::ofstream logFile ("logs/programLog.txt");
+		logFile << log << std::endl;
+		logFile.close ();
+		delete log;
+		std::cout.flush();
+		throw std::runtime_error("[GraphicsInterface] : OpenGL : Failed to link 2D shader program");
+	}
 
 	glDeleteShader(vShader);
 	glDeleteShader(fShader);
+	glDeleteShader(vShader2D);
+	glDeleteShader(fShader2D);
 }
 
 void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
@@ -488,5 +513,20 @@ void Module::SDLOpenGLInterface::renderFrame()
 		glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
 		
 	}
+}
+
+void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& container)
+{
+										
+	glUseProgram(program2D);
+	
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+		
+	//glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
+}
+
+void Module::SDLOpenGLInterface::swapBuffers()
+{
 	SDL_GL_SwapWindow(window);
 }

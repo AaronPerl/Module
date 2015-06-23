@@ -1,4 +1,6 @@
 #include "GraphicsInterface.hpp"
+#include "GraphicsCallback.hpp"
+#include "GraphicsContext.hpp"
 #include "ModuleGame.hpp"
 #include "Mesh.hpp"
 #include "Vector3.hpp"
@@ -22,9 +24,30 @@ void GraphicsInterface::run()
 	createWindow();
 	while (isRunning())
 	{
+		preRender();
 		renderFrame();
+		postRender();
+		swapBuffers();
 		// while (getMilliseconds() - prevTime < 1000.0/fps);
 		// prevTime = getMilliseconds();
+	}
+}
+
+void GraphicsInterface::preRender()
+{
+	GraphicsContext context(this);
+	for (unsigned int i = 0; i < callbacks.size(); i++)
+	{
+		callbacks[i]->onPreRender(context);
+	}
+}
+
+void GraphicsInterface::postRender()
+{
+	GraphicsContext context(this);
+	for (unsigned int i = 0; i < callbacks.size(); i++)
+	{
+		callbacks[i]->onPostRender(context);
 	}
 }
 
@@ -67,3 +90,7 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 	return createMesh(other->vertices, other->normals, other->numVertices, other->name); // won't work given vertices may not be contiguous (across 2 or more pages)
 }*/
 
+void GraphicsInterface::addCallback(GraphicsCallback* callback)
+{
+	callbacks.push_back(callback);
+}

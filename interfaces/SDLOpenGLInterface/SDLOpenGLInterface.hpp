@@ -41,6 +41,7 @@ namespace Module
 	{
 		protected:
 			Book<GLuint> vertexBuffers;
+			Book<GLuint> vertexBuffers2D;
 			
 			SDL_Window *window;
 			SDL_GLContext context;
@@ -67,6 +68,8 @@ namespace Module
 			// OVERRIDES
 			void createWindow() { createWindow(800, 600, 60); }
 			void renderFrame();
+			void drawPolygons2D(const PolygonContainer& container);
+			void swapBuffers();
 			unsigned long getMilliseconds() { return SDL_GetTicks(); }
 			bool isRunning() { return running; }
 			
