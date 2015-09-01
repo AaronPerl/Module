@@ -2,13 +2,12 @@
 #include <cfloat>
 #include <csignal>
 #include <iostream>
-#include "ModuleGame.hpp"
-#include "Sound.hpp"
-#include "SoundClip.hpp"
+
+// Module includes
+#include <ModuleGame.hpp>
 #include <OpenALInterface.hpp>
 #include <SDLOpenGLInterface.hpp>
 #include <PthreadsInterface.hpp>
-
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
 
@@ -59,12 +58,21 @@ int main(int argc, char ** argv)
 	game.setMesh(gameobj, teapot);
 	graphics.setCamera(camera);
 	
+	
+	
+	
+	
 	// AUDIO TESTS
-	//Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
+	Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
 	Module::SoundClip* musicClip = audio.loadSoundClip("chopinScherzo","sounds/chopin_scherzo.wav");
-	//audio.playSound(boilClip,1.0f,0.1f);
+	audio.playSound(boilClip,1.0f,0.1f);
 	Module::Sound* music = audio.playSound(musicClip,1.0f,1.0f);
 	audio.debugAudio();
+	// END AUDIO TESTS
+	
+	
+	
+	
 	
 	signal(SIGINT, sigterm_handler);
 	

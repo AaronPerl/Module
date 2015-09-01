@@ -54,15 +54,15 @@ SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::str
 void AudioInterface::debugAudio()
 {
 	#ifdef DEBUG
-	std::cout << "[AudioInterface] Sound Collection (" << sounds.size() << "):" << std::endl;
+	std::cout << "[AudioInterface] SoundClips (" << sounds.size() << "):" << std::endl;
 	for(unsigned int i = 0; i < clips.size(); ++i)
 	{
-		std::cout << "                  " << i+1 << ") " << clips[i].getName() << std::endl;
+		std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
 	}
-	std::cout << "                 Currently-playing Sounds (" << sounds.size() << "):" << std::endl;
+	std::cout << "                 Sounds (" << sounds.size() << "):" << std::endl;
 	for(unsigned int i = 0; i < sounds.size(); ++i)
 	{
-		std::cout << "                  " << i+1 << ") " << sounds[i].getName() << std::endl;
+		std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
 	}
 	#endif
 }

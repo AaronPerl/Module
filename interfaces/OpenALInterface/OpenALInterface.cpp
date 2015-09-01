@@ -96,33 +96,7 @@ OpenALInterface::OpenALInterface() : AudioInterface()
 	alutInit(NULL,NULL);
 }
 // Plays a Sound
-Sound* OpenALInterface::playSound(SoundClip* clip)
-{
-	Sound* toReturn = AudioInterface::playSound(clip);
-	// Ensure we actually can create this Sound
-	if(toReturn)
-	{
-		// Create source
-		ALuint source;
-		alGenSources((ALuint)1, &source);
-		
-		alSourcef(source, AL_PITCH, 1);				// Pitch of 1
-		alSourcef(source, AL_GAIN, 1);				// Gain of 1
-		alSource3f(source, AL_POSITION, 0, 0, 0);	// Position = (0,0,0)
-		alSource3f(source, AL_VELOCITY, 0, 0, 0);	// Velocity = (0,0,0)
-		alSourcei(source, AL_LOOPING, AL_FALSE);	// Looping off
-		
-		// Look up what buffer "name" this SoundClip represents
-		ALuint buffer = getClipName(clip);
-		alSourcei(source, AL_BUFFER, buffer);
-		soundNames.push_back(source);
-		
-		alSourcePlay(source);
-	}
-	return toReturn;
-}
-// Plays a Sound
-Sound* OpenALInterface::playSound(SoundClip* clip, float pitch, float gain)
+Sound* OpenALInterface::playSound(SoundClip* clip, float pitch = 1.0f, float gain = 1.0f)
 {
 	Sound* toReturn = AudioInterface::playSound(clip);
 	// Ensure we actually can create this Sound

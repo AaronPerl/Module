@@ -7,11 +7,11 @@
 #include <vector>
 
 // Module includes
-#include "Sound.hpp"
-#include "SoundClip.hpp"
-#include "Book.hpp"
-#include "ThreadObject.hpp"
-#include "GameObject.hpp"
+#include <Sound.hpp>
+#include <SoundClip.hpp>
+#include <Book.hpp>
+#include <ThreadObject.hpp>
+#include <GameObject.hpp>
 
 namespace Module
 {
