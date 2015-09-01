@@ -7,11 +7,11 @@ OPENAL_SOFT = lib/openal-soft-1.16.0
 FREEALUT = lib/freealut
 
 #LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
-LIBS 			:= -lalut.dll -lSDL2main -lSDL2
+LIBS 			:= -lalut -lSDL2main -lSDL2
 LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include
 LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include
 LIB_PATHS		:= -L$(FREEALUT)/lib
-LIB_PATHS32		:= 
+LIB_PATHS32		:=
 
 
 DUMPNAME = $(shell gcc -dumpmachine)
@@ -21,6 +21,8 @@ NEEDS_PTHREADS_WIN32 = false
 
 ifeq ($(OS), Windows_NT)
 	NEEDS_PTHREADS_WIN32 = true
+else
+	LIBS += -lopenal
 endif
 
 ifeq ($(DUMPNAME), x86_64-pc-cygwin)
@@ -120,20 +122,21 @@ interfaces: $(INTERFACE_LIBS)
 
 .PHONY: test
 test: 64bit interfaces
-	g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
+	@echo Compiling test program!
+	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
 
 .PHONY: clean
 clean:
 	rm -rf build
-	
+
 .PHONY: dumpmachine
 dumpmachine:
-	echo 
+	echo
 
 $(PATH64):
 	@echo Making 64-bit build directory
 	@mkdir -p $(PATH64)
-	
+
 $(PATH32):
 	@echo Making 32-bit build directory
 	@mkdir -p $(PATH32)
@@ -141,12 +144,12 @@ $(PATH32):
 $(DEP_PATH):
 	@echo Making dependency directory
 	@mkdir -p $(DEP_PATH)
-	
+
 $(PATH64)/%.o : src/%.cpp
 	@echo Compiling $<
 	@printf "  "
 	g++ $< -c -Iinclude $(FLAGS) -o $@
-	
+
 $(PATH32)/%.o : src/%.cpp
 	@echo Compiling $<
 	@printf "  "
@@ -162,7 +165,7 @@ $(DEP_PATH)/%.d : src/%.cpp | $(DEP_PATH)
 $(PATH64)/$(FULL_NAME): $(FULL_OBJS64)
 	ar rcs $(PATH64)/$(FULL_NAME) $(PATH64)/*.o
 #	g++ $(FLAGS) $(SRCS) $(LIB_PATHS) $(LIB_INC_PATHS) $(LIBS) -o $@
-	
+
 $(PATH32)/$(FULL_NAME): $(FULL_OBJS32)
 	ar rcs $(PATH32)/$(FULL_NAME) $(PATH32)/*.o
 #	i686-w64-mingw32-g++ $(FLAGS) $(SRCS) $(LIB_PATHS_32) $(LIB_INC_PATHS_32) $(LIBS) -o $@

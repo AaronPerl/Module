@@ -1,0 +1,25 @@
+Current WIP Features in order of completion
+
+Rendering 2D polygons
+	Polygon container class that stores vertices, vertex colors, texture coords for rendering 2D polygons (i.e. GUI)
+		Only 1 texture per polygon container? More? How so (efficiently)?
+			1 initially, perhaps more in the future
+	Stores information to keep track of which polygon each vertex belongs to for easy translation/deletion
+		Should polygons have a name?
+		Lookup (polygon to vertices) and reverse lookup (vertex to polygon)
+			Without having to iterate over every previous polygon (store a start index)
+			Reverse lookup without iterating over polygons? (map?)
+				Updating when polygons are removed
+	Translation of entire polygon containers
+	Clipping edges for polygon containers
+		Rectangular or arbitrary?
+
+Click Handlers:
+	Priority based (lower values are called first)
+	If a click handler returns true, the event was processed
+		Otherwise, continue by calling the next click handler by order of priority
+
+Textures
+	Texture class which has a pointer to a TextureData class
+	TextureData classes are extended by GraphicsInterface implementations
+		Contain implementation-specific texture data (i.e. Texture ID)

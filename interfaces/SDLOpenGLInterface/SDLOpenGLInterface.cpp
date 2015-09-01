@@ -1,7 +1,7 @@
 #include "SDLOpenGLInterface.hpp"
 
 Module::SDLOpenGLInterface::SDLOpenGLInterface() : 
-	window(0), context(0), vShader(0), fShader(0), program(0), running(false), terminated(false)
+	window(0), context(0), vShader(0), fShader(0), program(0), frames(0), prevMillis(0), running(false), terminated(false)
 {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -110,9 +110,34 @@ void Module::SDLOpenGLInterface::setupShaders()
 		std::cout.flush();
 		throw std::runtime_error("[GraphicsInterface] : OpenGL : Failed to link shader program");
 	}
+	
+	vShader2D = initShader("shaders/vs2D.glsl",GL_VERTEX_SHADER);
+	fShader2D = initShader("shaders/fs2D.glsl",GL_FRAGMENT_SHADER);
+	
+	program2D = glCreateProgram();
+	glAttachShader(program2D,vShader2D);
+	glAttachShader(program2D,fShader2D);
+	glLinkProgram(program2D);
+	glGetProgramiv(program2D,GL_LINK_STATUS,&linked);
+
+	if (linked==GL_FALSE)
+	{
+		GLint logLen = 0;
+		glGetProgramiv(program2D, GL_INFO_LOG_LENGTH, &logLen);
+		char * log = new char[logLen];
+		glGetProgramInfoLog(program,logLen,NULL,log);
+		std::ofstream logFile ("logs/programLog.txt");
+		logFile << log << std::endl;
+		logFile.close ();
+		delete log;
+		std::cout.flush();
+		throw std::runtime_error("[GraphicsInterface] : OpenGL : Failed to link 2D shader program");
+	}
 
 	glDeleteShader(vShader);
 	glDeleteShader(fShader);
+	glDeleteShader(vShader2D);
+	glDeleteShader(fShader2D);
 }
 
 void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
@@ -122,8 +147,9 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	window = SDL_CreateWindow("SDL Program",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
 	context = SDL_GL_CreateContext(window);
-    if (SDL_GL_SetSwapInterval(-1)==-1) // TODO change this to -1 for release
-    	SDL_GL_SetSwapInterval(1);
+    // if (SDL_GL_SetSwapInterval(-1)==-1) // TODO change this to -1 for release
+		// SDL_GL_SetSwapInterval(1);
+    SDL_GL_SetSwapInterval(0);
     glClearColor(0,0,0,1);
     glClear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_CULL_FACE);
@@ -133,6 +159,7 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
     }
     setupShaders();
     SDL_GL_SwapWindow(window);
+	prevMillis = getMilliseconds();
 }
 
 void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
@@ -172,6 +199,19 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	
 	vertexBuffers.push_back(vertexVBO);
 	vertexBuffers.push_back(normalVBO);
+}
+
+std::vector<std::string> split(const std::string& toSplit)
+{
+	std::vector<std::string> retval;
+	int curPos = toSplit.find_first_not_of(" ", 0);
+	while (curPos != std::string::npos)
+	{
+		int nextPos = toSplit.find_first_of(" ", curPos);
+		retval.push_back(toSplit.substr(curPos, nextPos - curPos));
+		curPos = toSplit.find_first_not_of(" ", nextPos);
+	}
+	return retval;
 }
 
 Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces)
@@ -231,13 +271,26 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 			} //endif vn
 			else if (element == "f")
 			{
-				for (unsigned short i = 0; i < 3; i++)
+				char curLine[256];
+				modelFile.getline(curLine, 256);
+				if (modelFile.fail())
 				{
-					std::string indexStr;
-					modelFile >> indexStr;
+					std::cerr << "[GraphicsInterface]   File line too long" << std::endl;
+					return NULL;
+				}
+				unsigned int numVertices = 0;
+				std::vector<std::string> tokens = split(curLine);
+				if (tokens.size() < 3)
+				{
+					std::cerr << "[GraphicsInterface]   Not enough vertices in face!" << std::endl;
+					return NULL;
+				}
+				for (unsigned short i = 0; i < tokens.size(); i++)
+				{
+					std::string indexStr = tokens[i];
 					std::size_t slashIndex1 = indexStr.find('/');
 					std::size_t slashIndex2 = std::string::npos;
-					if (slashIndex1 != std::string::npos) // f v//n v//n v//n
+					if (slashIndex1 != std::string::npos) // f v//n v//n v//n or f v/t/n v/t/n v/t/n
 					{
 						slashIndex2 = indexStr.find('/', slashIndex1+1);
 						if (slashIndex2 == std::string::npos)
@@ -261,8 +314,22 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 							std::cerr << "[GraphicsInterface]   Unsupported/invalid obj file" << std::endl;
 							return NULL;
 						}
-						vertices.push_back(indexedVertices[vi-1]);
-						normals.push_back(indexedNormals[ni-1]);
+						if (i < 3)
+						{
+							vertices.push_back(indexedVertices[vi-1]);
+							normals.push_back(indexedNormals[ni-1]);
+						}
+						else
+						{
+							unsigned int firstIndex = vertices.size() - i;
+							unsigned int lastIndex = vertices.size() - 1;
+							vertices.push_back(vertices[firstIndex]);
+							vertices.push_back(vertices[lastIndex]);
+							vertices.push_back(indexedVertices[vi-1]);
+							normals.push_back(normals[firstIndex]);
+							normals.push_back(normals[lastIndex]);
+							normals.push_back(indexedNormals[ni-1]);
+						}
 					}
 					else // f v v v
 					{
@@ -279,7 +346,7 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 						vertices.push_back(indexedVertices[vi-1]);
 						normals.push_back(indexedNormals[vi-1]);
 					}
-				} //endfor i from 0 to 3
+				} //endfor i from 0 to tokens.size
 				if (flipFaces)
 				{
 					Vector3 third  = vertices.back();
@@ -297,7 +364,8 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 					normals.push_back(second);
 				}
 			} // endif f
-			modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			if (element != "f")
+				modelFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 	
@@ -310,21 +378,31 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 
 void Module::SDLOpenGLInterface::renderFrame()
 {
-	
-	// SDL stuff
-
-	SDL_Event event;
-	SDL_PumpEvents();
-
-	if (SDL_PollEvent(&event))
+	frames++;
+	if (getMilliseconds() - prevMillis > 5000)
 	{
-		switch (event.type)
+		std::cout << "[GraphicsInterface] FPS: " << (frames/5.0f) << std::endl;
+		prevMillis = getMilliseconds();
+		frames = 0;
+	}
+	
+	//	SDL stuff
+
+	if (frames % 5 == 0)
+	{
+		SDL_Event event;
+		SDL_PumpEvents();
+
+		while (SDL_PollEvent(&event))
 		{
-			case SDL_QUIT:
-				std::cout << "SDL Program closed!" << std::endl;
-				terminate();
-				running = false;
-				break;
+			switch (event.type)
+			{
+				case SDL_QUIT:
+					std::cout << "SDL Program closed!" << std::endl;
+					terminate();
+					running = false;
+					break;
+			}
 		}
 	}
 	
@@ -332,12 +410,13 @@ void Module::SDLOpenGLInterface::renderFrame()
 	int height;
 	
 	SDL_GetWindowSize(window,&width,&height);
+	glViewport(0,0,width,height);
 	
 	// create new VBOs
 	
-	while (allMeshes.size() > vertexBuffers.size()) // make sure any new meshes have buffer objects
+	while (allMeshes.size() * 2 > vertexBuffers.size()) // make sure any new meshes have buffer objects
 	{
-		createVNBuffers(&allMeshes[vertexBuffers.size()]);
+		createVNBuffers(&allMeshes[vertexBuffers.size()/2]);
 	}
 	
 	// OpenGL stuff now
@@ -387,6 +466,8 @@ void Module::SDLOpenGLInterface::renderFrame()
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	
+	// std::cout << "[GraphicsInterface] NumObjects = " << game->numObjects() << std::endl;
+		
 	for (Book<GameObject>::size_type i = 0; i < game->numObjects(); i++)
 	{
 		GLuint vertexVBO = 0;
@@ -396,19 +477,17 @@ void Module::SDLOpenGLInterface::renderFrame()
 		Vector3 curPos = curObj->getPosition();
 		Quaternion curRot = curObj->getRotation();
 		if (curMesh == NULL) // Nothing to see here, literally (no mesh)
-			continue;
-		for (Book<Mesh>::size_type j = 0; j < allMeshes.size(); j++) // find the index of this mesh, TODO make better
 		{
-			if (&allMeshes[j] == curMesh)
-			{
-				vertexVBO = vertexBuffers[2*j+0];
-				normalVBO = vertexBuffers[2*j+1];
-				break;
-			}
+			// std::cout << "[GraphicsInterface] No mesh, skipping GameObject" << std::endl;
+			continue;
 		}
+		
+		vertexVBO = vertexBuffers[2 * curMesh->getIndex() + 0];
+		normalVBO = vertexBuffers[2 * curMesh->getIndex() + 1];
 		
 		if (vertexVBO == 0 || normalVBO == 0) // This mesh is not in our book/invalid or the buffer for this mesh hasn't been generated yet
 		{
+			// std::cout << "[GraphicsInterface] No VBOs found" << std::endl;
 			continue;
 		}
 		
@@ -433,6 +512,21 @@ void Module::SDLOpenGLInterface::renderFrame()
 		
 		glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
 		
-		SDL_GL_SwapWindow(window);
 	}
+}
+
+void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& container)
+{
+										
+	glUseProgram(program2D);
+	
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
+		
+	//glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
+}
+
+void Module::SDLOpenGLInterface::swapBuffers()
+{
+	SDL_GL_SwapWindow(window);
 }

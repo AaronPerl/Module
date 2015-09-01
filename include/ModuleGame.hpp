@@ -32,16 +32,47 @@ public:
 	
 	// Game Objects
 	GameObject* createGameObject();
-	Book<GameObject>::size_type numObjects() { return objects.size(); }
-	GameObject* getGameObject(Book<GameObject>::size_type index) { return &objects[index]; }
+	Book<GameObject>::size_type numObjects() const;
+	GameObject* getGameObject(Book<GameObject>::size_type index);
+	const GameObject* getGameObject(Book<GameObject>::size_type index) const;
 	
 	// Threading
-	Mutex* createMutex() { return threading->createMutex(); }
+	Mutex* createMutex();
 	
 	// Graphics
-	void setMesh(GameObject* obj, Mesh* mesh) { obj->mesh = mesh; }
-	unsigned long getMilliseconds() { return graphics->getMilliseconds(); }
+	void setMesh(GameObject* obj, Mesh* mesh);
+	unsigned long getMilliseconds();
 };
+
+inline Book<GameObject>::size_type ModuleGame::numObjects() const
+{
+	return objects.size();
+}
+
+inline GameObject* ModuleGame::getGameObject(Book<GameObject>::size_type index)
+{
+	return &objects[index];
+}
+
+inline const GameObject* ModuleGame::getGameObject(Book<GameObject>::size_type index) const
+{
+	return &objects[index];
+}
+
+inline Mutex* ModuleGame::createMutex()
+{
+	return threading->createMutex();
+}
+
+inline void ModuleGame::setMesh(GameObject* obj, Mesh* mesh)
+{
+	obj->mesh = mesh;
+}
+
+inline unsigned long ModuleGame::getMilliseconds()
+{
+	return graphics->getMilliseconds();
+}
 
 }
 

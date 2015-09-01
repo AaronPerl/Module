@@ -1,4 +1,6 @@
 #include "GraphicsInterface.hpp"
+#include "GraphicsCallback.hpp"
+#include "GraphicsContext.hpp"
 #include "ModuleGame.hpp"
 #include "Mesh.hpp"
 #include "Vector3.hpp"
@@ -20,10 +22,32 @@ void GraphicsInterface::run()
 {
 	unsigned long prevTime = getMilliseconds();
 	createWindow();
-	while (1)
+	while (isRunning())
 	{
+		preRender();
 		renderFrame();
-		while (getMilliseconds() - prevTime < 1000/fps);
+		postRender();
+		swapBuffers();
+		// while (getMilliseconds() - prevTime < 1000.0/fps);
+		// prevTime = getMilliseconds();
+	}
+}
+
+void GraphicsInterface::preRender()
+{
+	GraphicsContext context(this);
+	for (unsigned int i = 0; i < callbacks.size(); i++)
+	{
+		callbacks[i]->onPreRender(context);
+	}
+}
+
+void GraphicsInterface::postRender()
+{
+	GraphicsContext context(this);
+	for (unsigned int i = 0; i < callbacks.size(); i++)
+	{
+		callbacks[i]->onPostRender(context);
 	}
 }
 
@@ -40,7 +64,7 @@ Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, unsigne
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
 	}
-	allMeshes.push_back(Mesh(&allVertices, &allNormals, firstIndex, firstIndex, num_vertices, name));
+	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, firstIndex, firstIndex, num_vertices, name));
 	return &allMeshes.back();
 }
 
@@ -56,7 +80,7 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
 	}
-	allMeshes.push_back(Mesh(&allVertices, &allNormals, firstIndex, firstIndex, vertices.size(), name));
+	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, firstIndex, firstIndex, vertices.size(), name));
 	return &allMeshes.back();
 }
 
@@ -66,3 +90,7 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 	return createMesh(other->vertices, other->normals, other->numVertices, other->name); // won't work given vertices may not be contiguous (across 2 or more pages)
 }*/
 
+void GraphicsInterface::addCallback(GraphicsCallback* callback)
+{
+	callbacks.push_back(callback);
+}
