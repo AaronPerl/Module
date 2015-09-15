@@ -17,11 +17,12 @@ class Mesh;
 // with the addition of an extension system, this list could be joined with a dynamic container of generic components used by extensions.
 class GameObject {
 protected:
+	ModuleGame* game;
 	TransformObject* tObj;
 	Mesh* mesh;
 	Vector3 pos;
 	Quaternion rot;
-	GameObject() : tObj(0), mesh(0) {}
+	GameObject(ModuleGame* g) : game(g), tObj(0), mesh(0) {}
 public:
 	const Vector3& getPosition() const		{ return tObj ? tObj->getPosition() : pos; }
 	const Quaternion& getRotation() const	{ return tObj ? tObj->getRotation() : rot; }

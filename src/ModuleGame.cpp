@@ -7,7 +7,7 @@ Module::ModuleGame::ModuleGame() : graphics(0), audio(0), threading(0)
 
 Module::GameObject* Module::ModuleGame::createGameObject()
 {
-	objects.push_back(GameObject());
+	objects.push_back(GameObject(this));
 	return &objects.back();
 }
 
