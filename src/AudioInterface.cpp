@@ -1,7 +1,11 @@
 #include "AudioInterface.hpp"
 #include "ModuleGame.hpp"
+#include "SoundClip.hpp"
+#include "Sound.hpp"
 
 using namespace Module;
+
+AudioInterface::AudioInterface() {} // A blank constructor
 
 // Starts the thread for run.
 void AudioInterface::start()

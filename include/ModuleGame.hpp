@@ -1,6 +1,9 @@
 #ifndef __MODULE__MODULEGAME_HPP__
 #define __MODULE__MODULEGAME_HPP__
 
+#include "ModuleDefines.hpp"
+#include "GameObject.hpp"
+#include "Book.hpp"
 #include "GraphicsInterface.hpp"
 #include "ThreadingInterface.hpp"
 #include "AudioInterface.hpp"

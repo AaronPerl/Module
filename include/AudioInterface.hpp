@@ -7,19 +7,12 @@
 #include <vector>
 
 // Module includes
-#include <Sound.hpp>
-#include <SoundClip.hpp>
-#include <Book.hpp>
-#include <ThreadObject.hpp>
-#include <GameObject.hpp>
+#include "ModuleDefines.hpp"
+#include "ThreadObject.hpp"
+#include "Book.hpp"
 
 namespace Module
 {
-	
-class Sound;
-class SoundClip;
-class ModuleGame;
-
 // The AudioInterface is one of Module's four core interfaces,
 // and handles its titular audio. It may be used to load and
 // or play sounds.
@@ -54,7 +47,7 @@ class AudioInterface : ThreadObject
 		
 	public:
 		// CONSTRUCTOR
-		AudioInterface(){}	// A blank constructor
+		AudioInterface();	// A blank constructor
 		
 		// IMPLEMENT THESE
 		virtual Sound* playSound(SoundClip*);						// Plays a Sound
