@@ -42,11 +42,11 @@ var searchData=
   ['getz',['getZ',['../dd/ddb/class_module_1_1_quaternion.html#adb6b154c8f4d13f5f4b31a7efc49272d',1,'Module::Quaternion::getZ()'],['../d2/d28/class_module_1_1_vector3.html#ac5a3f0b6841c57ab47fb9238a24250ba',1,'Module::Vector3::getZ()']]],
   ['graphicscallback',['GraphicsCallback',['../db/d56/class_module_1_1_graphics_callback.html',1,'Module']]],
   ['graphicscallback_2ehpp',['GraphicsCallback.hpp',['../da/db4/_graphics_callback_8hpp.html',1,'']]],
-  ['graphicscontext',['GraphicsContext',['../db/dba/class_module_1_1_graphics_context.html',1,'Module']]],
   ['graphicscontext',['GraphicsContext',['../d3/d35/class_module_1_1_graphics_interface.html#a8fffd8ec74983da6e71d9f81690cea11',1,'Module::GraphicsInterface']]],
+  ['graphicscontext',['GraphicsContext',['../db/dba/class_module_1_1_graphics_context.html',1,'Module']]],
   ['graphicscontext_2ehpp',['GraphicsContext.hpp',['../dc/d1a/_graphics_context_8hpp.html',1,'']]],
-  ['graphicsinterface',['GraphicsInterface',['../d3/d35/class_module_1_1_graphics_interface.html',1,'Module']]],
   ['graphicsinterface',['GraphicsInterface',['../db/dba/class_module_1_1_graphics_context.html#af810937056fe35089fdc33e91847717b',1,'Module::GraphicsContext::GraphicsInterface()'],['../dc/d6a/class_module_1_1_mesh.html#af810937056fe35089fdc33e91847717b',1,'Module::Mesh::GraphicsInterface()'],['../d3/d35/class_module_1_1_graphics_interface.html#a00eb91cfc5ba633d9d5170aba5d32e18',1,'Module::GraphicsInterface::GraphicsInterface()'],['../d3/d35/class_module_1_1_graphics_interface.html#aedb1843c1e64fbb1c3a080127d1a705f',1,'Module::GraphicsInterface::GraphicsInterface(unsigned int set_fps)']]],
+  ['graphicsinterface',['GraphicsInterface',['../d3/d35/class_module_1_1_graphics_interface.html',1,'Module']]],
   ['graphicsinterface_2ecpp',['GraphicsInterface.cpp',['../d5/db7/_graphics_interface_8cpp.html',1,'']]],
   ['graphicsinterface_2ehpp',['GraphicsInterface.hpp',['../d4/dda/_graphics_interface_8hpp.html',1,'']]]
 ];
