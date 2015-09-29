@@ -165,7 +165,9 @@ Friends</h2></td></tr>
 <tr class="memitem:a03062f30a1b4351255f596f45683f9da"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d3c/class_module_1_1_audio_interface.html#a03062f30a1b4351255f596f45683f9da">ModuleGame</a></td></tr>
 <tr class="separator:a03062f30a1b4351255f596f45683f9da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <a class="el" href="../../d7/d3c/class_module_1_1_audio_interface.html">AudioInterface</a> is one of <a class="el" href="../../d2/da9/namespace_module.html">Module</a>'s four core interfaces, and handles its titular audio. It may be used to load and or play sounds. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a418ed4ffe27220b2851f56eef17dbd42"></a>
 <div class="memitem">
 <div class="memproto">
@@ -194,6 +196,7 @@ Friends</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>A debug method, which prints out information about the current state of game audio. </p>
 
 </div>
 </div>
@@ -228,6 +231,14 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Loads a <a class="el" href="../../df/db6/class_module_1_1_sound_clip.html">SoundClip</a> into memory. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">name</td><td>The name of the <a class="el" href="../../df/db6/class_module_1_1_sound_clip.html">SoundClip</a>, ie: "explosion." </td></tr>
+    <tr><td class="paramname">fileName</td><td>The name of the file to be loaded from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the loaded <a class="el" href="../../df/db6/class_module_1_1_sound_clip.html">SoundClip</a>. </dd></dl>
 
 </div>
 </div>
@@ -276,6 +287,13 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Plays a <a class="el" href="../../d1/da0/class_module_1_1_sound.html">Sound</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">A</td><td>pointer to the <a class="el" href="../../df/db6/class_module_1_1_sound_clip.html">SoundClip</a> that the <a class="el" href="../../d1/da0/class_module_1_1_sound.html">Sound</a> will be of. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the <a class="el" href="../../d1/da0/class_module_1_1_sound.html">Sound</a>, which is currently playing. </dd></dl>
 
 </div>
 </div>
@@ -387,6 +405,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Overrides <a class="el" href="../../da/d38/class_module_1_1_thread_object.html#a27769f0459a9bf567bd1eb6575dc4ad3">ThreadObject::run()</a> </p>
 
 <p>Implements <a class="el" href="../../da/d38/class_module_1_1_thread_object.html#a27769f0459a9bf567bd1eb6575dc4ad3">Module::ThreadObject</a>.</p>
 
@@ -446,6 +465,13 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Sets the frequency of a <a class="el" href="../../df/db6/class_module_1_1_sound_clip.html">SoundClip</a>. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">soundClip</td><td>A pointer to the <a class="el" href="../../df/db6/class_module_1_1_sound_clip.html">SoundClip</a>. </td></tr>
+    <tr><td class="paramname">frequency</td><td>The frequency of the clip, in Hertz. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -493,6 +519,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Starts the thread for run. </p>
 
 </div>
 </div>
@@ -623,6 +650,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The collection of all loaded sounds </p>
 
 </div>
 </div>
@@ -643,6 +671,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The game that this is a part of </p>
 
 </div>
 </div>
@@ -663,6 +692,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The listener <a class="el" href="../../d2/ddb/class_module_1_1_game_object.html">GameObject</a> </p>
 
 </div>
 </div>
@@ -683,6 +713,7 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The collection of all playing sounds </p>
 
 </div>
 </div>
