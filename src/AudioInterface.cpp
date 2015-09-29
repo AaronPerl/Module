@@ -29,7 +29,7 @@ void AudioInterface::setFrequency(SoundClip* soundClip, unsigned int frequency)
 	soundClip->setFrequency(frequency);
 }
 /** Plays a Sound.
- * @param A pointer to the SoundClip that the Sound will be of.
+ * @param clip A pointer to the SoundClip that the Sound will be of.
  * @return A pointer to the Sound, which is currently playing.
 */
 Sound* AudioInterface::playSound(SoundClip* clip)
