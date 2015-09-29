@@ -7,23 +7,31 @@ using namespace Module;
 
 AudioInterface::AudioInterface() {} // A blank constructor
 
-// Starts the thread for run.
+/** Starts the thread for run.
+ */
 void AudioInterface::start()
 {
 	game->startThread(this);
 }
-// Overrides ThreadObject::run()
+/** Overrides ThreadObject::run()
+*/
 void AudioInterface::run()
 {
 	setDevice();
 	setListener(NULL);
 }
-// Sets the frequency
+/** Sets the frequency of a SoundClip.
+ * @param soundClip A pointer to the SoundClip.
+ * @param frequency The frequency of the clip, in Hertz.
+*/
 void AudioInterface::setFrequency(SoundClip* soundClip, unsigned int frequency)
 {
 	soundClip->setFrequency(frequency);
 }
-// Plays a Sound
+/** Plays a Sound.
+ * @param A pointer to the SoundClip that the Sound will be of.
+ * @return A pointer to the Sound, which is currently playing.
+*/
 Sound* AudioInterface::playSound(SoundClip* clip)
 {
 	if(clip)
@@ -40,6 +48,11 @@ Sound* AudioInterface::playSound(SoundClip* clip)
 		#endif
 	}	return &sounds.back();
 }
+/** Loads a SoundClip into memory.
+ * @param name The name of the SoundClip, ie: "explosion."
+ * @param fileName The name of the file to be loaded from.
+ * @return A pointer to the loaded SoundClip.
+*/
 SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::string& fileName)
 {
 	for(unsigned int i = 0; i < clips.size(); i++)
@@ -55,6 +68,8 @@ SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::str
 	clips.push_back(SoundClip(name,this));
 	return &clips.back();
 }
+/** A debug method, which prints out information about the current state of game audio.
+*/
 void AudioInterface::debugAudio()
 {
 	#ifdef DEBUG

@@ -13,9 +13,10 @@
 
 namespace Module
 {
-// The AudioInterface is one of Module's four core interfaces,
-// and handles its titular audio. It may be used to load and
-// or play sounds.
+/** The AudioInterface is one of Module's four core interfaces,
+ * and handles its titular audio. It may be used to load and
+ * or play sounds.
+ */
 class AudioInterface : ThreadObject
 {
 	// This is a very amiable interface
@@ -25,14 +26,14 @@ class AudioInterface : ThreadObject
 	
 	protected:
 		// REPRESENTATION
-		ModuleGame* game;		// The game that this is a part of
-		GameObject* listener;	// The listener GameObject
-		Book<Sound> sounds;		// The collection of all playing sounds
-		Book<SoundClip> clips;	// The collection of all loaded sounds
+		ModuleGame* game;		/**< The game that this is a part of */
+		GameObject* listener;	/**< The listener GameObject */
+		Book<Sound> sounds;		/**< The collection of all playing sounds */
+		Book<SoundClip> clips;	/**< The collection of all loaded sounds */
 		
 		// FUNCTIONS
-		void start();	// Starts the thread for run.
-		void run(); 	// Overrides ThreadObject::run()
+		void start();	/**< Starts the thread for run. */
+		void run(); 	/**<  Overrides ThreadObject::run() */
 		
 		// IMPLEMENT THESE FOR SOUND
 		virtual void replaySound(Sound*) = 0;		// Replays a Sound
