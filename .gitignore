@@ -1,7 +1,0 @@
-build
-depend
-main_test.exe
-main_test
-interfaces/*/*.o
-interfaces/*/*.a
-logs/*
