@@ -1,9 +1,10 @@
 #include "GraphicsInterface.hpp"
+#include "Book.hpp"
+#include "Vector3.hpp"
+#include "InputCallback.hpp"
 #include "GraphicsCallback.hpp"
 #include "GraphicsContext.hpp"
 #include "ModuleGame.hpp"
-#include "Mesh.hpp"
-#include "Vector3.hpp"
 
 #include <cassert>
 
@@ -71,7 +72,7 @@ void GraphicsInterface::mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t d
 {
 	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
 	{
-		inputCallbacks[i]->onMouseMoved(x,y,dx,dy);
+		inputCallbacks[i]->onMouseMove(x,y,dx,dy);
 	}
 }
 

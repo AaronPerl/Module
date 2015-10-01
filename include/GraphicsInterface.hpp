@@ -1,21 +1,15 @@
 #ifndef __MODULE__GRAPHICSINTERFACE_HPP__
 #define __MODULE__GRAPHICSINTERFACE_HPP__
 
+#include "ModuleDefines.hpp"
 #include "Mesh.hpp"
 #include "ThreadObject.hpp"
-#include "Book.hpp"
-#include "Vector3.hpp"
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 namespace Module
 {
-class Mesh;
-class ModuleGame;
-class GameObject;
-class GraphicsContext;
-class PolygonContainer;
-class GraphicsCallback;
 
 /** 
  * The GraphicsInterface is one of Module's four core interfaces. It manages rendering
