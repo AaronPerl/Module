@@ -29,6 +29,11 @@ public:
 	{
 		std::cout << "Mouse released at location <" << x << "," << y << ">" << std::endl;
 	}
+	/*virtual void onMouseMove(uint16_t x, uint16_t y, int16_t dx, int16_t dy)
+	{
+		std::cout << "Mouse moved to location <" << x << "," << y << ">" << std::endl;
+		std::cout << "Relative movement vector was <" << dx << "," << dy << ">" << std::endl;
+	}*/
 };
 
 bool halted = false;

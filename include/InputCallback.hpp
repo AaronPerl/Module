@@ -31,7 +31,7 @@ public:
 	 * @param dx The change in the x position of the mouse.
 	 * @param dy The change in the y position of the mouse.
 	 */
-	virtual void onMouseMove(uint16_t x, uint16_t y, int16_t dx, uint16_t dy) {}
+	virtual void onMouseMove(uint16_t x, uint16_t y, int16_t dx, int16_t dy) {}
 	
 	/**
 	 * Called when a key is pressed.
