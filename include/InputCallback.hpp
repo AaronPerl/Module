@@ -12,17 +12,19 @@ public:
 
 	/**
 	 * Called when a mouse button is pressed down.
+	 * @param button The mouse button that was pressed. 0 is left button, 1 is right, 2 is middle.
 	 * @param x The x position of the mouse on screen.
 	 * @param y The y position of the mouse on screen.
 	 */
-	virtual void onMouseDown(uint16_t x, uint16_t y) {}
+	virtual void onMouseDown(uint8_t button, uint16_t x, uint16_t y) {}
 	
 	/**
 	 * Called when a mouse button is released.
+	 * @param button The mouse button that was released. 0 is left button, 1 is right, 2 is middle.
 	 * @param x The x position of the mouse on screen.
 	 * @param y The y position of the mouse on screen.
 	 */
-	virtual void onMouseUp(uint16_t x, uint16_t y) {}
+	virtual void onMouseUp(uint8_t button, uint16_t x, uint16_t y) {}
 	
 	/**
 	 * Called when the mouse position changes.

@@ -52,19 +52,19 @@ void GraphicsInterface::postRender()
 	}
 }
 
-void GraphicsInterface::mousePressed(uint16_t x, uint16_t y)
+void GraphicsInterface::mousePressed(uint8_t button, uint16_t x, uint16_t y)
 {
 	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
 	{
-		inputCallbacks[i]->onMouseDown(x,y);
+		inputCallbacks[i]->onMouseDown(button, x, y);
 	}
 }
 
-void GraphicsInterface::mouseReleased(uint16_t x, uint16_t y)
+void GraphicsInterface::mouseReleased(uint8_t button, uint16_t x, uint16_t y)
 {
 	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
 	{
-		inputCallbacks[i]->onMouseUp(x,y);
+		inputCallbacks[i]->onMouseUp(button, x, y);
 	}
 }
 

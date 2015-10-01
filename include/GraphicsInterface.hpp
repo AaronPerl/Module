@@ -37,8 +37,8 @@ class GraphicsInterface : ThreadObject
 		void preRender();
 		void postRender();
 		
-		void mousePressed(uint16_t x, uint16_t y);
-		void mouseReleased(uint16_t x, uint16_t y);
+		void mousePressed(uint8_t button, uint16_t x, uint16_t y);
+		void mouseReleased(uint8_t button, uint16_t x, uint16_t y);
 		void mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t dy);
 		
 		void keyPressed(uint8_t key);

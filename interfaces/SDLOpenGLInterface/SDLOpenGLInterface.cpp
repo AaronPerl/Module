@@ -395,6 +395,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 
 		while (SDL_PollEvent(&event))
 		{
+			uint8_t mouseButton = 255;
 			switch (event.type)
 			{
 				case SDL_QUIT:
@@ -403,12 +404,40 @@ void Module::SDLOpenGLInterface::renderFrame()
 					running = false;
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-					mousePressed(	(uint16_t) event.button.x,
-									(uint16_t) event.button.y);
+					switch (event.button.button)
+					{
+						case SDL_BUTTON_LEFT:
+							mouseButton = 0;
+							break;
+						case SDL_BUTTON_MIDDLE:
+							mouseButton = 2;
+							break;
+						case SDL_BUTTON_RIGHT:
+							mouseButton = 1;
+							break;
+					}
+					if (mouseButton != 255)
+						mousePressed(	mouseButton,
+										(uint16_t) event.button.x,
+										(uint16_t) event.button.y);
 					break;
 				case SDL_MOUSEBUTTONUP:
-					mouseReleased(	(uint16_t) event.button.x,
-									(uint16_t) event.button.y);
+					switch (event.button.button)
+					{
+						case SDL_BUTTON_LEFT:
+							mouseButton = 0;
+							break;
+						case SDL_BUTTON_MIDDLE:
+							mouseButton = 2;
+							break;
+						case SDL_BUTTON_RIGHT:
+							mouseButton = 1;
+							break;
+					}
+					if (mouseButton != 255)
+						mouseReleased(	mouseButton,
+										(uint16_t) event.button.x,
+										(uint16_t) event.button.y);
 					break;
 				case SDL_MOUSEMOTION:
 					mouseMoved(	(uint16_t) event.motion.x,

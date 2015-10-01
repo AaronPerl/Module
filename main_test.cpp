@@ -21,13 +21,35 @@
 class TestInputCallback : public Module::InputCallback
 {
 public:
-	virtual void onMouseDown(uint16_t x, uint16_t y)
+	virtual void onMouseDown(uint8_t button, uint16_t x, uint16_t y)
 	{
-		std::cout << "Mouse pressed at location <" << x << "," << y << ">" << std::endl;
+		switch (button)
+		{
+			case 0:
+				std::cout << "Left";
+				break;
+			case 1:
+				std::cout << "Right";
+				break;
+			case 2:
+				std::cout << "Middle";
+		}
+		std::cout << " mouse button pressed at location <" << x << "," << y << ">" << std::endl;
 	}
-	virtual void onMouseUp(uint16_t x, uint16_t y)
+	virtual void onMouseUp(uint8_t button, uint16_t x, uint16_t y)
 	{
-		std::cout << "Mouse released at location <" << x << "," << y << ">" << std::endl;
+		switch (button)
+		{
+			case 0:
+				std::cout << "Left";
+				break;
+			case 1:
+				std::cout << "Right";
+				break;
+			case 2:
+				std::cout << "Middle";
+		}
+		std::cout << " mouse button released at location <" << x << "," << y << ">" << std::endl;
 	}
 	/*virtual void onMouseMove(uint16_t x, uint16_t y, int16_t dx, int16_t dy)
 	{
