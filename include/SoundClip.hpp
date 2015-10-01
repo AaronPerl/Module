@@ -12,9 +12,10 @@
 namespace Module
 {
 class AudioInterface;
-// The SoundClip represents a single sound's data, which
-// is stored in the AudioInterface, and which is read from by
-// SoundInstances, which represent the actual playing of sounds.
+/** The SoundClip represents a single sound's data, which
+ * is stored in the AudioInterface, and which is read from by
+ * SoundInstances, which represent the actual playing of sounds.
+ */
 class SoundClip
 {
 	friend class AudioInterface;
@@ -22,10 +23,10 @@ class SoundClip
 	
 	protected:
 		// REPRESENTATION
-		std::string name;		// The name of this SoundClip
-		uint16_t numInstances;	// The number of instances (Sounds) of this SoundClip
-		AudioInterface* audio;	// The audioInterface that created this SoundClip
-		unsigned int frequency;	// The frequency, in Hertz, of this SoundClip
+		std::string name;		/**< The name of this SoundClip */
+		uint16_t numInstances;	/**< The number of instances (Sounds) of this SoundClip */
+		AudioInterface* audio;	/**< The audioInterface that created this SoundClip */
+		unsigned int frequency;	/**< The frequency, in Hertz, of this SoundClip */
 		
 		// CONSTRUCTOR
 		SoundClip(std::string n, AudioInterface* aI): name(n), numInstances(0), audio(aI), frequency(0) {}
