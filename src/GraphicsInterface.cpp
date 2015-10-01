@@ -36,18 +36,42 @@ void GraphicsInterface::run()
 void GraphicsInterface::preRender()
 {
 	GraphicsContext context(this);
-	for (unsigned int i = 0; i < callbacks.size(); i++)
+	for (unsigned int i = 0; i < graphicsCallbacks.size(); i++)
 	{
-		callbacks[i]->onPreRender(context);
+		graphicsCallbacks[i]->onPreRender(context);
 	}
 }
 
 void GraphicsInterface::postRender()
 {
 	GraphicsContext context(this);
-	for (unsigned int i = 0; i < callbacks.size(); i++)
+	for (unsigned int i = 0; i < graphicsCallbacks.size(); i++)
 	{
-		callbacks[i]->onPostRender(context);
+		graphicsCallbacks[i]->onPostRender(context);
+	}
+}
+
+void GraphicsInterface::mousePressed(uint16_t x, uint16_t y)
+{
+	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
+	{
+		inputCallbacks[i]->onMouseDown(x,y);
+	}
+}
+
+void GraphicsInterface::mouseReleased(uint16_t x, uint16_t y)
+{
+	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
+	{
+		inputCallbacks[i]->onMouseUp(x,y);
+	}
+}
+
+void GraphicsInterface::mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t dy)
+{
+	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
+	{
+		inputCallbacks[i]->onMouseMoved(x,y,dx,dy);
 	}
 }
 
@@ -90,7 +114,13 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 	return createMesh(other->vertices, other->normals, other->numVertices, other->name); // won't work given vertices may not be contiguous (across 2 or more pages)
 }*/
 
-void GraphicsInterface::addCallback(GraphicsCallback* callback)
+void GraphicsInterface::addGraphicsCallback(GraphicsCallback* callback)
 {
-	callbacks.push_back(callback);
+	graphicsCallbacks.push_back(callback);
 }
+
+void GraphicsInterface::addInputCallback(InputCallback* callback)
+{
+	inputCallbacks.push_back(callback);
+}
+

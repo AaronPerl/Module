@@ -10,6 +10,7 @@ namespace Module
 		class TransformObject;
 	class GraphicsInterface;
 		class GraphicsCallback;
+		class InputCallback;
 		class GraphicsContext;
 		class Mesh;
 		class Color;

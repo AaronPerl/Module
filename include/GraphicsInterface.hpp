@@ -17,9 +17,11 @@ class GraphicsContext;
 class PolygonContainer;
 class GraphicsCallback;
 
-// The GraphicsInterface is one of Module's four core interfaces. It manages rendering
-// and user input. Implementations of the GraphicsInterface are responsible for drawing
-// the world and triggering the attached graphics and input callbacks.
+/** 
+ * The GraphicsInterface is one of Module's four core interfaces. It manages rendering
+ * and user input. Implementations of the GraphicsInterface are responsible for drawing
+ * the world and triggering the attached graphics and input callbacks.
+ */
 class GraphicsInterface : ThreadObject
 {
 	friend class ModuleGame;
@@ -33,12 +35,20 @@ class GraphicsInterface : ThreadObject
 		Book<float> allVertices;				// all vertices (x, y then z) stored in a contiguous array to improve caching
 		Book<float> allNormals;					// all vertex normals, 1 to 1 with vertices
 		Book<Mesh> allMeshes;					// same for meshes, though they matter less
-		std::vector<GraphicsCallback*> callbacks;
+		std::vector<GraphicsCallback*> graphicsCallbacks;
+		std::vector<InputCallback*> inputCallbacks;
 		
 		void start();
 		void run(); //overrides ThreadObject::run()
 		void preRender();
 		void postRender();
+		
+		void mousePressed(uint16_t x, uint16_t y);
+		void mouseReleased(uint16_t x, uint16_t y);
+		void mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t dy);
+		
+		void keyPressed(uint8_t key);
+		void keyReleased(uint8_t key);
 		
 		// IMPLEMENT THESE //
 		virtual void createWindow() = 0;            	// initialization and window creation
@@ -66,7 +76,8 @@ class GraphicsInterface : ThreadObject
 		
 		virtual void setCamera(GameObject* obj) { camera = obj; }
 		
-		void addCallback(GraphicsCallback* g);
+		void addGraphicsCallback(GraphicsCallback* g);
+		void addInputCallback(InputCallback* g);
 };
 
 inline Book<float>* GraphicsInterface::getVertexBook(Mesh* m) const
