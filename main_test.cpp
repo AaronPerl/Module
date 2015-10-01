@@ -10,10 +10,26 @@
 #include <PthreadsInterface.hpp>
 #include "Vector3.hpp"
 #include "Quaternion.hpp"
+#include "Sound.hpp"
+#include "SoundClip.hpp"
+#include "InputCallback.hpp"
 
 #define MATH_PI 3.14159265358979323846264
 
 // The Chopin comes from https://archive.org/details/onclassical-quality-wav-audio-files-of-classical-music
+
+class TestInputCallback : public Module::InputCallback
+{
+public:
+	virtual void onMouseDown(uint16_t x, uint16_t y)
+	{
+		std::cout << "Mouse pressed at location <" << x << "," << y << ">" << std::endl;
+	}
+	virtual void onMouseUp(uint16_t x, uint16_t y)
+	{
+		std::cout << "Mouse released at location <" << x << "," << y << ">" << std::endl;
+	}
+};
 
 bool halted = false;
 
@@ -40,6 +56,9 @@ int main(int argc, char ** argv)
 	game.attachThreadingInterface(&threads);
 	game.attachGraphicsInterface(&graphics);
 	game.attachAudioInterface(&audio);
+	
+	TestInputCallback input;
+	graphics.addInputCallback(&input);
 	
 	// Starts the game
 	game.start();

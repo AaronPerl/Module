@@ -8,10 +8,11 @@ layout (location = 0) in vec2 position;
 layout (location = 1) in vec4 vertex_color;
 
 out vec4 varyingColor;
+out vec4 varyingPosition;
 
 void main()
 {
-    gl_Position = vec4(position/screen_size,0,0);
-    varyingPosition = position;
+    gl_Position = vec4(position.xy/screen_size,0,0);
+    varyingPosition = vec4(position,0,0);
     varyingColor = vertex_color;
 }
