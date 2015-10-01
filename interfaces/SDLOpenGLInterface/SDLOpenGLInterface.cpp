@@ -402,6 +402,19 @@ void Module::SDLOpenGLInterface::renderFrame()
 					terminate();
 					running = false;
 					break;
+				case SDL_MOUSEBUTTONDOWN:
+					mousePressed(	(uint16_t) event.button.x,
+									(uint16_t) event.button.y);
+					break;
+				case SDL_MOUSEBUTTONUP:
+					mouseReleased(	(uint16_t) event.button.x,
+									(uint16_t) event.button.y);
+					break;
+				case SDL_MOUSEMOTION:
+					mouseMoved(	(uint16_t) event.motion.x,
+								(uint16_t) event.motion.y,
+								(int16_t) event.motion.xrel,
+								(int16_t) event.motion.yrel);
 			}
 		}
 	}

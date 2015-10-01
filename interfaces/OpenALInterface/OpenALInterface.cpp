@@ -1,4 +1,6 @@
 #include "OpenALInterface.hpp"
+#include "Sound.hpp"
+#include "SoundClip.hpp"
 #include <stdio.h>
 #include <string.h>
 
