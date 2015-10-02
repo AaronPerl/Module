@@ -1,6 +1,8 @@
 #ifndef __MODULE__INPUTCALLBACK_HPP__
 #define __MODULE__INPUTCALLBACK_HPP__
 
+#include "KeyCodes.hpp"
+
 namespace Module {
 
 /* An abstract class to hook into events triggered by user input, such as mouse and key presses.
