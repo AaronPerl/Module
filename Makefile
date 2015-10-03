@@ -105,6 +105,8 @@ else
 	LIBS += -lpthread
 endif
 
+.DEFAULT_GOAL = 64bit
+
 .PHONY: all
 all: 64bit 32bit
 
