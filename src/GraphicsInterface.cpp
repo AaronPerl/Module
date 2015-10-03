@@ -21,7 +21,7 @@ void GraphicsInterface::start()
 
 void GraphicsInterface::run()
 {
-	unsigned long prevTime = getMilliseconds();
+	// unsigned long prevTime = getMilliseconds();
 	createWindow();
 	while (isRunning())
 	{

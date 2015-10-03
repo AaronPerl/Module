@@ -10,6 +10,8 @@ namespace Module {
  */
 class InputCallback {
 private:
+protected:
+	InputCallback() {}
 public:
 
 	/**

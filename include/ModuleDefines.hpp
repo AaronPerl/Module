@@ -1,8 +1,12 @@
 #ifndef __MODULEDEFINES_HPP__
 #define __MODULEDEFINES_HPP__
 
+#include <string>
+
 namespace Module
-{
+{	
+	void Log(const std::string& info);
+	
 	class ModuleGame;
 		class GameObject;
 		class Vector3;
