@@ -76,6 +76,22 @@ void GraphicsInterface::mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t d
 	}
 }
 
+void GraphicsInterface::keyPressed(KeyCode code, char keyChar)
+{
+	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
+	{
+		inputCallbacks[i]->onKeyDown(code, keyChar);
+	}
+}
+
+void GraphicsInterface::keyReleased(KeyCode code, char keyChar)
+{
+	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
+	{
+		inputCallbacks[i]->onKeyUp(code, keyChar);
+	}
+}
+
 Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name)
 {
 	assert(num_vertices);

@@ -5,7 +5,8 @@
 
 namespace Module {
 
-/* An abstract class to hook into events triggered by user input, such as mouse and key presses.
+/**
+ * An abstract class to hook into events triggered by user input, such as mouse and key presses.
  * Extend this class if you need to process these events.
  */
 class InputCallback {
@@ -43,13 +44,13 @@ public:
 	 * Called when a key is pressed.
 	 * @param key The key that was pressed.
 	 */
-	virtual void onKeyDown(uint8_t key) {}
+	virtual void onKeyDown(KeyCode code, char keyChar) {}
 	
 	/**
 	 * Called when a key is released.
 	 * @param key The key that was released.
 	 */
-	virtual void onKeyUp(uint8_t key) {}
+	virtual void onKeyUp(KeyCode code, char keyChar) {}
 };
 
 }

@@ -4,6 +4,7 @@
 #include "ModuleDefines.hpp"
 #include "Mesh.hpp"
 #include "ThreadObject.hpp"
+#include "KeyCodes.hpp"
 #include <string>
 #include <vector>
 #include <stdint.h>
@@ -41,8 +42,8 @@ class GraphicsInterface : ThreadObject
 		void mouseReleased(uint8_t button, uint16_t x, uint16_t y);
 		void mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t dy);
 		
-		void keyPressed(uint8_t key);
-		void keyReleased(uint8_t key);
+		void keyPressed(KeyCode code, char keyChar);
+		void keyReleased(KeyCode code, char keyChar);
 		
 		// IMPLEMENT THESE //
 		virtual void createWindow() = 0;            	// initialization and window creation
