@@ -1,6 +1,9 @@
 var searchData=
 [
+  ['b',['B',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a5d27d6868414bb790513865b8400352f',1,'Module::KeyCode']]],
   ['back',['back',['../d2/dfe/class_module_1_1_book.html#a67469d7c4c0cf0a114173f9bbc3aa720',1,'Module::Book::back()'],['../d2/dfe/class_module_1_1_book.html#a2702210e8dc0f92c4bfe336084e5b855',1,'Module::Book::back() const ']]],
+  ['backslash',['Backslash',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a53b6fd6c4ce51a02e58aaf964270a3f7',1,'Module::KeyCode']]],
+  ['backspace',['Backspace',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a7a30cdaa68b13e535d639b76c6b6166b',1,'Module::KeyCode']]],
   ['book',['Book',['../d2/dfe/class_module_1_1_book.html',1,'Module']]],
   ['book',['Book',['../d2/dfe/class_module_1_1_book.html#a103036ead3349a1077f95b1008c026cd',1,'Module::Book']]],
   ['book_2ehpp',['Book.hpp',['../d1/d0c/_book_8hpp.html',1,'']]],

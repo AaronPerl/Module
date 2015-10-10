@@ -1,18 +1,18 @@
 var searchData=
 [
-  ['onkeydown',['onKeyDown',['../dd/d02/class_module_1_1_input_callback.html#a2de7641073d7f5a8e1ec0b96f6969ee8',1,'Module::InputCallback']]],
-  ['onkeyup',['onKeyUp',['../dd/d02/class_module_1_1_input_callback.html#a6992fbf1edd54c5b90917a4b05f264cf',1,'Module::InputCallback']]],
-  ['onmousedown',['onMouseDown',['../dd/d02/class_module_1_1_input_callback.html#a2e78aa2aada94e679818883062cbe75d',1,'Module::InputCallback']]],
-  ['onmousemove',['onMouseMove',['../dd/d02/class_module_1_1_input_callback.html#aafdc3bca121e92ee37ffe8a167ec559f',1,'Module::InputCallback']]],
-  ['onmouseup',['onMouseUp',['../dd/d02/class_module_1_1_input_callback.html#ad39a6c69ddd3c8218a1e1bc72d597f5f',1,'Module::InputCallback']]],
-  ['onpostrender',['onPostRender',['../db/d56/class_module_1_1_graphics_callback.html#ab6f7bf8fde7dc850697b768df4fd97bb',1,'Module::GraphicsCallback']]],
-  ['onprerender',['onPreRender',['../db/d56/class_module_1_1_graphics_callback.html#a7db3cf0b3ba89cbcc27c900f3a2042ea',1,'Module::GraphicsCallback']]],
-  ['operator_2a',['operator*',['../dd/ddb/class_module_1_1_quaternion.html#a1b3b9706fc0f7633c43457f781a497ea',1,'Module::Quaternion::operator*()'],['../d2/d28/class_module_1_1_vector3.html#ab8bb1a236776d951a2e43b3ca9448bb2',1,'Module::Vector3::operator*(float scalar) const '],['../d2/d28/class_module_1_1_vector3.html#a9a4f85694ae3de0340ac7a6a9dc63209',1,'Module::Vector3::operator*(const Vector3 &amp;other) const ']]],
-  ['operator_2a_3d',['operator*=',['../dd/ddb/class_module_1_1_quaternion.html#a005233b2ecdca221e818975ef5f68d0e',1,'Module::Quaternion::operator*=()'],['../d2/d28/class_module_1_1_vector3.html#ab337fe4b0c5fd44657f42427e265c982',1,'Module::Vector3::operator*=(float scalar)'],['../d2/d28/class_module_1_1_vector3.html#a389eb7e7b9eb9ed8c712f6705f377e24',1,'Module::Vector3::operator*=(const Vector3 &amp;other)']]],
-  ['operator_2b',['operator+',['../d2/d28/class_module_1_1_vector3.html#aa4b594eec33c63408000a3f51f03ad76',1,'Module::Vector3']]],
-  ['operator_2b_3d',['operator+=',['../d2/d28/class_module_1_1_vector3.html#a9dbccb6721900d305483b20dfcfc5f45',1,'Module::Vector3']]],
-  ['operator_2d',['operator-',['../d2/d28/class_module_1_1_vector3.html#a72a36c71164f1532d24ec49c3d7056fc',1,'Module::Vector3::operator-() const '],['../d2/d28/class_module_1_1_vector3.html#a18a8e576c9629c9fef92ee084aac8c2d',1,'Module::Vector3::operator-(const Vector3 &amp;other) const ']]],
-  ['operator_2d_3d',['operator-=',['../d2/d28/class_module_1_1_vector3.html#a4ef4d60ca82e5bad1d9ed91c79b447b4',1,'Module::Vector3']]],
-  ['operator_3c_3c',['operator&lt;&lt;',['../de/d3b/_quaternion_8cpp.html#a60829c0f8f2a36602ab5fdbb1a79b635',1,'operator&lt;&lt;(std::ostream &amp;o, const Quaternion &amp;q):&#160;Quaternion.cpp'],['../d6/d0e/_vector3_8cpp.html#a1fc070e26f24996653ff64151263ae2e',1,'operator&lt;&lt;(std::ostream &amp;o, const Module::Vector3 &amp;v):&#160;Vector3.cpp'],['../d6/d42/_quaternion_8hpp.html#a1cad41785f44399620baba3a332f5f7a',1,'operator&lt;&lt;(std::ostream &amp;o, const Module::Quaternion &amp;q):&#160;Quaternion.cpp'],['../d2/d6a/_vector3_8hpp.html#a1fc070e26f24996653ff64151263ae2e',1,'operator&lt;&lt;(std::ostream &amp;o, const Module::Vector3 &amp;v):&#160;Vector3.cpp']]],
-  ['operator_5b_5d',['operator[]',['../d2/dfe/class_module_1_1_book.html#ab7000d83aed9aab98ef0c1cb78684e22',1,'Module::Book::operator[](size_type index)'],['../d2/dfe/class_module_1_1_book.html#a60438f42506e15083b190ae19b617630',1,'Module::Book::operator[](size_type index) const ']]]
+  ['k',['K',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a327011f54fa236d0a7df8b63eb766926',1,'Module::KeyCode']]],
+  ['key0',['Key0',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a96bd1ddbcf086f5872aaf87ce2fe6905',1,'Module::KeyCode']]],
+  ['key1',['Key1',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a7dafcec6b2e94b468e4dafebd268b231',1,'Module::KeyCode']]],
+  ['key2',['Key2',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a619d8d87d4c8de5e001d72e62f6d3d00',1,'Module::KeyCode']]],
+  ['key3',['Key3',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a49ce9743ab5aeb56c14a73fdeb15fc9c',1,'Module::KeyCode']]],
+  ['key4',['Key4',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7ac7ce84d3fa73cb1c70e54e94505adfcd',1,'Module::KeyCode']]],
+  ['key5',['Key5',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7aa56bebb3fb6d995e9a23a28fff20cbc0',1,'Module::KeyCode']]],
+  ['key6',['Key6',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7abf8a884ed0f2da0d7b33f77e5c04a4db',1,'Module::KeyCode']]],
+  ['key7',['Key7',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7abf5082e0b53b9a086491e73545fe16e8',1,'Module::KeyCode']]],
+  ['key8',['Key8',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a2b2767c19759e34fc34516d4683118dd',1,'Module::KeyCode']]],
+  ['key9',['Key9',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a7334c80fa04d937eaac46f90d987e2a5',1,'Module::KeyCode']]],
+  ['keycode',['KeyCode',['../d9/d55/class_module_1_1_key_code.html',1,'Module']]],
+  ['keycodes_2ehpp',['KeyCodes.hpp',['../dc/d4f/_key_codes_8hpp.html',1,'']]],
+  ['keypressed',['keyPressed',['../d3/d35/class_module_1_1_graphics_interface.html#a0e13545ec2809356ac1e712db080514e',1,'Module::GraphicsInterface']]],
+  ['keyreleased',['keyReleased',['../d3/d35/class_module_1_1_graphics_interface.html#a81ddefbc2a729352d3e7d8c40f3dfcc7',1,'Module::GraphicsInterface']]]
 ];

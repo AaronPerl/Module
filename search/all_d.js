@@ -1,14 +1,21 @@
 var searchData=
 [
-  ['remainingelementsinpage',['remainingElementsInPage',['../d2/dfe/class_module_1_1_book.html#ada8f6f8b3de06fddde87545142aa1780',1,'Module::Book']]],
-  ['renderframe',['renderFrame',['../d3/d35/class_module_1_1_graphics_interface.html#a12034dd0502952997a38260ac1d612b9',1,'Module::GraphicsInterface']]],
-  ['replay',['replay',['../d1/da0/class_module_1_1_sound.html#a2b8cbdde64953340cb2c5c05baf5257c',1,'Module::Sound']]],
-  ['replaysound',['replaySound',['../d7/d3c/class_module_1_1_audio_interface.html#a8bc6aacf39052c673cbe4c964e7da4cf',1,'Module::AudioInterface']]],
-  ['resetupdates',['resetUpdates',['../d1/df7/class_module_1_1_polygon_container.html#ab4e5ca4f5df7a58d5e3bd56149bda3d6',1,'Module::PolygonContainer']]],
-  ['resume',['resume',['../d1/da0/class_module_1_1_sound.html#a6139aff26f5bd3fea27fbef013124afc',1,'Module::Sound']]],
-  ['resumesound',['resumeSound',['../d7/d3c/class_module_1_1_audio_interface.html#af180bc4040882bd0e0579e5b9fcfa81c',1,'Module::AudioInterface']]],
-  ['rot',['rot',['../d2/ddb/class_module_1_1_game_object.html#a722c24d911b930971c652bc15ebe55f1',1,'Module::GameObject']]],
-  ['rotate',['rotate',['../d2/d28/class_module_1_1_vector3.html#a4e2041c03a71592109a84837c87da183',1,'Module::Vector3']]],
-  ['run',['run',['../d7/d3c/class_module_1_1_audio_interface.html#a8292f26451aeaca84445c653349561da',1,'Module::AudioInterface::run()'],['../d3/d35/class_module_1_1_graphics_interface.html#a90b574a4d08ababf14258fba9bda0157',1,'Module::GraphicsInterface::run()'],['../da/d38/class_module_1_1_thread_object.html#a27769f0459a9bf567bd1eb6575dc4ad3',1,'Module::ThreadObject::run()']]],
-  ['runthreadobject',['runThreadObject',['../d2/d0a/class_module_1_1_threading_interface.html#a7e20397d5f7edbbc4f182a598ada6fb2',1,'Module::ThreadingInterface']]]
+  ['n',['N',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7abfe607e01476e69795d5c5ea5d7508ac',1,'Module::KeyCode']]],
+  ['name',['name',['../df/db6/class_module_1_1_sound_clip.html#a7bdde774a483872393783579ec54c1cb',1,'Module::SoundClip']]],
+  ['normalize',['normalize',['../dd/ddb/class_module_1_1_quaternion.html#a08f7aca94b3e3e4c429d22f9c8155d6d',1,'Module::Quaternion']]],
+  ['numinstances',['numInstances',['../df/db6/class_module_1_1_sound_clip.html#ab498c32f2e15ca109382b9aa1f4ba4fe',1,'Module::SoundClip']]],
+  ['numlock',['NumLock',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7aa36b27b8cf3a1bf8caafb8df9546be3e',1,'Module::KeyCode']]],
+  ['numobjects',['numObjects',['../df/d09/class_module_1_1_module_game.html#a7f6f4988b6fec97f1bc7a97ab4a5f6e2',1,'Module::ModuleGame']]],
+  ['numpad0',['Numpad0',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a5f4260a662d15e0038c6b7712dc8bb73',1,'Module::KeyCode']]],
+  ['numpad1',['Numpad1',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a5cec9f7a27ef76093575c973f8ce9070',1,'Module::KeyCode']]],
+  ['numpad2',['Numpad2',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7af504d3e91423b6bda826a7abb081ae07',1,'Module::KeyCode']]],
+  ['numpad3',['Numpad3',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a05f260e28a06421ab9882e072c536964',1,'Module::KeyCode']]],
+  ['numpad4',['Numpad4',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a3396a37ae4d68fbc8b85d7b4586e0578',1,'Module::KeyCode']]],
+  ['numpad5',['Numpad5',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a8eb2a8f06a9538f7a340e5d4e2d84b3a',1,'Module::KeyCode']]],
+  ['numpad6',['Numpad6',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a2e677dd7c7eb060ac3a5ec1cd13ab264',1,'Module::KeyCode']]],
+  ['numpad7',['Numpad7',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7afba018f12a4c44b06e4ead5354460c44',1,'Module::KeyCode']]],
+  ['numpad8',['Numpad8',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7aa77f63eed17a7e47f4f2742aafe74d86',1,'Module::KeyCode']]],
+  ['numpad9',['Numpad9',['../d9/d55/class_module_1_1_key_code.html#adaca26668ae4f0554d1f0c12e704cec7a60a97bdc74b3e580865e33f2352a64b3',1,'Module::KeyCode']]],
+  ['numtriangles',['numTriangles',['../d1/df7/class_module_1_1_polygon_container.html#aaa849bbe5d73f4975b89532105f2dbf5',1,'Module::PolygonContainer']]],
+  ['numvertices',['numVertices',['../d1/df7/class_module_1_1_polygon_container.html#a824df5f8e89832b834b8058de946db25',1,'Module::PolygonContainer']]]
 ];
