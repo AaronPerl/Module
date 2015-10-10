@@ -449,12 +449,15 @@ void Module::SDLOpenGLInterface::renderFrame()
 				case SDL_KEYDOWN:
 					if (!event.key.repeat)
 					{
-						std::cout << "Down " << getKeyCode(event.key.keysym.sym) << std::endl;
-						
+						SDL_Keycode key = event.key.keysym.sym;
+						uint16_t mod = event.key.keysym.mod;
+						keyPressed(getKeyCode(key), getChar(key,mod));
 					}
 					break;
 				case SDL_KEYUP:
-						std::cout << "Up " << getKeyCode(event.key.keysym.sym) << std::endl;
+					SDL_Keycode key = event.key.keysym.sym;
+					uint16_t mod = event.key.keysym.mod;
+					keyReleased(getKeyCode(key), getChar(key,mod));
 					break;
 			}
 		}
@@ -595,4 +598,71 @@ Module::KeyCode::Code Module::getKeyCode(SDL_Keycode sym)
 	{
 		return highLookup[sym & ~0x40000000];
 	}
+}
+
+uint8_t Module::getChar(SDL_Keycode sym, uint16_t mod)
+{
+	if ((sym & 0x40000000) != 0x40000000)
+	{
+		if (mod & KMOD_SHIFT)
+		{
+			if (sym >= 'a' && sym <= 'z')
+			{
+				return sym - 'a' + 'A';
+			}
+			else
+			{
+				switch (sym)
+				{
+				case '1':
+					return '!';
+				case '2':
+					return '@';
+				case '3':
+					return '#';
+				case '4':
+					return '$';
+				case '5':
+					return '%';
+				case '6':
+					return '^';
+				case '7':
+					return '&';
+				case '8':
+					return '*';
+				case '9':
+					return '(';
+				case '0':
+					return ')';
+				case '-':
+					return '_';
+				case '=':
+					return '+';
+				case '`':
+					return '~';
+				case '\\':
+					return '|';
+				case '[':
+					return '{';
+				case ']':
+					return '}';
+				case ';':
+					return ':';
+				case '\'':
+					return '"';
+				case ',':
+					return '<';
+				case '.':
+					return '>';
+				case '/':
+					return '?';
+				}
+			}
+		}
+		else
+		{
+			return (wchar_t) sym;
+		}	
+	}
+		return '\000';
 }

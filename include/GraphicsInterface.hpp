@@ -42,8 +42,8 @@ class GraphicsInterface : ThreadObject
 		void mouseReleased(uint8_t button, uint16_t x, uint16_t y);
 		void mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t dy);
 		
-		void keyPressed(KeyCode code, char keyChar);
-		void keyReleased(KeyCode code, char keyChar);
+		void keyPressed(KeyCode::Code code, char keyChar);
+		void keyReleased(KeyCode::Code code, char keyChar);
 		
 		// IMPLEMENT THESE //
 		virtual void createWindow() = 0;            	// initialization and window creation

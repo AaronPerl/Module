@@ -76,7 +76,7 @@ void GraphicsInterface::mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t d
 	}
 }
 
-void GraphicsInterface::keyPressed(KeyCode code, char keyChar)
+void GraphicsInterface::keyPressed(KeyCode::Code code, char keyChar)
 {
 	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
 	{
@@ -84,7 +84,7 @@ void GraphicsInterface::keyPressed(KeyCode code, char keyChar)
 	}
 }
 
-void GraphicsInterface::keyReleased(KeyCode code, char keyChar)
+void GraphicsInterface::keyReleased(KeyCode::Code code, char keyChar)
 {
 	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
 	{

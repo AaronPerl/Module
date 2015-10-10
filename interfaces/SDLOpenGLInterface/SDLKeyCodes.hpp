@@ -418,6 +418,7 @@ namespace Module {
 	};
 	
 	KeyCode::Code getKeyCode(SDL_Keycode sym);
+	uint8_t getChar(SDL_Keycode sym, uint16_t mod);
 }
 
 #endif

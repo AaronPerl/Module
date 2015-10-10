@@ -44,13 +44,13 @@ public:
 	 * Called when a key is pressed.
 	 * @param key The key that was pressed.
 	 */
-	virtual void onKeyDown(KeyCode code, char keyChar) {}
+	virtual void onKeyDown(KeyCode::Code code, char keyChar) {}
 	
 	/**
 	 * Called when a key is released.
 	 * @param key The key that was released.
 	 */
-	virtual void onKeyUp(KeyCode code, char keyChar) {}
+	virtual void onKeyUp(KeyCode::Code code, char keyChar) {}
 };
 
 }

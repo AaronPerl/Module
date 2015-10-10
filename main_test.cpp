@@ -56,6 +56,10 @@ public:
 		std::cout << "Mouse moved to location <" << x << "," << y << ">" << std::endl;
 		std::cout << "Relative movement vector was <" << dx << "," << dy << ">" << std::endl;
 	}*/
+	virtual void onKeyDown(Module::KeyCode::Code code, char keyChar)
+	{
+		std::cout << "Key press: code = " << code << " char = " << keyChar << std::endl;
+	}
 };
 
 bool halted = false;
