@@ -585,7 +585,7 @@ void Module::SDLOpenGLInterface::swapBuffers()
 	SDL_GL_SwapWindow(window);
 }
 
-Module::KeyCode Module::getKeyCode(SDL_Keycode sym)
+Module::KeyCode::Code Module::getKeyCode(SDL_Keycode sym)
 {
 	if (sym < 0x40000000)
 	{
