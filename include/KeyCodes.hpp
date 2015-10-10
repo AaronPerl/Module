@@ -5,6 +5,7 @@
 
 namespace Module {
 	enum KeyCode {
+		Invalid = 0,
 		Backspace = 8,
 		Tab = 9,
 		Enter = 13,
@@ -17,6 +18,7 @@ namespace Module {
 		Space = 32,
 		PageUp = 33,
 		PageDown = 34,
+		End = 35,
 		Home = 36,
 		Left = 37,
 		Up = 38,
@@ -88,6 +90,7 @@ namespace Module {
 		NumLock = 144,
 		ScrollLock = 145,
 		Semicolon = 186,
+		Equals = 187,
 		Comma = 188,
 		Dash = 189,
 		Period = 190,
@@ -95,7 +98,7 @@ namespace Module {
 		Grave = 192,
 		LeftBracket = 219,
 		Backslash = 220,
-		CloseBracket = 221,
+		RightBracket = 221,
 		Apostrophe = 222
 	};
 };

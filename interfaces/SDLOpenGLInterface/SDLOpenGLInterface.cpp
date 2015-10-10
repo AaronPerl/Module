@@ -1,4 +1,5 @@
 #include "SDLOpenGLInterface.hpp"
+#include "SDLKeyCodes.hpp"
 
 Module::SDLOpenGLInterface::SDLOpenGLInterface() : 
 	window(0), context(0), vShader(0), fShader(0), program(0), frames(0), prevMillis(0), running(false), terminated(false)
@@ -444,6 +445,17 @@ void Module::SDLOpenGLInterface::renderFrame()
 								(uint16_t) event.motion.y,
 								(int16_t) event.motion.xrel,
 								(int16_t) event.motion.yrel);
+					break;
+				case SDL_KEYDOWN:
+					if (!event.key.repeat)
+					{
+						std::cout << "Down " << getKeyCode(event.key.keysym.sym) << std::endl;
+						
+					}
+					break;
+				case SDL_KEYUP:
+						std::cout << "Up " << getKeyCode(event.key.keysym.sym) << std::endl;
+					break;
 			}
 		}
 	}
@@ -571,4 +583,16 @@ void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& containe
 void Module::SDLOpenGLInterface::swapBuffers()
 {
 	SDL_GL_SwapWindow(window);
+}
+
+Module::KeyCode Module::getKeyCode(SDL_Keycode sym)
+{
+	if (sym < 0x40000000)
+	{
+		return lowLookup[sym];
+	}
+	else
+	{
+		return highLookup[sym & ~0x40000000];
+	}
 }
