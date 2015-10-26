@@ -128,15 +128,16 @@ dumpmachine:
 $(PATH64):
 	@echo Making 64-bit build directory
 	@echo $(PATH64)
-	@mkdir $(PATH64) 2>$(NULL) || mkdir $(subst /,\,$(PATH64)) 2>$(NULL)
+	@echo $(subst /,\,$(PATH64))
+	@mkdir $(PATH64) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH64)) 2>$(NULL)
 
 $(PATH32):
 	@echo Making 32-bit build directory
-	@mkdir $(PATH32) || mkdir $(subst /,\,$(PATH32))
+	@mkdir $(PATH32) -p || mkdir $(subst /,\,$(PATH32))
 
 $(DEP_PATH):
 	@echo Making dependency directory
-	@mkdir $(DEP_PATH) || $(subst /,\,$(DEP_PATH))
+	@mkdir $(DEP_PATH) -p || $(subst /,\,$(DEP_PATH))
 
 $(PATH64)/%.o : src/%.cpp
 	@echo Compiling $<
