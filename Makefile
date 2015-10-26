@@ -75,6 +75,7 @@ DEPS = $(notdir $(SRCS:.cpp=.d))
 FULL_OBJS64 = $(addprefix $(PATH64)/,$(OBJS))
 FULL_OBJS32 = $(addprefix $(PATH32)/,$(OBJS))
 FULL_DEPS = $(addprefix $(DEP_PATH)/,$(DEPS))
+NULL = 
 
 ifeq ($(OS), Windows_NT)
 	LIB_PATHS 		+= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib -L$(OPENAL_SOFT)/libs/Win64
@@ -88,12 +89,12 @@ ifeq ($(OS), Windows_NT)
 		PATH64 := $(addsuffix /windows/cygwin, $(PATH64))
 		PATH32 := $(addsuffix /windows/cygwin, $(PATH32))
 	endif
-	PATH64 := $(subst /,\,$(PATH64))
-	PATH32 := $(subst /,\,$(PATH32))
+	NULL := nul
 else
 	LIBS		+= -lGL -lGLEW
 	PATH64 := $(addsuffix /linux, $(PATH64))
 	PATH32 := $(addsuffix /linux, $(PATH32))
+	NULL := /dev/null
 endif
 
 ifeq ($(NEEDS_PTHREADS_WIN32), true)
@@ -109,46 +110,33 @@ endif
 
 .DEFAULT_GOAL = 64bit
 
-.PHONY: all
+.PHONY: all depends 64bit 32bit interfaces test clean dumpmachine
+
 all: 64bit 32bit
-
-.PHONY: depends
 depends: $(FULL_DEPS)
-
-.PHONY: 64bit
 64bit: $(PATH64)/$(FULL_NAME)
-
-.PHONY: 32bit
 32bit: $(PATH32)/$(FULL_NAME)
-
-.PHONY: interfaces
 interfaces: $(INTERFACE_LIBS)
-
-.PHONY: test
 test: 64bit interfaces
 	@echo Compiling test program!
 	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
-
-.PHONY: clean
 clean:
 	rm -rf build
-
-.PHONY: dumpmachine
 dumpmachine:
 	echo
 
 $(PATH64):
 	@echo Making 64-bit build directory
 	@echo $(PATH64)
-	@mkdir -p $(PATH64)
+	@mkdir $(PATH64) 2>$(NULL) || mkdir $(subst /,\,$(PATH64)) 2>$(NULL)
 
 $(PATH32):
 	@echo Making 32-bit build directory
-	@mkdir -p $(PATH32)
+	@mkdir $(PATH32) || mkdir $(subst /,\,$(PATH32))
 
 $(DEP_PATH):
 	@echo Making dependency directory
-	@mkdir -p $(DEP_PATH)
+	@mkdir $(DEP_PATH) || $(subst /,\,$(DEP_PATH))
 
 $(PATH64)/%.o : src/%.cpp
 	@echo Compiling $<
@@ -159,8 +147,6 @@ $(PATH32)/%.o : src/%.cpp
 	@echo Compiling $<
 	@printf "  "
 	i686-w64-mingw32-g++ $< -c -Iinclude $(FLAGS) -o $@
-#$(DEP_PATH)/%.d : src/%.cpp
-#	g++ -MF $@ -MG -MM -MP -MT $@ -MT $(<:.cpp=.o) $(FLAGS) $<
 
 $(DEP_PATH)/%.d : src/%.cpp | $(DEP_PATH)
 	@echo Generating dependencies for $<
