@@ -56,16 +56,16 @@ DEBUG ?= 1
 ifeq ($(DEBUG), 1)
 	#Debug mode
 	FLAGS += -g -DDEBUG -ggdb3
-	PATH64 = build/debug/64bit
-	PATH32 = build/debug/32bit
+	PATH64 := build/debug/64bit
+	PATH32 := build/debug/32bit
 else
 	#Release mode
 	FLAGS += -DNDEBUG
 	ifeq ($(OS), Windows_NT)
 		FLAGS += -mwindows
 	endif
-	PATH64 = build/release/64bit
-	PATH32 = build/release/32bit
+	PATH64 := build/release/64bit
+	PATH32 := build/release/32bit
 endif
 
 DEP_PATH = depend
@@ -88,6 +88,8 @@ ifeq ($(OS), Windows_NT)
 		PATH64 := $(addsuffix /windows/cygwin, $(PATH64))
 		PATH32 := $(addsuffix /windows/cygwin, $(PATH32))
 	endif
+	PATH64 := $(subst /,\,$(PATH64))
+	PATH32 := $(subst /,\,$(PATH32))
 else
 	LIBS		+= -lGL -lGLEW
 	PATH64 := $(addsuffix /linux, $(PATH64))
@@ -137,6 +139,7 @@ dumpmachine:
 
 $(PATH64):
 	@echo Making 64-bit build directory
+	@echo $(PATH64)
 	@mkdir -p $(PATH64)
 
 $(PATH32):
