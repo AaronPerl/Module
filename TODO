@@ -1,5 +1,10 @@
 Current WIP Features in order of completion
 
+Textures
+	Texture class which has a pointer to a TextureData class
+	TextureData classes are extended by GraphicsInterface implementations
+		Contain implementation-specific texture data (i.e. Texture ID)
+
 Rendering 2D polygons
 	Polygon container class that stores vertices, vertex colors, texture coords for rendering 2D polygons (i.e. GUI)
 		Only 1 texture per polygon container? More? How so (efficiently)?
@@ -18,8 +23,3 @@ Click Handlers:
 	Priority based (lower values are called first)
 	If a click handler returns true, the event was processed
 		Otherwise, continue by calling the next click handler by order of priority
-
-Textures
-	Texture class which has a pointer to a TextureData class
-	TextureData classes are extended by GraphicsInterface implementations
-		Contain implementation-specific texture data (i.e. Texture ID)
