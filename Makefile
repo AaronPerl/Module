@@ -121,8 +121,8 @@ test: 64bit interfaces
 	@echo Compiling test program!
 	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
 clean:
-	@echo Files are: $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/.o*))
-	rm -rf build $(DEP_PATH) $(INTERFACE_LIBS) $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/.o*))
+	@echo Files are: $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
+	rm -rf build $(DEP_PATH) $(INTERFACE_LIBS) $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
 dumpmachine:
 	echo
 
