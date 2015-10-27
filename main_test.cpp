@@ -128,11 +128,11 @@ int main(int argc, char ** argv)
 	
 	
 	// AUDIO TESTS
-	Module::SoundClip* boilClip = audio.loadSoundClip("boilingWater","sounds/boiling.wav");
-	Module::SoundClip* musicClip = audio.loadSoundClip("chopinScherzo","sounds/chopin_scherzo.wav");
-	audio.playSound(boilClip,1.0f,0.1f);
-	Module::Sound* music = audio.playSound(musicClip,1.0f,1.0f);
-	audio.debugAudio();
+	Module::SoundClip* boilClip = game.loadSoundClip("boilingWater","sounds/boiling.wav");
+	Module::SoundClip* musicClip = game.loadSoundClip("chopinScherzo","sounds/chopin_scherzo.wav");
+	game.playSound(boilClip);//,1.0f,0.1f);
+	Module::Sound* music = game.playSound(musicClip);//,1.0f,1.0f);
+	game.debugAudio();
 	// END AUDIO TESTS
 	
 	

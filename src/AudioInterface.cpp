@@ -14,11 +14,21 @@ void AudioInterface::start()
 	game->startThread(this);
 }
 /** Overrides ThreadObject::run()
-*/
+ */
 void AudioInterface::run()
 {
 	setDevice();
 	setListener(NULL);
+	while(true) // While the game is running (?)
+	{
+		updateEnvironment();
+	}
+}
+/** Updates positions, velocities, etc.
+ */
+void AudioInterface::updateEnvironment()
+{
+	
 }
 /** Sets the frequency of a SoundClip.
  * @param soundClip A pointer to the SoundClip.
@@ -39,7 +49,7 @@ Sound* AudioInterface::playSound(SoundClip* clip)
 		#ifdef DEBUG
 		std::cerr << "[AudioInterface] Now playing the Sound: " << clip->getName() << std::endl;
 		#endif
-		sounds.push_back(Sound(clip,this));
+		sounds.push_back(Sound(clip,NULL,this));
 	}
 	else
 	{
