@@ -2,17 +2,16 @@
 #extension GL_ARB_separate_shader_objects : enable
 #extension GL_ARB_explicit_attrib_location : enable
 
-uniform vec2 screen_size;
+uniform ivec2 screen_size;
 
-layout (location = 0) in vec2 position;
-layout (location = 1) in vec4 vertex_color;
+layout (location = 0) in vec3 position;
+//layout (location = 1) in vec4 vertex_color;
 
 out vec4 varyingColor;
-out vec4 varyingPosition;
 
 void main()
 {
-    gl_Position = vec4(position.xy/screen_size,0,0);
-    varyingPosition = vec4(position,0,0);
-    varyingColor = vertex_color;
+	vec2 scaledPosition = 2 * (vec2(position.x, 0) - vec2(0,position.y))/screen_size;
+    gl_Position = vec4(position.x, -position.y, 0, 0);//vec4(scaledPosition - vec2(1,1),0,0);
+    varyingColor = vec4(1,0,0,1);
 }

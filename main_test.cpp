@@ -148,7 +148,7 @@ int main(int argc, char ** argv)
 		unsigned long millis = game.getMilliseconds() - millisStart;
 		for (unsigned int i = 0; i < objects.size(); i++)
 		{
-			thing->setPosition(Module::Vector3(5*std::sin(2 * MATH_PI * millis / 1000.0f),0,0));
+			thing->setPosition(Module::Vector3(2*std::sin(0.25f * MATH_PI * millis / 1000.0f),0,1));
 			objects[i]->setRotation(Module::Quaternion(Module::Vector3(0,1,0), std::sin(2 * MATH_PI * millis / 1000.0f) + (2 * MATH_PI * i / teapots)));
 		}		
 	}

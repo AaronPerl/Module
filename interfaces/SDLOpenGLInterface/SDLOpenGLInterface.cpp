@@ -1,5 +1,6 @@
 #include "SDLOpenGLInterface.hpp"
 #include "SDLKeyCodes.hpp"
+#include "PolygonContainer.hpp"
 
 Module::SDLOpenGLInterface::SDLOpenGLInterface() : 
 	window(0), context(0), vShader(0), fShader(0), program(0), frames(0), prevMillis(0), running(false), terminated(false)
@@ -158,6 +159,10 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
     {
     	throw std::runtime_error("[GraphicsInterface] : glew : Error initializing glew!");
     }
+	if (!GLEW_VERSION_3_1)
+	{
+		throw std::runtime_error("[GraphicsInterface] : OpenGL : Version 3.1 not supported!");
+	}
     setupShaders();
     SDL_GL_SwapWindow(window);
 	prevMillis = getMilliseconds();
@@ -200,6 +205,27 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	
 	vertexBuffers.push_back(vertexVBO);
 	vertexBuffers.push_back(normalVBO);
+}
+
+void Module::SDLOpenGLInterface::createVertexBuffer(PolygonContainer* container)
+{
+	GLuint vertexVBO;
+	float* buffer;
+	const float* vertices = container->getCoordinates().data();
+	glGenBuffers(1, &vertexVBO);
+	
+	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+	glBufferData(GL_ARRAY_BUFFER, container->numVertices() * 3 * sizeof(float), NULL, GL_STATIC_DRAW);
+	buffer = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	for (unsigned int i = 0; i < container->numVertices() * 3; i++)
+	{
+		buffer[i] = vertices[i];
+		std::cout << "coordinate i:" << vertices[i] << std::endl;
+	}
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
+	vertexBuffers2D.push_back(vertexVBO);
 }
 
 std::vector<std::string> split(const std::string& toSplit)
@@ -389,77 +415,74 @@ void Module::SDLOpenGLInterface::renderFrame()
 	
 	//	SDL stuff
 
-	if (frames % 5 == 0)
-	{
-		SDL_Event event;
-		SDL_PumpEvents();
+	SDL_Event event;
+	SDL_PumpEvents();
 
-		while (SDL_PollEvent(&event))
+	while (SDL_PollEvent(&event))
+	{
+		uint8_t mouseButton = 255;
+		switch (event.type)
 		{
-			uint8_t mouseButton = 255;
-			switch (event.type)
-			{
-				case SDL_QUIT:
-					std::cout << "SDL Program closed!" << std::endl;
-					terminate();
-					running = false;
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-					switch (event.button.button)
-					{
-						case SDL_BUTTON_LEFT:
-							mouseButton = 0;
-							break;
-						case SDL_BUTTON_MIDDLE:
-							mouseButton = 2;
-							break;
-						case SDL_BUTTON_RIGHT:
-							mouseButton = 1;
-							break;
-					}
-					if (mouseButton != 255)
-						mousePressed(	mouseButton,
-										(uint16_t) event.button.x,
-										(uint16_t) event.button.y);
-					break;
-				case SDL_MOUSEBUTTONUP:
-					switch (event.button.button)
-					{
-						case SDL_BUTTON_LEFT:
-							mouseButton = 0;
-							break;
-						case SDL_BUTTON_MIDDLE:
-							mouseButton = 2;
-							break;
-						case SDL_BUTTON_RIGHT:
-							mouseButton = 1;
-							break;
-					}
-					if (mouseButton != 255)
-						mouseReleased(	mouseButton,
-										(uint16_t) event.button.x,
-										(uint16_t) event.button.y);
-					break;
-				case SDL_MOUSEMOTION:
-					mouseMoved(	(uint16_t) event.motion.x,
-								(uint16_t) event.motion.y,
-								(int16_t) event.motion.xrel,
-								(int16_t) event.motion.yrel);
-					break;
-				case SDL_KEYDOWN:
-					if (!event.key.repeat)
-					{
-						SDL_Keycode key = event.key.keysym.sym;
-						uint16_t mod = event.key.keysym.mod;
-						keyPressed(getKeyCode(key), getChar(key,mod));
-					}
-					break;
-				case SDL_KEYUP:
+			case SDL_QUIT:
+				std::cout << "SDL Program closed!" << std::endl;
+				terminate();
+				running = false;
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				switch (event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+						mouseButton = 0;
+						break;
+					case SDL_BUTTON_MIDDLE:
+						mouseButton = 2;
+						break;
+					case SDL_BUTTON_RIGHT:
+						mouseButton = 1;
+						break;
+				}
+				if (mouseButton != 255)
+					mousePressed(	mouseButton,
+									(uint16_t) event.button.x,
+									(uint16_t) event.button.y);
+				break;
+			case SDL_MOUSEBUTTONUP:
+				switch (event.button.button)
+				{
+					case SDL_BUTTON_LEFT:
+						mouseButton = 0;
+						break;
+					case SDL_BUTTON_MIDDLE:
+						mouseButton = 2;
+						break;
+					case SDL_BUTTON_RIGHT:
+						mouseButton = 1;
+						break;
+				}
+				if (mouseButton != 255)
+					mouseReleased(	mouseButton,
+									(uint16_t) event.button.x,
+									(uint16_t) event.button.y);
+				break;
+			case SDL_MOUSEMOTION:
+				mouseMoved(	(uint16_t) event.motion.x,
+							(uint16_t) event.motion.y,
+							(int16_t) event.motion.xrel,
+							(int16_t) event.motion.yrel);
+				break;
+			case SDL_KEYDOWN:
+				if (!event.key.repeat)
+				{
 					SDL_Keycode key = event.key.keysym.sym;
 					uint16_t mod = event.key.keysym.mod;
-					keyReleased(getKeyCode(key), getChar(key,mod));
-					break;
-			}
+					keyPressed(getKeyCode(key), getChar(key,mod));
+				}
+				break;
+			case SDL_KEYUP:
+				SDL_Keycode key = event.key.keysym.sym;
+				uint16_t mod = event.key.keysym.mod;
+				keyReleased(getKeyCode(key), getChar(key,mod));
+				break;
 		}
 	}
 	
@@ -468,6 +491,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 	
 	SDL_GetWindowSize(window,&width,&height);
 	glViewport(0,0,width,height);
+    glDepthFunc(GL_LESS);
 	
 	// create new VBOs
 	
@@ -477,8 +501,6 @@ void Module::SDLOpenGLInterface::renderFrame()
 	}
 	
 	// OpenGL stuff now
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 	// projection matrix
 	glm::mat4 projectionMat = glm::perspective(1.0472f, width/(float)height, 0.1f, 100.0f);
@@ -574,18 +596,41 @@ void Module::SDLOpenGLInterface::renderFrame()
 
 void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& container)
 {
-										
+    glDepthFunc(GL_NEVER);
+	GLint dimensions[2];
+	
+	SDL_GetWindowSize(window,&dimensions[0],&dimensions[1]);
+	glViewport(0,0,dimensions[0], dimensions[1]);
+	
+	// create new VBOs
+	
+	while (allPolygons.size() > vertexBuffers2D.size()) // make sure any new meshes have buffer objects
+	{
+		createVertexBuffer(&allPolygons[vertexBuffers2D.size()]);
+	}
+	
+	GLuint vertexVBO = vertexBuffers2D[container.getIndex()];
+	GLuint dimensionLoc = glGetUniformLocation(program2D, "position");
+	
 	glUseProgram(program2D);
+	glUniform2iv(dimensionLoc,1,dimensions);
 	
 	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-		
-	//glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
+	
+	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	
+	glDrawArrays(GL_TRIANGLES, 0, container.numVertices());
+	
+	glUseProgram(0);
 }
 
 void Module::SDLOpenGLInterface::swapBuffers()
 {
+	//drawPolygons2D(*test); //testing purposes
 	SDL_GL_SwapWindow(window);
+	
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 Module::KeyCode::Code Module::getKeyCode(SDL_Keycode sym)

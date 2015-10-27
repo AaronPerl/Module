@@ -56,6 +56,8 @@ namespace Module
 			GLuint prevMillis;
 			bool running;
 			bool terminated;
+			
+			PolygonContainer* test;
 	
 			unsigned int initShader(const char * path, unsigned int shaderType);
 			std::string readSource(const char * path);
@@ -64,9 +66,15 @@ namespace Module
 	
 			void createWindow(int width, int height, int fps);
 			void createVNBuffers(Mesh* mesh);
+			void createVertexBuffer(PolygonContainer* container);
 			
 			// OVERRIDES
-			void createWindow() { createWindow(800, 600, 60); }
+			void createWindow() {
+				createWindow(800, 600, 60);
+				//test = createPolygonContainer();
+				//test->addTriangle(Vector3(0,0,0), Vector3(0,100,0), Vector3(100,0,0), Color(0,0,0));
+				//test->addTriangle(Vector3(0,0,0), Vector3(100,0,0), Vector3(0,100,0), Color(0,0,0));
+			}
 			void renderFrame();
 			void drawPolygons2D(const PolygonContainer& container);
 			void swapBuffers();

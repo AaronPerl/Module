@@ -10,7 +10,13 @@
 
 using namespace Module;
 
-GraphicsInterface::GraphicsInterface() : fps(60), game(NULL), camera(NULL) {}
+GraphicsInterface::GraphicsInterface() : fps(60), game(NULL), camera(NULL)
+{
+	for (unsigned int i = 0; i < sizeof(keyStates)/sizeof(bool); i++)
+	{
+		keyStates[i] = false;
+	}
+}
 
 GraphicsInterface::GraphicsInterface(unsigned int set_fps) : fps(set_fps), game(NULL), camera(NULL) {}
 
@@ -78,6 +84,7 @@ void GraphicsInterface::mouseMoved(uint16_t x, uint16_t y, int16_t dx, int16_t d
 
 void GraphicsInterface::keyPressed(KeyCode::Code code, char keyChar)
 {
+	keyStates[code] = true;
 	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
 	{
 		inputCallbacks[i]->onKeyDown(code, keyChar);
@@ -86,6 +93,7 @@ void GraphicsInterface::keyPressed(KeyCode::Code code, char keyChar)
 
 void GraphicsInterface::keyReleased(KeyCode::Code code, char keyChar)
 {
+	keyStates[code] = false;
 	for (unsigned int i = 0; i < inputCallbacks.size(); i++)
 	{
 		inputCallbacks[i]->onKeyUp(code, keyChar);
@@ -130,6 +138,13 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 {
 	return createMesh(other->vertices, other->normals, other->numVertices, other->name); // won't work given vertices may not be contiguous (across 2 or more pages)
 }*/
+
+PolygonContainer* GraphicsInterface::createPolygonContainer()
+{
+	unsigned int index = allPolygons.size();
+	allPolygons.push_back(PolygonContainer(&allPolygons, index));
+	return &allPolygons.back();
+}
 
 void GraphicsInterface::addGraphicsCallback(GraphicsCallback* callback)
 {

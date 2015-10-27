@@ -1,7 +1,7 @@
 #ifndef __MODULE_POLYGONCONTAINER_HPP__
 #define __MODULE_POLYGONCONTAINER_HPP__
 
-#include <cstdint>
+#include <stdint.h>
 #include <vector>
 #include "Vector3.hpp"
 #include "Color.hpp"
@@ -16,7 +16,7 @@ class PolygonContainer {
 private:
 	std::vector<float> coordinates;
 	std::vector<uint8_t> colors;
-	std::vector<Polygon> polygons;
+	//std::vector<Module::Polygon> polygons;
 	Book<PolygonContainer>::size_type index;
 	bool resized;
 	bool updated;
@@ -24,7 +24,7 @@ private:
 	PolygonContainer()
 		: index(0), resized(false), updated(false) {}
 	PolygonContainer(Book<PolygonContainer>* parent, Book<PolygonContainer>::size_type parentIndex)
-		: index(index), resized(false), updated(false) {}
+		: index(parentIndex), resized(false), updated(false) {}
 public:
 	typedef std::vector<float>::size_type size_type;
 	
@@ -50,13 +50,14 @@ public:
 		colors.push_back(color.getRed());
 		colors.push_back(color.getGreen());
 		colors.push_back(color.getBlue());
-		polygons.push_back(Polygon(3));
+		//polygons.push_back(Module::Polygon(3));
 	}
 
 	const std::vector<float>& getCoordinates() const { return coordinates; }
 	const std::vector<uint8_t>& getColorComponents() const { return colors; }
-	const size_type numTriangles() { return coordinates.size() / 3; }
-	const size_type numVertices() { return coordinates.size(); }
+	const size_type numTriangles() const { return coordinates.size() / 9; }
+	const size_type numVertices() const { return coordinates.size() / 3; }
+	Book<PolygonContainer*>::size_type getIndex() const { return index; }
 	
 	// Sets the coordinates of a face's vertex to a new value
 	void setVertex(size_type faceIndex, short vertex, const Vector3& newValue)
@@ -80,6 +81,9 @@ public:
 	bool wasUpdated() { return updated; }
 	bool wasResized() { return resized; }
 	void resetUpdates() { updated = resized = false; }
+	
+	friend class GraphicsInterface;
+	friend class Book<PolygonContainer>;
 };
 
 }

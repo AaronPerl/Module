@@ -5,6 +5,7 @@
 #include "Mesh.hpp"
 #include "ThreadObject.hpp"
 #include "KeyCodes.hpp"
+#include "PolygonContainer.hpp"
 #include <string>
 #include <vector>
 #include <stdint.h>
@@ -26,10 +27,12 @@ class GraphicsInterface : ThreadObject
 		unsigned int fps;
 		ModuleGame* game;
 		GameObject* camera;
+		bool keyStates[222];
 		
 		Book<float> allVertices;				// all vertices (x, y then z) stored in a contiguous array to improve caching
 		Book<float> allNormals;					// all vertex normals, 1 to 1 with vertices
 		Book<Mesh> allMeshes;					// same for meshes, though they matter less
+		Book<PolygonContainer> allPolygons;		// same for polygon containers
 		std::vector<GraphicsCallback*> graphicsCallbacks;
 		std::vector<InputCallback*> inputCallbacks;
 		
@@ -44,6 +47,8 @@ class GraphicsInterface : ThreadObject
 		
 		void keyPressed(KeyCode::Code code, char keyChar);
 		void keyReleased(KeyCode::Code code, char keyChar);
+		
+		bool checkKeyState(KeyCode::Code code) const { return keyStates[code]; }
 		
 		// IMPLEMENT THESE //
 		virtual void createWindow() = 0;            	// initialization and window creation
@@ -64,10 +69,12 @@ class GraphicsInterface : ThreadObject
 		GraphicsInterface();
 		GraphicsInterface(unsigned int set_fps);
 		
-		virtual Mesh* createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name);
-		virtual Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name);
+		Mesh* createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name);
+		Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name);
 		//virtual Mesh* copyMesh(Mesh* other);
 		virtual Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false) = 0;
+		
+		PolygonContainer* createPolygonContainer();
 		
 		virtual void setCamera(GameObject* obj) { camera = obj; }
 		
