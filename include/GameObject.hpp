@@ -1,6 +1,7 @@
 #ifndef __MODULE__GAMEOBJECT_HPP__
 #define __MODULE__GAMEOBJECT_HPP__
 
+#include "ModuleDefines.hpp"
 #include "Book.hpp"
 #include "TransformObject.hpp"
 #include "Vector3.hpp"
@@ -34,6 +35,11 @@ public:
 	void setTransform(TransformObject* t) { tObj = t; }
 	
 	Mesh* getMesh() { return mesh; }
+	
+	// Audio
+	Sound* playSound(SoundClip*);											// Plays a Sound
+	SoundClip* loadSoundClip(const std::string&, const std::string&);		// Loads SoundClip
+	void unloadSoundClip(SoundClip*);										// Unloads SoundClip
 	
 	friend class ModuleGame;
 	friend class Book<GameObject>;

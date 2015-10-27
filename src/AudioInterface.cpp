@@ -24,12 +24,6 @@ void AudioInterface::run()
 		updateEnvironment();
 	}
 }
-/** Updates positions, velocities, etc.
- */
-void AudioInterface::updateEnvironment()
-{
-	
-}
 /** Sets the frequency of a SoundClip.
  * @param soundClip A pointer to the SoundClip.
  * @param frequency The frequency of the clip, in Hertz.
@@ -42,14 +36,14 @@ void AudioInterface::setFrequency(SoundClip* soundClip, unsigned int frequency)
  * @param clip A pointer to the SoundClip that the Sound will be of.
  * @return A pointer to the Sound, which is currently playing.
 */
-Sound* AudioInterface::playSound(SoundClip* clip)
+Sound* AudioInterface::playSound(SoundClip* clip, GameObject* gameObj = NULL)
 {
 	if(clip)
 	{
 		#ifdef DEBUG
 		std::cerr << "[AudioInterface] Now playing the Sound: " << clip->getName() << std::endl;
 		#endif
-		sounds.push_back(Sound(clip,NULL,this));
+		sounds.push_back(Sound(clip,gameObj,this));
 	}
 	else
 	{

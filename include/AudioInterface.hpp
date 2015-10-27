@@ -36,10 +36,10 @@ class AudioInterface : ThreadObject
 		void run(); 				/**< Overrides ThreadObject::run() */
 		
 		// IMPLEMENT THIS
-		void updateEnvironment(); 	/**< Updates positions, velocities, etc. */
+		virtual void updateEnvironment() = 0; 	/**< Updates positions, velocities, etc. */
 		
 		// IMPLEMENT FOR GAMEOBJECT & MODULEGAME
-		virtual Sound* playSound(SoundClip*);						// Plays a Sound
+		virtual Sound* playSound(SoundClip*, GameObject*);			// Plays a Sound
 		virtual SoundClip* loadSoundClip(const std::string&, 
 										 const std::string&);		// Loads SoundClip
 		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip

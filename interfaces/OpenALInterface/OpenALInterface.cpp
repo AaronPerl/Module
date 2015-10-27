@@ -14,7 +14,7 @@ void OpenALInterface::updateEnvironment()
 	float orient[6] = { /*fwd:*/ 0, 0, -1, /*up:*/ 0, 1, 0 };
 	alListenerfv( AL_ORIENTATION, orient );
 	
-	for(unsigned int i = 0; i < sounds.size(); i++)
+	for(unsigned int i = 0; i < soundNames.size(); i++)
 	{
 		ALuint name = getSoundName(&sounds[i]);
 		Vector3 sPos = sounds[i].getPosition();
@@ -115,11 +115,11 @@ OpenALInterface::OpenALInterface() : AudioInterface()
 	alutInit(NULL,NULL);
 }
 // Plays a Sound
-Sound* OpenALInterface::playSound(SoundClip* clip)//, float pitch = 1.0f, float gain = 1.0f)
+Sound* OpenALInterface::playSound(SoundClip* clip, GameObject* gameObj = NULL)//, float pitch = 1.0f, float gain = 1.0f)
 {
 	float pitch = 1.0f;
 	float gain = 1.0f;
-	Sound* toReturn = AudioInterface::playSound(clip);
+	Sound* toReturn = AudioInterface::playSound(clip,gameObj);
 	// Ensure we actually can create this Sound
 	if(toReturn)
 	{

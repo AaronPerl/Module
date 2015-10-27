@@ -51,7 +51,7 @@ class ModuleGame
 		unsigned long getMilliseconds();
 		
 		// Audio
-		Sound* playSound(SoundClip*);											// Plays a Sound
+		Sound* playSound(SoundClip*,GameObject*);									// Plays a Sound
 		SoundClip* loadSoundClip(const std::string&, const std::string&);		// Loads SoundClip
 		void unloadSoundClip(SoundClip*);										// Unloads SoundClip
 		void debugAudio();
@@ -112,9 +112,9 @@ inline unsigned long ModuleGame::getMilliseconds()
  * @param clip A pointer to the SoundClip that the Sound will be of.
  * @return A pointer to the Sound, which is currently playing.
 */
-inline Sound* ModuleGame::playSound(SoundClip* clip)
+inline Sound* ModuleGame::playSound(SoundClip* clip, GameObject* gameObj = NULL)
 {
-	return audio->playSound(clip);
+	return audio->playSound(clip,gameObj);
 }
 
 /** Loads a SoundClip into memory.
