@@ -26,14 +26,23 @@ class AudioInterface : ThreadObject
 	
 	protected:
 		// REPRESENTATION
-		ModuleGame* game;		/**< The game that this is a part of */
-		GameObject* listener;	/**< The listener GameObject */
-		Book<Sound> sounds;		/**< The collection of all playing sounds */
-		Book<SoundClip> clips;	/**< The collection of all loaded sounds */
+		ModuleGame* game;			/**< The game that this is a part of */
+		GameObject* listener;		/**< The listener GameObject */
+		Book<Sound> sounds;			/**< The collection of all playing sounds */
+		Book<SoundClip> clips;		/**< The collection of all loaded sounds */
 		
 		// FUNCTIONS
-		void start();	/**< Starts the thread for run. */
-		void run(); 	/**<  Overrides ThreadObject::run() */
+		void start();				/**< Starts the thread for run. */
+		void run(); 				/**< Overrides ThreadObject::run() */
+		
+		// IMPLEMENT THIS
+		void updateEnvironment(); 	/**< Updates positions, velocities, etc. */
+		
+		// IMPLEMENT FOR GAMEOBJECT & MODULEGAME
+		virtual Sound* playSound(SoundClip*);						// Plays a Sound
+		virtual SoundClip* loadSoundClip(const std::string&, 
+										 const std::string&);		// Loads SoundClip
+		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip
 		
 		// IMPLEMENT THESE FOR SOUND
 		virtual void replaySound(Sound*) = 0;		// Replays a Sound
@@ -45,20 +54,13 @@ class AudioInterface : ThreadObject
 		
 		// IMPLEMENT THESE FOR SOUNDCLIPS
 		virtual void setFrequency(SoundClip*, unsigned int);	// Sets the frequency
+			
+		// DEBUG FUNCTIONS
+		void debugAudio();	// A function for debugging the sound collection
 		
 	public:
 		// CONSTRUCTOR
 		AudioInterface();	// A blank constructor
-		
-		// IMPLEMENT THESE
-		virtual Sound* playSound(SoundClip*);						// Plays a Sound
-		virtual Sound* playSound(SoundClip*, float, float) = 0;		// Plays a Sound
-		virtual SoundClip* loadSoundClip(const std::string&, 
-										 const std::string&);		// Loads SoundClip
-		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip
-		
-		// DEBUG FUNCTIONS
-		void debugAudio();	// A function for debugging the sound collection
 };
 
 }

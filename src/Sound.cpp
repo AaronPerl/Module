@@ -33,6 +33,39 @@ void Sound::setTime(const unsigned long t)
 {
 	time = t;
 }
+/** Gets this Sound's rotation.
+ * @param A Vector3 representing the position of this Sound's source.
+*/
+Vector3 Sound::getPosition()
+{
+	if(gameObject == NULL)
+	{
+		return Vector3(0,0,0);
+	}
+	return gameObject->getPosition();
+}
+/** Gets this Sound's rotation.
+ * @return A Vector3 representing the rotation of this Sound's source.
+*/
+Vector3 Sound::getRotation()
+{
+	if(gameObject == NULL)
+	{
+		return Vector3(0,0,0);
+	}
+	return  Vector3(0,0,0); // ACTUALLY IMPLEMENT THIS LATER
+}
+/** Gets this Sound's velocity.
+ * @return A Vector3 representing the velocity of this Sound's source.
+*/
+Vector3 Sound::getVelocity()
+{
+	if(gameObject == NULL)
+	{
+		return Vector3(0,0,0);
+	}
+	return Vector3(0,0,0); // ACTUALLY IMPLEMENT THIS LATER
+}
 /** Gets the name of this Sound.
  * @return The name of this Sound.
 */

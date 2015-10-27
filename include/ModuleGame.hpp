@@ -8,44 +8,53 @@
 #include "ThreadingInterface.hpp"
 #include "AudioInterface.hpp"
 
-namespace Module {
+namespace Module
+{
 
 /** The main class of Module. The ModuleGame class represents the core of Module. Its functionality ties together
  * that of the different interfaces. End users of Module (game developers) control Module through this class and not
  * by accessing interfaces, as those are meant to be abstracted away from users. Setting up a ModuleGame instance should
  * be the first thing done in a game that uses Module.
  */
-class ModuleGame {
-private:
-	GraphicsInterface* graphics; /**< The GraphicsInterface attached to this game */
-	AudioInterface* audio; /**< The AudioInterface attached to this game */
-	ThreadingInterface* threading; /**< The ThreadingInterface attached to this game */
-	
-	Book<GameObject> objects; /**< The book of all GameObjects */
-public:
-	ModuleGame();
-	
-	void attachGraphicsInterface(GraphicsInterface* newGraphics);
-	void attachAudioInterface(AudioInterface* newAudio);
-	void attachThreadingInterface(ThreadingInterface* newThreading);
-	
-	void startThread(ThreadObject* obj);
-	
-	void start();
-	bool isRunning();
-	
-	// Game Objects
-	GameObject* createGameObject();
-	Book<GameObject>::size_type numObjects() const;
-	GameObject* getGameObject(Book<GameObject>::size_type index);
-	const GameObject* getGameObject(Book<GameObject>::size_type index) const;
-	
-	// Threading
-	Mutex* createMutex();
-	
-	// Graphics
-	void setMesh(GameObject* obj, Mesh* mesh);
-	unsigned long getMilliseconds();
+class ModuleGame
+{
+
+	private:
+		GraphicsInterface* graphics;	/**< The GraphicsInterface attached to this game */
+		AudioInterface* audio;			/**< The AudioInterface attached to this game */
+		ThreadingInterface* threading;	/**< The ThreadingInterface attached to this game */
+		
+		Book<GameObject> objects;		/**< The book of all GameObjects */
+	public:
+		ModuleGame();
+		
+		void attachGraphicsInterface(GraphicsInterface* newGraphics);
+		void attachAudioInterface(AudioInterface* newAudio);
+		void attachThreadingInterface(ThreadingInterface* newThreading);
+		
+		void startThread(ThreadObject* obj);
+		
+		void start();
+		bool isRunning();
+		
+		// Game Objects
+		GameObject* createGameObject();
+		Book<GameObject>::size_type numObjects() const;
+		GameObject* getGameObject(Book<GameObject>::size_type index);
+		const GameObject* getGameObject(Book<GameObject>::size_type index) const;
+		
+		// Threading
+		Mutex* createMutex();
+		
+		// Graphics
+		void setMesh(GameObject* obj, Mesh* mesh);
+		unsigned long getMilliseconds();
+		
+		// Audio
+		Sound* playSound(SoundClip*);											// Plays a Sound
+		SoundClip* loadSoundClip(const std::string&, const std::string&);		// Loads SoundClip
+		void unloadSoundClip(SoundClip*);										// Unloads SoundClip
+		void debugAudio();
 };
 
 /**
@@ -99,6 +108,31 @@ inline unsigned long ModuleGame::getMilliseconds()
 	return graphics->getMilliseconds();
 }
 
+/** Plays a Sound.
+ * @param clip A pointer to the SoundClip that the Sound will be of.
+ * @return A pointer to the Sound, which is currently playing.
+*/
+inline Sound* ModuleGame::playSound(SoundClip* clip)
+{
+	return audio->playSound(clip);
 }
 
+/** Loads a SoundClip into memory.
+ * @param name The name of the SoundClip, ie: "explosion."
+ * @param fileName The name of the file to be loaded from.
+ * @return A pointer to the loaded SoundClip.
+*/
+inline SoundClip* ModuleGame::loadSoundClip(const std::string& name, const std::string& fileName)
+{
+	return audio->loadSoundClip(name,fileName);
+}
+
+/** Prints out some useful Audio debugging information.
+ */
+inline void ModuleGame::debugAudio()
+{
+	audio->debugAudio();
+}
+ 
+}
 #endif

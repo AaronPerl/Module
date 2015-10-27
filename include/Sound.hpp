@@ -9,6 +9,8 @@
 // Module includes
 #include "AudioInterface.hpp"
 #include "SoundClip.hpp"
+#include "GameObject.hpp"
+#include "Vector3.hpp"
 #include "Book.hpp"
 
 namespace Module
@@ -26,11 +28,12 @@ class Sound
 		uint16_t uid;			// The UID of this Sound
 		unsigned long time;		// The time of this Sound
 		SoundClip* soundClip;	// The data this Sound is playing
+		GameObject* gameObject;	// The GameObject this Sound is being emitted from
 		AudioInterface* audio;	// The audioInterface that created this Sound
 		
 		// CONSTRUCTOR
-		Sound(SoundClip* sd, AudioInterface* aI): uid(sd->getNextUID()), time(0), soundClip(sd), audio(aI) {}
-		Sound(): uid(0), time(0), soundClip(NULL), audio(NULL) {}
+		Sound(SoundClip* sd, GameObject* gO, AudioInterface* aI): uid(sd->getNextUID()), time(0), soundClip(sd), gameObject(gO), audio(aI) {}
+		Sound(): uid(0), time(0), soundClip(NULL), gameObject(NULL), audio(NULL) {}
 		
 	public:
 		// FUNCTIONS
@@ -38,6 +41,10 @@ class Sound
 		void resume();		// Plays this Sound from the current time
 		void pause();		// Pauses this Sound
 		void stop();		// Stops this Sound
+		
+		Vector3 getPosition();
+		Vector3 getRotation();
+		Vector3 getVelocity();
 		
 		// GETTERS
 		const std::string getName() const;		// Gets the name of this Sound

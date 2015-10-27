@@ -33,6 +33,7 @@ namespace Module
 			Book<uint16_t> pcmData;		// The underlying PCM data
 			
 			// IMPLEMENTED
+			void updateEnvironment();		// Updates positions, velocities, etc.
 			void replaySound(Sound*);		// Replays a Sound
 			void resumeSound(Sound*);		// Resumes a Sound
 			void pauseSound(Sound*);		// Pauses a Sound
@@ -45,7 +46,7 @@ namespace Module
 			
 		public:
 			OpenALInterface();								// Constructor
-			Sound* playSound(SoundClip*, float, float);		// Plays a Sound
+			Sound* playSound(SoundClip*);					// Plays a Sound
 			SoundClip* loadSoundClip(const std::string&, 
 									 const std::string&);	// Loads SoundClip
 			void unloadSoundClip(SoundClip*);				// Unloads SoundClip

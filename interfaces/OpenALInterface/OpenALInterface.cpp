@@ -5,7 +5,24 @@
 #include <string.h>
 
 using namespace Module;
-
+// Updates positions, velocities, etc.
+void OpenALInterface::updateEnvironment()
+{
+	// Sets listener at origin, facing -z
+	alListener3f(AL_POSITION, 0, 0, 0);
+	alListener3f(AL_VELOCITY, 0, 0, 0);
+	float orient[6] = { /*fwd:*/ 0, 0, -1, /*up:*/ 0, 1, 0 };
+	alListenerfv( AL_ORIENTATION, orient );
+	
+	for(unsigned int i = 0; i < sounds.size(); i++)
+	{
+		ALuint name = getSoundName(&sounds[i]);
+		Vector3 sPos = sounds[i].getPosition();
+		Vector3 sVel = sounds[i].getVelocity();
+		alSource3f(name, AL_POSITION, sPos.getX(),sPos.getY(),sPos.getZ() );
+		alSource3f(name, AL_VELOCITY, sVel.getX(),sVel.getY(),sVel.getZ() );
+	}
+}
 // Replays a Sound
 void OpenALInterface::replaySound(Sound* sound)
 {
@@ -98,8 +115,10 @@ OpenALInterface::OpenALInterface() : AudioInterface()
 	alutInit(NULL,NULL);
 }
 // Plays a Sound
-Sound* OpenALInterface::playSound(SoundClip* clip, float pitch = 1.0f, float gain = 1.0f)
+Sound* OpenALInterface::playSound(SoundClip* clip)//, float pitch = 1.0f, float gain = 1.0f)
 {
+	float pitch = 1.0f;
+	float gain = 1.0f;
 	Sound* toReturn = AudioInterface::playSound(clip);
 	// Ensure we actually can create this Sound
 	if(toReturn)
