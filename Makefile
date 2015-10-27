@@ -127,11 +127,11 @@ dumpmachine:
 
 $(PATH64):
 	@echo Making 64-bit build directory
-	@mkdir $(PATH64) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH64)) 2>$(NULL); rm -rf -- -p
+	@mkdir $(PATH64) -p 2>$(NULL) || (mkdir $(subst /,\,$(PATH64)) 2>$(NULL)) && (rm -rf -- -p)
 
 $(PATH32):
 	@echo Making 32-bit build directory
-	@mkdir $(PATH32) -p || mkdir $(subst /,\,$(PATH32)); rm -rf -- -p
+	@mkdir $(PATH32) -p || (mkdir $(subst /,\,$(PATH32))) && (rm -rf -- -p)
 
 $(DEP_PATH):
 	@echo Making dependency directory
