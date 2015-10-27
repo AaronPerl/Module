@@ -40,15 +40,15 @@ FULL_NAME = lib$(LIBRARY_NAME).a
 FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
 
 INTERFACE_PATH = interfaces
-INTERFACES = $(wildcard $(INTERFACE_PATH)/*)
-INTERFACE_LIB_NAMES = $(addprefix lib, $(addsuffix .a, $(notdir $(INTERFACES))))
-INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACES)), $(INTERFACE_LIB_NAMES))
-INTERFACE_INC = $(addprefix -I,$(INTERFACES))
-INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACES))
-INTERFACE_LINKS = $(addprefix -l, $(notdir $(INTERFACES)))
+INTERFACE_PATHS = $(wildcard $(INTERFACE_PATH)/*)
+INTERFACE_FILE_NAMES = $(addprefix lib, $(addsuffix .a, $(notdir $(INTERFACE_PATHS))))
+INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACE_PATHS)), $(INTERFACE_FILE_NAMES))
+INTERFACE_INC = $(addprefix -I,$(INTERFACE_PATHS))
+INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACE_PATHS))
+INTERFACE_LINKS = $(addprefix -l, $(notdir $(INTERFACE_PATHS)))
 
 
-include $(addsuffix /Makefile, $(INTERFACES))
+include $(addsuffix /Makefile, $(INTERFACE_PATHS))
 
 
 DEBUG ?= 1
@@ -121,23 +121,21 @@ test: 64bit interfaces
 	@echo Compiling test program!
 	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
 clean:
-	rm -rf build
+	rm -rf build $(DEP_PATH) $(INTERFACE_LIBS) $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
 dumpmachine:
 	echo
 
 $(PATH64):
 	@echo Making 64-bit build directory
-	@echo $(PATH64)
-	@echo $(subst /,\,$(PATH64))
-	@mkdir $(PATH64) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH64)) 2>$(NULL)
+	@mkdir $(PATH64) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH64)) 2>$(NULL); rm -rf -- -p
 
 $(PATH32):
 	@echo Making 32-bit build directory
-	@mkdir $(PATH32) -p || mkdir $(subst /,\,$(PATH32))
+	@mkdir $(PATH32) -p || mkdir $(subst /,\,$(PATH32)); rm -rf -- -p
 
 $(DEP_PATH):
 	@echo Making dependency directory
-	@mkdir $(DEP_PATH) -p || $(subst /,\,$(DEP_PATH))
+	@mkdir $(DEP_PATH)
 
 $(PATH64)/%.o : src/%.cpp
 	@echo Compiling $<
