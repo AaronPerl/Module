@@ -121,17 +121,18 @@ test: 64bit interfaces
 	@echo Compiling test program!
 	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
 clean:
-	rm -rf build $(DEP_PATH) $(INTERFACE_LIBS) $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
+	@echo Files are: $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/.o*))
+	rm -rf build $(DEP_PATH) $(INTERFACE_LIBS) $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/.o*))
 dumpmachine:
 	echo
 
 $(PATH64):
 	@echo Making 64-bit build directory
-	@mkdir $(PATH64) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH64)) 2>$(NULL); rm -rf -- -p
+	@mkdir $(PATH64) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH64))
 
 $(PATH32):
 	@echo Making 32-bit build directory
-	@mkdir $(PATH32) -p || mkdir $(subst /,\,$(PATH32)); rm -rf -- -p
+	@mkdir $(PATH32) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH32))
 
 $(DEP_PATH):
 	@echo Making dependency directory
