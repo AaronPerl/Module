@@ -100,10 +100,11 @@ void GraphicsInterface::keyReleased(KeyCode::Code code, char keyChar)
 	}
 }
 
-Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name)
+Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, float* uvs, unsigned int num_vertices, const std::string& name)
 {
 	assert(num_vertices);
-	Book<Vector3>::size_type firstIndex = allVertices.size();
+	Book<float>::size_type firstIndex = allVertices.size();
+	Book<float>::size_type firstUVIndex = allUVs.size();
 	for (unsigned int i = 0; i < num_vertices; i++)
 	{
 		allVertices.push_back(vertices[i].getX());
@@ -112,14 +113,21 @@ Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, unsigne
 		allNormals.push_back(normals[i].getX());
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
+		if (uvs != 0)
+		{
+			allUVs.push_back(uvs[2 * i]);
+			allUVs.push_back(uvs[2 * i + 1]);
+		}
 	}
-	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, firstIndex, firstIndex, num_vertices, name));
+	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, &allUVs, uvs != 0, firstIndex, firstIndex, firstUVIndex, num_vertices, name));
 	return &allMeshes.back();
 }
 
-Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name)
+Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<float>& uvs, 
+                                    const std::string& name)
 {
-	Book<Vector3>::size_type firstIndex = allVertices.size();
+	Book<float>::size_type firstIndex = allVertices.size();
+	Book<float>::size_type firstUVIndex = allUVs.size();
 	for (unsigned int i = 0; i < vertices.size(); i++)
 	{
 		allVertices.push_back(vertices[i].getX());
@@ -128,8 +136,13 @@ Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const 
 		allNormals.push_back(normals[i].getX());
 		allNormals.push_back(normals[i].getY());
 		allNormals.push_back(normals[i].getZ());
+		if (uvs.size() > 0)
+		{
+			allUVs.push_back(uvs[2 * i]);
+			allUVs.push_back(uvs[2 * i + 1]);
+		}
 	}
-	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, firstIndex, firstIndex, vertices.size(), name));
+	allMeshes.push_back(Mesh(allMeshes.size(), &allVertices, &allNormals, &allUVs, uvs.size() > 0, firstIndex, firstIndex, firstUVIndex, vertices.size(), name));
 	return &allMeshes.back();
 }
 

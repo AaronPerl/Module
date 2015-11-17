@@ -4,7 +4,7 @@
 #include <KeyCodes.hpp>
 
 namespace Module {
-	KeyCode::Code lowLookup[] {
+	KeyCode::Code lowLookup[] = {
 		KeyCode::Invalid,
 		KeyCode::Invalid,
 		KeyCode::Invalid,
@@ -131,7 +131,7 @@ namespace Module {
 		KeyCode::Del		
 	};
 	
-	KeyCode::Code highLookup[] {
+	KeyCode::Code highLookup[] = {
 		KeyCode::Invalid,
 		KeyCode::Invalid,
 		KeyCode::Invalid,

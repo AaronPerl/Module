@@ -9,18 +9,18 @@
 
 namespace Module {
 
-class ModuleGame;
-class Mesh;
-
-// One of the core classes in Module. The GameObject represents any object in the game world (though not terrain).
-// Being that Module is a component-based engine, the GameObject class can have contain of many different components.
-// At the current moment, this list is finite and hard-coded, being represented by pointers to objects. In the future,
-// with the addition of an extension system, this list could be joined with a dynamic container of generic components used by extensions.
+/**
+ * One of the core classes in Module. The GameObject represents any object in the game world (though not terrain).
+ * Being that Module is a component-based engine, the GameObject class can have contain of many different components.
+ * At the current moment, this list is finite and hard-coded, being represented by pointers to objects. In the future,
+ * with the addition of an extension system, this list could be joined with a dynamic container of generic components used by extensions.
+ */
 class GameObject {
 protected:
 	ModuleGame* game;
 	TransformObject* tObj;
 	Mesh* mesh;
+	Texture* texture;
 	Vector3 pos;
 	Quaternion rot;
 	GameObject(ModuleGame* g) : game(g), tObj(0), mesh(0) {}
@@ -35,6 +35,7 @@ public:
 	void setTransform(TransformObject* t) { tObj = t; }
 	
 	Mesh* getMesh() { return mesh; }
+	Texture* getTexture() { return texture; }
 	
 	// Audio
 	Sound* playSound(SoundClip*);											// Plays a Sound

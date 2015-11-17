@@ -47,7 +47,9 @@ class ModuleGame
 		Mutex* createMutex();
 		
 		// Graphics
+		Texture* loadTexture(const std::string&);
 		void setMesh(GameObject* obj, Mesh* mesh);
+		void setTexture(GameObject* obj, Texture* tex);
 		unsigned long getMilliseconds();
 		
 		// Audio
@@ -91,6 +93,16 @@ inline Mutex* ModuleGame::createMutex()
 }
 
 /**
+ * Loads a given texture file
+ * @param filename The name of the texture file to load
+ * @return A pointer to the newly loaded Texture
+ */
+inline Texture* ModuleGame::loadTexture(const std::string& filename)
+{
+	return graphics->loadTexture(filename);
+}
+
+/**
  * Sets the Mesh component of a GameObject
  * @param obj The GameObject to set the Mesh component of
  * @param mesh The corresponding Mesh
@@ -98,6 +110,16 @@ inline Mutex* ModuleGame::createMutex()
 inline void ModuleGame::setMesh(GameObject* obj, Mesh* mesh)
 {
 	obj->mesh = mesh;
+}
+
+/**
+ * Sets the Texture component of a GameObject
+ * @param obj The GameObject to set the Texture component of
+ * @param tex The corresponding Texture
+ */
+inline void ModuleGame::setTexture(GameObject* obj, Texture* tex)
+{
+	obj->texture = tex;
 }
 
 /**

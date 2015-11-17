@@ -2,17 +2,14 @@
 #define __SDLOPENGLINTERFACE_HPP__
 
 // C++ standard library includes
+#include <vector>
 #include <string>
 #include <sstream>
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <limits>
-
-// Module includes
-#include <ModuleGame.hpp>
-#include <GraphicsInterface.hpp>
-#include <Book.hpp>
+#include <utility>
 
 // Library includes
 #define GLM_FORCE_RADIANS
@@ -33,6 +30,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <SOIL.h>
+
+// Module includes
+#include <ModuleGame.hpp>
+#include <GraphicsInterface.hpp>
+#include <Book.hpp>
+#include <Texture.hpp>
+#include "SDLOpenGLTexture.hpp"
 
 namespace Module
 {
@@ -42,6 +47,7 @@ namespace Module
 		protected:
 			Book<GLuint> vertexBuffers;
 			Book<GLuint> vertexBuffers2D;
+			Book<SDLOpenGLTexture> textures;
 			
 			SDL_Window *window;
 			SDL_GLContext context;
@@ -86,6 +92,7 @@ namespace Module
 			~SDLOpenGLInterface();
 			
 			Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false);
+			Texture* loadTexture(const std::string& filename);
 			
 	};
 }

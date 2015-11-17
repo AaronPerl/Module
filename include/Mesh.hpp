@@ -6,6 +6,7 @@
 #include <string>
 #include <cstdlib>
 #include <vector>
+#include <utility>
 
 namespace Module {
 
@@ -25,25 +26,42 @@ private:
 	
 	Book<float>* vertexBook; // the book containing the vertices of this mesh
 	Book<float>* normalBook; // the book containing the normals of this mesh
+	Book<float>* uvBook; // the book containing the texture coordinates of this mesh
 	Book<float>::size_type  vertexIndex; // the index of this mesh's first vertex in the vertexBook
 	Book<float>::size_type  normalIndex; // the index of this mesh's first normal in the normalBook
+	Book<float>::size_type  uvIndex; // the index of this mesh's first texture coordinate in the uvBook
 	Book<float>::size_type  numVertices; // the number of vertices/normals that this mesh has
 	float scale; // scalar to multiply all vertices by for rendering, etc.
+	bool hasUVCoords;
 	std::string name;
+	
 	Mesh() :
-		selfIndex(0), vertexBook(0), normalBook(0), vertexIndex(0), normalIndex(0), numVertices(0), scale(1.0f), name("") {}
-	Mesh(Book<Mesh>::size_type index, Book<float>* vb, Book<float>* nb, 
-		 Book<int>::size_type vi, Book<int>::size_type ni,
-		 unsigned int num, std::string meshName) : 
-			selfIndex(index), vertexBook(vb), normalBook(nb), vertexIndex(vi), normalIndex(ni),
-			numVertices(num), scale(1.0f), name(meshName) {}
+		selfIndex(0),
+		vertexBook(0), normalBook(0), uvBook(0),
+		vertexIndex(0), normalIndex(0), uvIndex(0),
+		numVertices(0),
+		scale(1.0f), hasUVCoords(false), name("")
+		{}
+	
+	Mesh(Book<Mesh>::size_type index,
+			Book<float>* vb, Book<float>* nb, Book<float>* tb, bool hasTexture,
+			Book<float>::size_type vi, Book<float>::size_type ni, Book<float>::size_type ti,
+			unsigned int num, std::string meshName) : 
+		selfIndex(index),
+		vertexBook(vb), normalBook(nb), uvBook(tb),
+		vertexIndex(vi), normalIndex(ni), uvIndex(ti),
+		numVertices(num),
+		scale(1.0f), hasUVCoords(hasTexture), name(meshName)
+		{}
 public:
 	Book<Mesh>::size_type getIndex() const;
 	Book<float>::size_type getNumVertices() const;
 	Vector3 getVertex(unsigned int i) const;
 	Vector3 getNormal(unsigned int i) const;
+	std::pair<float, float> getUV(unsigned int i) const;
 	float getScale() const;
 	void setScale(float newScale);
+	bool hasUVs() const;
 	
 	friend class GraphicsInterface;
 	friend class Book<Mesh>;
@@ -69,6 +87,11 @@ inline void Mesh::setScale(float newScale)
 	scale = newScale;
 }
 
+inline bool Mesh::hasUVs() const
+{
+	return hasUVCoords;
+}
+
 inline Vector3 Mesh::getVertex(unsigned int i) const
 {
 	return Vector3(	(*vertexBook)[vertexIndex + 3 * i],
@@ -81,6 +104,12 @@ inline Vector3 Mesh::getNormal(unsigned int i) const
 	return Vector3(	(*normalBook)[normalIndex + 3 * i],
 					(*normalBook)[normalIndex + 3 * i + 1],
 					(*normalBook)[normalIndex + 3 * i + 2]);
+}
+
+inline std::pair<float, float> Mesh::getUV(unsigned int i) const
+{
+	return std::make_pair(	(*uvBook)[uvIndex + 2 * i],
+							(*uvBook)[uvIndex + 2 * i + 1]);
 }
 	
 }

@@ -31,6 +31,7 @@ class GraphicsInterface : ThreadObject
 		
 		Book<float> allVertices;				// all vertices (x, y then z) stored in a contiguous array to improve caching
 		Book<float> allNormals;					// all vertex normals, 1 to 1 with vertices
+		Book<float> allUVs;					// all texture coordinates
 		Book<Mesh> allMeshes;					// same for meshes, though they matter less
 		Book<PolygonContainer> allPolygons;		// same for polygon containers
 		std::vector<GraphicsCallback*> graphicsCallbacks;
@@ -61,18 +62,22 @@ class GraphicsInterface : ThreadObject
 		// FRIENDSHIP WRAPPERS //
 		Book<float>* getVertexBook(Mesh* m) const;		// returns the book that contains the vertices the ones for this mesh
 		Book<float>* getNormalBook(Mesh* m) const;		// returns the book that contains the vertex normals for this mesh
-		unsigned int getVertexIndex(Mesh* m) const;		// returns this mesh's starting index in its book of vertices
-		unsigned int getNormalIndex(Mesh* m) const;		// returns this mesh's starting index in its book of vertex normals
-		unsigned int getNumVertices(Mesh* m) const;		// returns the number of vertices that compose this mesh
+		Book<float>* getUVBook(Mesh* m) const;
+		Book<float>::size_type getVertexIndex(Mesh* m) const;		// returns this mesh's starting index in its book of vertices
+		Book<float>::size_type getNormalIndex(Mesh* m) const;		// returns this mesh's starting index in its book of vertex normals
+		Book<float>::size_type getUVIndex(Mesh* m) const;
+		Book<float>::size_type getNumVertices(Mesh* m) const;		// returns the number of vertices that compose this mesh
 		
 	public:
 		GraphicsInterface();
 		GraphicsInterface(unsigned int set_fps);
 		
-		Mesh* createMesh(Vector3* vertices, Vector3* normals, unsigned int num_vertices, const std::string& name);
-		Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::string& name);
+		Mesh* createMesh(Vector3* vertices, Vector3* normals, float* uvs, unsigned int num_vertices, const std::string& name);
+		Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals,
+		                 const std::vector<float>& uvs, const std::string& name);
 		//virtual Mesh* copyMesh(Mesh* other);
 		virtual Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false) = 0;
+		virtual Texture* loadTexture(const std::string& filename) = 0;
 		
 		PolygonContainer* createPolygonContainer();
 		
@@ -90,19 +95,29 @@ inline Book<float>* GraphicsInterface::getVertexBook(Mesh* m) const
 inline Book<float>* GraphicsInterface::getNormalBook(Mesh* m) const
 {
 	return m->normalBook;
+}	
+
+inline Book<float>* GraphicsInterface::getUVBook(Mesh* m) const
+{
+	return m->uvBook;
 }
 
-inline unsigned int GraphicsInterface::getVertexIndex(Mesh* m) const
+inline Book<float>::size_type GraphicsInterface::getVertexIndex(Mesh* m) const
 {
 	return m->vertexIndex;
 }
 
-inline unsigned int GraphicsInterface::getNormalIndex(Mesh* m) const
+inline Book<float>::size_type GraphicsInterface::getNormalIndex(Mesh* m) const
 {
 	return m->normalIndex;
 }
 
-inline unsigned int GraphicsInterface::getNumVertices(Mesh* m) const
+inline Book<float>::size_type GraphicsInterface::getUVIndex(Mesh* m) const
+{
+	return m->uvIndex;
+}
+
+inline Book<float>::size_type GraphicsInterface::getNumVertices(Mesh* m) const
 {
 	return m->numVertices;
 }

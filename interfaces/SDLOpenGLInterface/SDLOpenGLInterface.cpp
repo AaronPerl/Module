@@ -170,11 +170,13 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
 
 void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 {
-	GLuint vertexVBO;
-	GLuint normalVBO;
+	GLuint vertexVBO  = 0;
+	GLuint normalVBO  = 0;
+	GLuint textureVBO = 0;
 	float* buffer;
 	glGenBuffers(1, &vertexVBO);
 	glGenBuffers(1, &normalVBO);
+	glGenBuffers(1, &textureVBO);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, vertexVBO);
 	//glBufferStorage(GL_ARRAY_BUFFER, mesh->getNumVertices() * 3 * sizeof(float), NULL, GL_DYNAMIC_STORAGE_BIT);
@@ -201,10 +203,27 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 		buffer[3*i+2] = curVec.getZ();
 	}
 	glUnmapBuffer(GL_ARRAY_BUFFER);
+	
+	
+	if (mesh->hasUVs())
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, textureVBO);
+		//glBufferStorage(GL_ARRAY_BUFFER, mesh->getNumVertices() * sizeof(float), NULL, GL_DYNAMIC_STORAGE_BIT);
+		glBufferData(GL_ARRAY_BUFFER, mesh->getNumVertices() * 2 * sizeof(float), NULL, GL_STATIC_DRAW); // allocate buffer
+		buffer = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		for (unsigned int i = 0; i < mesh->getNumVertices(); i++)
+		{
+			std::pair<float,float> curUV = mesh->getUV(i);
+			buffer[2*i+0] = curUV.first;
+			buffer[2*i+1] = curUV.second;
+		}
+		glUnmapBuffer(GL_ARRAY_BUFFER);
+	}
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	vertexBuffers.push_back(vertexVBO);
 	vertexBuffers.push_back(normalVBO);
+	vertexBuffers.push_back(textureVBO);
 }
 
 void Module::SDLOpenGLInterface::createVertexBuffer(PolygonContainer* container)
@@ -269,8 +288,10 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 	std::string element;
 	std::vector<Vector3> indexedVertices;
 	std::vector<Vector3> indexedNormals;
+	std::vector<float> indexedUVs;
 	std::vector<Vector3> vertices;
 	std::vector<Vector3> normals;
+	std::vector<float> uvs;
 	
 	while (!modelFile.eof())
 	{
@@ -296,6 +317,13 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 				modelFile >> x >> y >> z;
 				indexedNormals.push_back(Vector3(x,y,z));
 			} //endif vn
+			else if (element == "vt")
+			{
+				float u,v;
+				modelFile >> u >> v;
+				indexedUVs.push_back(u);
+				indexedUVs.push_back(v);
+			}
 			else if (element == "f")
 			{
 				char curLine[256];
@@ -331,12 +359,25 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 							std::cerr << "[GraphicsInterface]   Invalid file data" << std::endl;
 							return NULL;
 						}
-						indexStr.replace(slashIndex1, slashIndex2 - slashIndex1 + 1, slashIndex2 - slashIndex1 + 1, ' ');
-						std::size_t vi, ni;					
+						indexStr[slashIndex1] = ' ';
+						indexStr[slashIndex2] = ' ';
+						// indexStr.replace(slashIndex1, slashIndex2 - slashIndex1 + 1, slashIndex2 - slashIndex1 + 1, ' ');
+						std::size_t vi, ti, ni;
+						bool has_ti;
 						std::stringstream indexStream(indexStr);
-						indexStream >> vi >> ni;
+						if (slashIndex2 == slashIndex1 + 1)
+						{
+							indexStream >> vi >> ni;
+							ti = 0;
+							has_ti = false;
+						}
+						else
+						{
+							indexStream >> vi >> ti >> ni;
+							has_ti = true;
+						}
 						
-						if (vi > indexedVertices.size() || ni > indexedNormals.size())
+						if (vi > indexedVertices.size() || ni > indexedNormals.size() || ti * 2 > indexedUVs.size())
 						{
 							std::cerr << "[GraphicsInterface]   Unsupported/invalid obj file" << std::endl;
 							return NULL;
@@ -345,6 +386,16 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 						{
 							vertices.push_back(indexedVertices[vi-1]);
 							normals.push_back(indexedNormals[ni-1]);
+							if (has_ti)
+							{
+								uvs.push_back(indexedUVs[ti * 2 - 2]);
+								uvs.push_back(indexedUVs[ti * 2 - 1]);
+							}
+							else
+							{
+								uvs.push_back(0.0f);
+								uvs.push_back(0.0f);
+							}
 						}
 						else
 						{
@@ -356,6 +407,28 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 							normals.push_back(normals[firstIndex]);
 							normals.push_back(normals[lastIndex]);
 							normals.push_back(indexedNormals[ni-1]);
+							if (has_ti)
+							{
+								uvs.push_back(uvs[firstIndex * 2]);
+								uvs.push_back(uvs[firstIndex * 2 + 1]);
+								
+								uvs.push_back(uvs[lastIndex * 2]);
+								uvs.push_back(uvs[lastIndex * 2 + 1]);
+								
+								uvs.push_back(indexedUVs[ti * 2 - 2]);
+								uvs.push_back(indexedUVs[ti * 2 - 1]);
+							}
+							else
+							{
+								uvs.push_back(0.0f);
+								uvs.push_back(0.0f);
+								
+								uvs.push_back(0.0f);
+								uvs.push_back(0.0f);
+								
+								uvs.push_back(0.0f);
+								uvs.push_back(0.0f);
+							}
 						}
 					}
 					else // f v v v
@@ -400,7 +473,23 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 	
 	std::cout << "[GraphicsInterface]   Successfully loaded file!" << std::endl;
 	
-	return createMesh(vertices, normals, meshname);
+	return createMesh(vertices, normals, uvs, meshname);
+}
+
+Module::Texture* Module::SDLOpenGLInterface::loadTexture(const std::string& filename)
+{
+	GLuint newID = SOIL_load_OGL_texture
+	(
+		filename.c_str(),
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	if (newID == 0)
+		throw std::runtime_error("[GraphicsInterface] : Texture " + filename + " could not be loaded");
+	textures.push_back(SDLOpenGLTexture());
+	textures.back().textureID = newID;
+	return &textures.back();
 }
 
 void Module::SDLOpenGLInterface::renderFrame()
@@ -544,6 +633,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 	
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 	
 	// std::cout << "[GraphicsInterface] NumObjects = " << game->numObjects() << std::endl;
 		
@@ -551,8 +641,10 @@ void Module::SDLOpenGLInterface::renderFrame()
 	{
 		GLuint vertexVBO = 0;
 		GLuint normalVBO = 0;
+		GLuint textureVBO = 0;
 		GameObject* curObj = game->getGameObject(i);
 		Mesh* curMesh = curObj->getMesh();
+		Texture* curTex = curObj->getTexture();
 		Vector3 curPos = curObj->getPosition();
 		Quaternion curRot = curObj->getRotation();
 		if (curMesh == NULL) // Nothing to see here, literally (no mesh)
@@ -560,11 +652,16 @@ void Module::SDLOpenGLInterface::renderFrame()
 			// std::cout << "[GraphicsInterface] No mesh, skipping GameObject" << std::endl;
 			continue;
 		}
+		if (curTex != NULL)
+		{
+			
+		}
 		
-		vertexVBO = vertexBuffers[2 * curMesh->getIndex() + 0];
-		normalVBO = vertexBuffers[2 * curMesh->getIndex() + 1];
+		vertexVBO = vertexBuffers[3 * curMesh->getIndex() + 0];
+		normalVBO = vertexBuffers[3 * curMesh->getIndex() + 1];
+		textureVBO = vertexBuffers[3 * curMesh->getIndex() + 2];
 		
-		if (vertexVBO == 0 || normalVBO == 0) // This mesh is not in our book/invalid or the buffer for this mesh hasn't been generated yet
+		if (vertexVBO == 0 || normalVBO == 0 || textureVBO == 0) // This mesh is not in our book/invalid or the buffer for this mesh hasn't been generated yet
 		{
 			// std::cout << "[GraphicsInterface] No VBOs found" << std::endl;
 			continue;
@@ -588,6 +685,9 @@ void Module::SDLOpenGLInterface::renderFrame()
 		
 		glBindBuffer(GL_ARRAY_BUFFER, normalVBO);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		
+		glBindBuffer(GL_ARRAY_BUFFER, textureVBO);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
 		
 		glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
 		

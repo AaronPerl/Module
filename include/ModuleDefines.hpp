@@ -17,6 +17,7 @@ namespace Module
 		class InputCallback;
 		class GraphicsContext;
 		class Mesh;
+		class Texture;
 		class Color;
 		class PolygonContainer;
 	class AudioInterface;
