@@ -76,9 +76,11 @@ DEPS = $(notdir $(SRCS:.cpp=.d))
 FULL_OBJS64 = $(addprefix $(PATH64)/,$(OBJS))
 FULL_OBJS32 = $(addprefix $(PATH32)/,$(OBJS))
 FULL_DEPS = $(addprefix $(DEP_PATH)/,$(DEPS))
+TEST_PROGRAM = main_test
 NULL = 
 
 ifeq ($(OS), Windows_NT)
+	TEST_PROGRAM := $(addsuffix .exe, $(TEST_PROGRAM))
 	LIB_PATHS 		+= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib -L$(OPENAL_SOFT)/libs/Win64 -L$(SOIL)/lib
 	LIB_PATHS_32 	+= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32 -L$(OPENAL_SOFT)/libs/Win32 -L$(SOIL)/lib
 	LIBS		+= -lopengl32 -lglew32 -lOpenAL32.dll
@@ -113,14 +115,16 @@ endif
 
 .PHONY: all depends 64bit 32bit interfaces test run clean dumpmachine
 
+$(TEST_PROGRAM) : $(PATH64)/$(FULL_NAME) $(INTERFACE_LIBS) main_test.cpp
+	@echo Compiling test program!
+	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
+
 all: 64bit 32bit
 depends: $(FULL_DEPS)
 64bit: $(PATH64)/$(FULL_NAME)
 32bit: $(PATH32)/$(FULL_NAME)
 interfaces: $(INTERFACE_LIBS)
-test: 64bit interfaces
-	@echo Compiling test program!
-	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
+test: $(TEST_PROGRAM)
 run: test
 	main_test
 clean:

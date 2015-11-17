@@ -13,6 +13,8 @@
 #include "Sound.hpp"
 #include "SoundClip.hpp"
 #include "InputCallback.hpp"
+#include "GraphicsCallback.hpp"
+#include "GraphicsContext.hpp"
 
 #define MATH_PI 3.14159265358979323846264
 
@@ -62,6 +64,25 @@ public:
 	}
 };
 
+class TestGraphicsCallback : public Module::GraphicsCallback
+{
+private:
+	Module::PolygonContainer* container;
+public:
+	TestGraphicsCallback(Module::GraphicsInterface *g)
+	{
+		container = g->createPolygonContainer();
+		container->addTriangle(	Module::Vector3(0,200,0),
+								Module::Vector3(100,0,0),
+								Module::Vector3(0,0,0),
+								Module::Color(0,0,0));
+	}
+	virtual void onPostRender(Module::GraphicsContext& context)
+	{
+		context.drawPolygons2D(*container);
+	}
+};
+
 bool halted = false;
 
 void sigterm_handler(int signal)
@@ -90,6 +111,8 @@ int main(int argc, char ** argv)
 	
 	TestInputCallback input;
 	graphics.addInputCallback(&input);
+	TestGraphicsCallback gCallback(&graphics);
+	graphics.addGraphicsCallback(&gCallback);
 	
 	// Starts the game
 	game.start();

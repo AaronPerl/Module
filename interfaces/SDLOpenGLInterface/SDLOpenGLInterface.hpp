@@ -75,12 +75,7 @@ namespace Module
 			void createVertexBuffer(PolygonContainer* container);
 			
 			// OVERRIDES
-			void createWindow() {
-				createWindow(800, 600, 60);
-				//test = createPolygonContainer();
-				//test->addTriangle(Vector3(0,0,0), Vector3(0,100,0), Vector3(100,0,0), Color(0,0,0));
-				//test->addTriangle(Vector3(0,0,0), Vector3(100,0,0), Vector3(0,100,0), Color(0,0,0));
-			}
+			void createWindow() { createWindow(800, 600, 60); }
 			void renderFrame();
 			void drawPolygons2D(const PolygonContainer& container);
 			void swapBuffers();

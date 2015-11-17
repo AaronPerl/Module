@@ -104,7 +104,7 @@ void Module::SDLOpenGLInterface::setupShaders()
 		GLint logLen = 0;
 		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLen);
 		char * log = new char[logLen];
-		glGetProgramInfoLog(program,logLen,NULL,log);
+		glGetProgramInfoLog(program2D,logLen,NULL,log);
 		std::ofstream logFile ("logs/programLog.txt");
 		logFile << log << std::endl;
 		logFile.close ();
@@ -127,7 +127,7 @@ void Module::SDLOpenGLInterface::setupShaders()
 		GLint logLen = 0;
 		glGetProgramiv(program2D, GL_INFO_LOG_LENGTH, &logLen);
 		char * log = new char[logLen];
-		glGetProgramInfoLog(program,logLen,NULL,log);
+		glGetProgramInfoLog(program2D,logLen,NULL,log);
 		std::ofstream logFile ("logs/programLog.txt");
 		logFile << log << std::endl;
 		logFile.close ();
@@ -692,15 +692,21 @@ void Module::SDLOpenGLInterface::renderFrame()
 		glDrawArrays(GL_TRIANGLES, 0, curMesh->getNumVertices());
 		
 	}
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glUseProgram(0);
 }
 
 void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& container)
 {
-    glDepthFunc(GL_NEVER);
-	GLint dimensions[2];
+	glUseProgram(program2D);
 	
+	GLint dimensions[2];
 	SDL_GetWindowSize(window,&dimensions[0],&dimensions[1]);
-	glViewport(0,0,dimensions[0], dimensions[1]);
+	
+	glDisable(GL_CULL_FACE);
+	glDepthFunc(GL_ALWAYS);
 	
 	// create new VBOs
 	
@@ -712,7 +718,6 @@ void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& containe
 	GLuint vertexVBO = vertexBuffers2D[container.getIndex()];
 	GLuint dimensionLoc = glGetUniformLocation(program2D, "position");
 	
-	glUseProgram(program2D);
 	glUniform2iv(dimensionLoc,1,dimensions);
 	
 	glEnableVertexAttribArray(0);
@@ -722,12 +727,15 @@ void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& containe
 	
 	glDrawArrays(GL_TRIANGLES, 0, container.numVertices());
 	
+	glDisableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glUseProgram(0);
+	
+	glEnable(GL_CULL_FACE);
 }
 
 void Module::SDLOpenGLInterface::swapBuffers()
 {
-	//drawPolygons2D(*test); //testing purposes
 	SDL_GL_SwapWindow(window);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
