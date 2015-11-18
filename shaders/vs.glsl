@@ -12,9 +12,11 @@ uniform vec4		eye_normal;
 
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec4 normal;
+layout (location = 2) in vec2 uv;
 
 out vec4 varyingPosition;
 out vec4 varyingNormal;
+out vec2 varyingUV;
 
 mat4 rotationMatrix(vec3 axis, float angle)
 {
@@ -36,4 +38,5 @@ void main()
     gl_Position = tempPos;
     varyingPosition = model_matrix * position;
     varyingNormal = normalize(norm_matrix*normal);
+	varyingUV = uv;
 }

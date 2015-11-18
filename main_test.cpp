@@ -130,8 +130,12 @@ int main(int argc, char ** argv)
 	// GRAPHICS TESTS
 	unsigned int teapots = 10;
 	
-	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);	
-	teapot->setScale(1/60.0f);
+	//Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/teapot.obj", true);	
+	Module::Mesh* teapot = graphics.loadMeshFromFile("teapot", "models/cube.obj", false);	
+	Module::Texture* texture = graphics.loadTexture("textures/test_tex.png");
+	
+	//teapot->setScale(1/60.0f);
+	teapot->setScale(1/1.0f);
 	
 	std::vector<Module::GameObject*> objects;
 		
@@ -140,6 +144,7 @@ int main(int argc, char ** argv)
 		float theta = 2 * MATH_PI * i / teapots;
 		Module::GameObject* gameobj = game.createGameObject();
 		game.setMesh(gameobj, teapot);
+		game.setTexture(gameobj, texture);
 		// gameobj->setPosition(Module::Vector3(i * 0.5f, 0.0f, i * 0.0f));
 		gameobj->setPosition(Module::Vector3(6 * std::sin(theta), 0.0f, 6 * std::cos(theta)));
 		objects.push_back(gameobj);

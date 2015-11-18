@@ -8,8 +8,11 @@ uniform mat4	   norm_matrix;
 uniform vec4	  eye_position;
 uniform vec4		eye_normal;
 
+uniform sampler2D texture;
+
 in vec4 varyingPosition;
 in vec4 varyingNormal;
+in vec2 varyingUV;
 
 out vec4 gl_FragColor;
 
@@ -38,7 +41,7 @@ struct material
 
 material frontMaterial = material(
   vec4(0.3, 0.2, 0.2, 1.0),
-  vec4(1.0, 0.0, 0.0, 1.0),
+  vec4(1.0, 1.0, 1.0, 1.0),
   vec4(1.0, 1.0, 1.0, 1.0),
   64.0
 );
@@ -50,12 +53,16 @@ void main()
 	vec3 lightVector = normalize(light0.position.xyz - varyingPosition.xyz);
 	float diffFactor = dot(varyingNormal.xyz, lightVector);
 	diffFactor = clamp(diffFactor, 0, 1);
+	
 	vec3 reflectedLight = normalize(reflect(lightVector, varyingNormal.xyz));
 	vec3 eyeDirection = normalize(eye_position.xyz-varyingPosition.xyz);
+	
 	float specFactor = dot(reflectedLight, eyeDirection);
 	specFactor = pow(clamp(specFactor, 0, 1), frontMaterial.shininess);
-	gl_FragColor = 	scene_ambient * frontMaterial.ambient +
-					diffFactor * frontMaterial.diffuse 	* vec4(light0.diffuse,1) + 
-					specFactor * frontMaterial.specular * vec4(light0.specular,1);
-	//gl_FragColor = vec4(1,0,0,1);
+	
+	vec4 lightColor = scene_ambient * frontMaterial.ambient +
+		diffFactor * frontMaterial.diffuse 	* vec4(light0.diffuse,1);
+	
+	vec4 specColor = specFactor * frontMaterial.specular * vec4(light0.specular,1);
+	gl_FragColor = lightColor * texture2D(texture, varyingUV) + specColor;
 }

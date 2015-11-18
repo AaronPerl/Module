@@ -18,6 +18,7 @@ namespace Module
 		protected:
 			GLuint textureID;
 		public:
+			SDLOpenGLTexture() : textureID(0) {}
 			Color getPixel(uint16_t x, uint16_t y) { throw std::runtime_error("getPixelColor not implemented!"); }
 			Color getPixel(float x, float y) { throw std::runtime_error("getPixelColor not implemented!"); }
 			friend class SDLOpenGLInterface;

@@ -23,6 +23,7 @@
 
 #define GLEW_NO_GLU
 
+#include <SOIL.h>
 #include <GL/glew.h>
 #include <GL/gl.h>
 #include <SDL2/SDL.h>
@@ -30,7 +31,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/quaternion.hpp>
-#include <SOIL.h>
+
+#define GL_GLEXT_PROTOTYPES
+
 
 // Module includes
 #include <ModuleGame.hpp>
@@ -64,6 +67,9 @@ namespace Module
 			bool terminated;
 			
 			PolygonContainer* test;
+			
+			std::vector<SDLOpenGLTexture*> texturesToLoad;
+			std::vector<std::string> filesToLoadFrom;
 	
 			unsigned int initShader(const char * path, unsigned int shaderType);
 			std::string readSource(const char * path);
@@ -73,6 +79,8 @@ namespace Module
 			void createWindow(int width, int height, int fps);
 			void createVNBuffers(Mesh* mesh);
 			void createVertexBuffer(PolygonContainer* container);
+			
+			void loadNewTextures();
 			
 			// OVERRIDES
 			void createWindow() { createWindow(800, 600, 60); }

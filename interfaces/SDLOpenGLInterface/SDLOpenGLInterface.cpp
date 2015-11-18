@@ -478,18 +478,32 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 
 Module::Texture* Module::SDLOpenGLInterface::loadTexture(const std::string& filename)
 {
-	GLuint newID = SOIL_load_OGL_texture
-	(
-		filename.c_str(),
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
-	);
-	if (newID == 0)
-		throw std::runtime_error("[GraphicsInterface] : Texture " + filename + " could not be loaded");
 	textures.push_back(SDLOpenGLTexture());
-	textures.back().textureID = newID;
+	texturesToLoad.push_back(&textures.back());
+	filesToLoadFrom.push_back(filename);
 	return &textures.back();
+}
+
+void Module::SDLOpenGLInterface::loadNewTextures()
+{
+	for (unsigned int i = 0; i < texturesToLoad.size(); i++)
+	{
+		SDLOpenGLTexture* curTex = texturesToLoad[i];
+		const std::string& curFilename = filesToLoadFrom[i];
+		GLuint newID = SOIL_load_OGL_texture
+		(
+			curFilename.c_str(),
+			SOIL_LOAD_AUTO,
+			SOIL_CREATE_NEW_ID,
+			SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB
+			//SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+		);
+		if (newID == 0)
+			throw std::runtime_error("[GraphicsInterface] : Texture " + curFilename + " could not be loaded");
+		curTex->textureID = newID;
+	}
+	texturesToLoad.clear();
+	filesToLoadFrom.clear();
 }
 
 void Module::SDLOpenGLInterface::renderFrame()
@@ -589,6 +603,8 @@ void Module::SDLOpenGLInterface::renderFrame()
 		createVNBuffers(&allMeshes[vertexBuffers.size()/2]);
 	}
 	
+	if (texturesToLoad.size() > 0)
+		loadNewTextures();
 	// OpenGL stuff now
 		
 	// projection matrix
@@ -624,6 +640,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 	GLuint nmloc = 	glGetUniformLocation(program, "norm_matrix");
 	GLuint eploc = 	glGetUniformLocation(program, "eye_position");
 	GLuint enloc = 	glGetUniformLocation(program, "eye_normal");
+	GLuint texloc = glGetUniformLocation(program, "texture");
 	
 	// pass uniforms
 	glUniformMatrix4fv(vloc,1,GL_FALSE,&viewMat[0][0]);
@@ -645,6 +662,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 		GameObject* curObj = game->getGameObject(i);
 		Mesh* curMesh = curObj->getMesh();
 		Texture* curTex = curObj->getTexture();
+		SDLOpenGLTexture* curSDLOGLTex;
 		Vector3 curPos = curObj->getPosition();
 		Quaternion curRot = curObj->getRotation();
 		if (curMesh == NULL) // Nothing to see here, literally (no mesh)
@@ -652,9 +670,11 @@ void Module::SDLOpenGLInterface::renderFrame()
 			// std::cout << "[GraphicsInterface] No mesh, skipping GameObject" << std::endl;
 			continue;
 		}
-		if (curTex != NULL)
+		if (curTex != NULL && (curSDLOGLTex = ((SDLOpenGLTexture*)curTex)) != NULL && curSDLOGLTex->textureID != 0)
 		{
-			
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, curSDLOGLTex->textureID);
+			glUniform1i(texloc, GL_TEXTURE0);
 		}
 		
 		vertexVBO = vertexBuffers[3 * curMesh->getIndex() + 0];
@@ -694,6 +714,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 	}
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glUseProgram(0);
 }
