@@ -24,7 +24,7 @@ struct lightSource
 };
 
 lightSource light0 = lightSource(
-  vec3(0.0,  3.0,  0.0),
+  vec3(0.0,  5.0,  0.0),
   vec3(1.0,  1.0,  1.0),
   vec3(1.0,  1.0,  1.0)
 );
@@ -40,7 +40,7 @@ struct material
 };
 
 material frontMaterial = material(
-  vec4(0.3, 0.2, 0.2, 1.0),
+  vec4(0.2, 0.2, 0.2, 1.0),
   vec4(1.0, 1.0, 1.0, 1.0),
   vec4(1.0, 1.0, 1.0, 1.0),
   64.0
@@ -51,10 +51,11 @@ void main()
 	//if (fract(sin(dot(varyingPosition.xy ,vec2(12.9898,78.233))) * 43758.5453)>0.8)
 		//discard;
 	vec3 lightVector = normalize(light0.position.xyz - varyingPosition.xyz);
-	float diffFactor = dot(varyingNormal.xyz, lightVector);
+	float diffFactor = dot(lightVector, varyingNormal.xyz);
 	diffFactor = clamp(diffFactor, 0, 1);
 	
-	vec3 reflectedLight = normalize(reflect(lightVector, varyingNormal.xyz));
+	vec3 reflectedLight = 2 * diffFactor * varyingNormal.xyz - lightVector;
+//	vec3 reflectedLight = normalize(reflect(lightVector, varyingNormal.xyz));
 	vec3 eyeDirection = normalize(eye_position.xyz-varyingPosition.xyz);
 	
 	float specFactor = dot(reflectedLight, eyeDirection);

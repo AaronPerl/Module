@@ -593,6 +593,10 @@ void Module::SDLOpenGLInterface::renderFrame()
 	int height;
 	
 	SDL_GetWindowSize(window,&width,&height);
+	
+	if (width == 0 || height == 0)
+		return;
+	
 	glViewport(0,0,width,height);
     glDepthFunc(GL_LESS);
 	
@@ -642,11 +646,15 @@ void Module::SDLOpenGLInterface::renderFrame()
 	GLuint enloc = 	glGetUniformLocation(program, "eye_normal");
 	GLuint texloc = glGetUniformLocation(program, "texture");
 	
+	glm::vec3 eyePos(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());
+	glm::vec3 eyeNorm(lookAt.getX(), lookAt.getY(), lookAt.getZ());
+	
 	// pass uniforms
 	glUniformMatrix4fv(vloc,1,GL_FALSE,&viewMat[0][0]);
 	glUniformMatrix4fv(prloc,1,GL_FALSE,&projectionMat[0][0]);
-	glUniform4fv(eploc,1,&viewMat[3][0]);
-	glUniform4fv(enloc,1,&viewMat[2][0]);
+	
+	glUniform3fv(eploc,1,&eyePos[0]);
+	glUniform3fv(enloc,1,&eyeNorm[0]);
 	
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
