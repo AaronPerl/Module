@@ -19,7 +19,7 @@ void AudioInterface::run()
 {
 	setDevice();
 	setListener(NULL);
-	while(true) // While the game is running (?)
+	while(game->isRunning()) // While the game is running
 	{
 		updateEnvironment();
 	}

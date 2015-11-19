@@ -530,7 +530,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 				std::cout << "SDL Program closed!" << std::endl;
 				terminate();
 				running = false;
-				break;
+				return;
 			case SDL_MOUSEBUTTONDOWN:
 				switch (event.button.button)
 				{
