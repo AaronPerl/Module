@@ -45,8 +45,11 @@ INTERFACE_PATH = interfaces
 # EX: interfaces/SDLOpenGLInterface
 INTERFACE_PATHS = $(wildcard $(INTERFACE_PATH)/*)
 
+# EX: SDLOpenGLInterface
+INTERFACE_NAMES = $(notdir $(INTERFACE_PATHS))
+
 # EX: libSDLOpenGLInterface.a
-INTERFACE_FILE_NAMES = $(addprefix lib, $(addsuffix .a, $(notdir $(INTERFACE_PATHS))))
+INTERFACE_FILE_NAMES = $(addprefix lib, $(addsuffix .a, $(INTERFACE_NAMES)))
 
 # EX: interfaces/SDLOpenGLInterface/libSDLOpenGLInterface.a
 INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACE_PATHS)), $(INTERFACE_FILE_NAMES))
@@ -58,7 +61,7 @@ INTERFACE_INC = $(addprefix -I,$(INTERFACE_PATHS))
 INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACE_PATHS))
 
 # EX: -lSDLOpenGLInterface
-INTERFACE_LINKS = $(addprefix -l, $(notdir $(INTERFACE_PATHS)))
+INTERFACE_LINKS = $(addprefix -l, $(INTERFACE_NAMES))
 
 
 include $(addsuffix /Makefile, $(INTERFACE_PATHS))
