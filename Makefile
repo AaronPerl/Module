@@ -40,32 +40,6 @@ LIBRARY_NAME = Module
 FULL_NAME = lib$(LIBRARY_NAME).a
 FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
 
-INTERFACE_PATH = interfaces
-
-# EX: interfaces/SDLOpenGLInterface
-INTERFACE_PATHS = $(wildcard $(INTERFACE_PATH)/*)
-
-# EX: SDLOpenGLInterface
-INTERFACE_NAMES = $(notdir $(INTERFACE_PATHS))
-
-# EX: libSDLOpenGLInterface.a
-INTERFACE_FILE_NAMES = $(addprefix lib, $(addsuffix .a, $(INTERFACE_NAMES)))
-
-# EX: interfaces/SDLOpenGLInterface/libSDLOpenGLInterface.a
-INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACE_PATHS)), $(INTERFACE_FILE_NAMES))
-
-# EX: -Iinterfaces/SDLOpenGLInterface
-INTERFACE_INC = $(addprefix -I,$(INTERFACE_PATHS))
-
-# EX: -Linterfaces/SDLOpenGLInterface
-INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACE_PATHS))
-
-# EX: -lSDLOpenGLInterface
-INTERFACE_LINKS = $(addprefix -l, $(INTERFACE_NAMES))
-
-
-include $(addsuffix /Makefile, $(INTERFACE_PATHS))
-
 
 DEBUG ?= 1
 
@@ -125,6 +99,32 @@ ifeq ($(NEEDS_PTHREADS_WIN32), true)
 else
 	LIBS += -lpthread
 endif
+
+INTERFACE_PATH = interfaces
+
+# EX: interfaces/SDLOpenGLInterface
+INTERFACE_PATHS = $(wildcard $(INTERFACE_PATH)/*)
+
+# EX: SDLOpenGLInterface
+INTERFACE_NAMES = $(notdir $(INTERFACE_PATHS))
+
+# EX: libSDLOpenGLInterface.a
+INTERFACE_FILE_NAMES = $(addprefix lib, $(addsuffix .a, $(INTERFACE_NAMES)))
+
+# EX: interfaces/SDLOpenGLInterface/libSDLOpenGLInterface.a
+INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACE_PATHS)), $(INTERFACE_FILE_NAMES))
+
+# EX: -Iinterfaces/SDLOpenGLInterface
+INTERFACE_INC = $(addprefix -I,$(INTERFACE_PATHS))
+
+# EX: -Linterfaces/SDLOpenGLInterface
+INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACE_PATHS))
+
+# EX: -lSDLOpenGLInterface
+INTERFACE_LINKS = $(addprefix -l, $(INTERFACE_NAMES))
+
+
+include $(addsuffix /Makefile, $(INTERFACE_PATHS))
 
 .DEFAULT_GOAL = 64bit
 
