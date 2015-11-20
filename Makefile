@@ -135,15 +135,15 @@ dumpmachine:
 
 $(PATH64):
 	@echo Making 64-bit build directory
-	@mkdir $(PATH64) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH64))
+	@mkdir $@ -p 2>$(NULL) || mkdir $(subst /,\,$@)
 
 $(PATH32):
 	@echo Making 32-bit build directory
-	@mkdir $(PATH32) -p 2>$(NULL) || mkdir $(subst /,\,$(PATH32))
+	@mkdir $@ -p 2>$(NULL) || mkdir $(subst /,\,$@)
 
 $(DEP_PATH):
 	@echo Making dependency directory
-	@mkdir $(DEP_PATH)
+	@mkdir $@
 
 $(PATH64)/%.o : src/%.cpp
 	@echo Compiling $<
@@ -161,12 +161,10 @@ $(DEP_PATH)/%.d : src/%.cpp | $(DEP_PATH)
 	@g++ -MM -MT $(PATH32)/$(notdir $(<:.cpp=.o)) $(FLAGS) -Iinclude $< >> $@
 
 $(PATH64)/$(FULL_NAME): $(FULL_OBJS64)
-	ar rcs $(PATH64)/$(FULL_NAME) $(PATH64)/*.o
-#	g++ $(FLAGS) $(SRCS) $(LIB_PATHS) $(LIB_INC_PATHS) $(LIBS) -o $@
+	ar rcs $@ $^
 
 $(PATH32)/$(FULL_NAME): $(FULL_OBJS32)
-	ar rcs $(PATH32)/$(FULL_NAME) $(PATH32)/*.o
-#	i686-w64-mingw32-g++ $(FLAGS) $(SRCS) $(LIB_PATHS_32) $(LIB_INC_PATHS_32) $(LIBS) -o $@
+	ar rcs $@ $^
 
 $(FULL_OBJS64) : | $(PATH64)
 $(FULL_OBJS32) : | $(PATH32)

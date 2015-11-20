@@ -6,4 +6,4 @@ $(SDLOPENGL_DIR)/%.o : $(SDLOPENGL_DIR)/%.cpp $(SDLOPENGL_DIR)/*.hpp
 	g++ $(FLAGS) $(LIB_INC_PATHS) -Iinclude -c $< -o $@
 
 $(SDLOPENGL_DIR)/libSDLOpenGLInterface.a : $(SDLOPENGL_OBJS)
-	ar rcs $@ $(SDLOPENGL_OBJS)
+	ar rcs $@ $^

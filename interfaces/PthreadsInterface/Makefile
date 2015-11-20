@@ -6,4 +6,4 @@ $(PTHREAD_DIR)/%.o : $(PTHREAD_DIR)/%.cpp $(PTHREAD_DIR)/*.hpp
 	g++ $(FLAGS) $(LIB_INC_PATHS) -Iinclude -c $< -o $@
 
 $(PTHREAD_DIR)/libPthreadsInterface.a : $(PTHREAD_OBJS)
-	ar rcs $@ $(PTHREAD_OBJS)
+	ar rcs $@ $^
