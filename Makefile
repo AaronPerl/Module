@@ -41,11 +41,23 @@ FULL_NAME = lib$(LIBRARY_NAME).a
 FLAGS = -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2
 
 INTERFACE_PATH = interfaces
+
+# EX: interfaces/SDLOpenGLInterface
 INTERFACE_PATHS = $(wildcard $(INTERFACE_PATH)/*)
+
+# EX: libSDLOpenGLInterface.a
 INTERFACE_FILE_NAMES = $(addprefix lib, $(addsuffix .a, $(notdir $(INTERFACE_PATHS))))
+
+# EX: interfaces/SDLOpenGLInterface/libSDLOpenGLInterface.a
 INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACE_PATHS)), $(INTERFACE_FILE_NAMES))
+
+# EX: -Iinterfaces/SDLOpenGLInterface
 INTERFACE_INC = $(addprefix -I,$(INTERFACE_PATHS))
+
+# EX: -Linterfaces/SDLOpenGLInterface
 INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACE_PATHS))
+
+# EX: -lSDLOpenGLInterface
 INTERFACE_LINKS = $(addprefix -l, $(notdir $(INTERFACE_PATHS)))
 
 
