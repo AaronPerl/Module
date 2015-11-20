@@ -2,14 +2,16 @@
 #include "SDLKeyCodes.hpp"
 #include "PolygonContainer.hpp"
 
-Module::SDLOpenGLInterface::SDLOpenGLInterface() : 
+using namespace Module;
+
+SDLOpenGLInterface::SDLOpenGLInterface() : 
 	window(0), context(0), vShader(0), fShader(0), program(0), frames(0), prevMillis(0), running(false), terminated(false)
 {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
     SDL_Init(SDL_INIT_EVERYTHING);
 }
 
-Module::SDLOpenGLInterface::~SDLOpenGLInterface()
+SDLOpenGLInterface::~SDLOpenGLInterface()
 {
 	if (!terminated)
 	{
@@ -17,7 +19,7 @@ Module::SDLOpenGLInterface::~SDLOpenGLInterface()
 	}
 }
 
-void Module::SDLOpenGLInterface::terminate()
+void SDLOpenGLInterface::terminate()
 {
 	if (program)
 	{
@@ -32,7 +34,7 @@ void Module::SDLOpenGLInterface::terminate()
 	terminated = true;
 }
 
-std::string Module::SDLOpenGLInterface::readSource(const char * path)
+std::string SDLOpenGLInterface::readSource(const char * path)
 {
 	std::cout << "[GraphicsInterface] : OpenGL :   Reading shader source file: " << path << std::endl;
 
@@ -47,7 +49,7 @@ std::string Module::SDLOpenGLInterface::readSource(const char * path)
 	return outString;
 }
 
-unsigned int Module::SDLOpenGLInterface::initShader(const char * path, unsigned int shaderType)
+unsigned int SDLOpenGLInterface::initShader(const char * path, unsigned int shaderType)
 {
 	std::cout << "[GraphicsInterface] : OpenGL : Creating shader from file " << path << std::endl;
 
@@ -82,7 +84,7 @@ unsigned int Module::SDLOpenGLInterface::initShader(const char * path, unsigned 
 	return newShader;
 }
 
-void Module::SDLOpenGLInterface::setupShaders()
+void SDLOpenGLInterface::setupShaders()
 {
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LESS);
@@ -142,7 +144,7 @@ void Module::SDLOpenGLInterface::setupShaders()
 	glDeleteShader(fShader2D);
 }
 
-void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
+void SDLOpenGLInterface::createWindow(int width, int height, int fps)
 {
 	running = true;
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
@@ -168,7 +170,7 @@ void Module::SDLOpenGLInterface::createWindow(int width, int height, int fps)
 	prevMillis = getMilliseconds();
 }
 
-void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
+void SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 {
 	GLuint vertexVBO  = 0;
 	GLuint normalVBO  = 0;
@@ -226,7 +228,7 @@ void Module::SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 	vertexBuffers.push_back(textureVBO);
 }
 
-void Module::SDLOpenGLInterface::createVertexBuffer(PolygonContainer* container)
+void SDLOpenGLInterface::createVertexBuffer(PolygonContainer* container)
 {
 	GLuint vertexVBO;
 	float* buffer;
@@ -260,7 +262,7 @@ std::vector<std::string> split(const std::string& toSplit)
 	return retval;
 }
 
-Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces)
+Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces)
 {
 	std::cout << "[GraphicsInterface] Loading mesh [" << meshname << "] from file: " << filename << std::endl;
 	std::size_t periodIndex = filename.rfind('.');
@@ -476,7 +478,7 @@ Module::Mesh* Module::SDLOpenGLInterface::loadMeshFromFile(const std::string& me
 	return createMesh(vertices, normals, uvs, meshname);
 }
 
-Module::Texture* Module::SDLOpenGLInterface::loadTexture(const std::string& filename)
+Texture* SDLOpenGLInterface::loadTexture(const std::string& filename)
 {
 	textures.push_back(SDLOpenGLTexture());
 	texturesToLoad.push_back(&textures.back());
@@ -484,7 +486,7 @@ Module::Texture* Module::SDLOpenGLInterface::loadTexture(const std::string& file
 	return &textures.back();
 }
 
-void Module::SDLOpenGLInterface::loadNewTextures()
+void SDLOpenGLInterface::loadNewTextures()
 {
 	for (unsigned int i = 0; i < texturesToLoad.size(); i++)
 	{
@@ -506,7 +508,7 @@ void Module::SDLOpenGLInterface::loadNewTextures()
 	filesToLoadFrom.clear();
 }
 
-void Module::SDLOpenGLInterface::renderFrame()
+void SDLOpenGLInterface::renderFrame()
 {
 	frames++;
 	if (getMilliseconds() - prevMillis > 5000)
@@ -727,7 +729,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 	glUseProgram(0);
 }
 
-void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& container)
+void SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& container)
 {
 	glUseProgram(program2D);
 	
@@ -763,14 +765,14 @@ void Module::SDLOpenGLInterface::drawPolygons2D(const PolygonContainer& containe
 	glEnable(GL_CULL_FACE);
 }
 
-void Module::SDLOpenGLInterface::swapBuffers()
+void SDLOpenGLInterface::swapBuffers()
 {
 	SDL_GL_SwapWindow(window);
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-Module::KeyCode::Code Module::getKeyCode(SDL_Keycode sym)
+KeyCode::Code Module::getKeyCode(SDL_Keycode sym)
 {
 	if (sym < 0x40000000)
 	{
