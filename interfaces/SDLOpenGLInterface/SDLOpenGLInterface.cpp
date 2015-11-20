@@ -678,7 +678,7 @@ void Module::SDLOpenGLInterface::renderFrame()
 			// std::cout << "[GraphicsInterface] No mesh, skipping GameObject" << std::endl;
 			continue;
 		}
-		if (curTex != NULL && (curSDLOGLTex = ((SDLOpenGLTexture*)curTex)) != NULL && curSDLOGLTex->textureID != 0)
+		if (curTex != NULL && (curSDLOGLTex = (dynamic_cast<SDLOpenGLTexture*>(curTex))) != NULL && curSDLOGLTex->textureID != 0)
 		{
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, curSDLOGLTex->textureID);

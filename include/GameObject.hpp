@@ -23,8 +23,8 @@ protected:
 	Texture* texture;
 	Vector3 pos;
 	Quaternion rot;
-	GameObject(ModuleGame* g) : game(g), tObj(0), mesh(0) {}
-	GameObject() : game(0), tObj(0), mesh(0) {} // EMpty constructor to enable use in a Book
+	GameObject(ModuleGame* g) : game(g), tObj(0), mesh(0), texture(0) {}
+	GameObject() : game(0), tObj(0), mesh(0), texture(0) {} // EMpty constructor to enable use in a Book
 public:
 	const Vector3& getPosition() const		{ return tObj ? tObj->getPosition() : pos; }
 	const Quaternion& getRotation() const	{ return tObj ? tObj->getRotation() : rot; }
