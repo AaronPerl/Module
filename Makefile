@@ -101,6 +101,8 @@ else
 endif
 
 INTERFACE_PATH = interfaces
+INTERFACE_BUILD_DIR_64 = $(PATH64)/interfaces
+INTERFACE_BUILD_DIR_32 = $(PATH32)/interfaces
 
 # EX: interfaces/SDLOpenGLInterface
 INTERFACE_PATHS = $(wildcard $(INTERFACE_PATH)/*)
@@ -111,34 +113,55 @@ INTERFACE_NAMES = $(notdir $(INTERFACE_PATHS))
 # EX: libSDLOpenGLInterface.a
 INTERFACE_FILE_NAMES = $(addprefix lib, $(addsuffix .a, $(INTERFACE_NAMES)))
 
-# EX: interfaces/SDLOpenGLInterface/libSDLOpenGLInterface.a
-INTERFACE_LIBS = $(join $(addsuffix /, $(INTERFACE_PATHS)), $(INTERFACE_FILE_NAMES))
+# EX: build/.../interfaces/libSDLOpenGLInterface.a
+INTERFACE_LIBS_64 = $(addprefix $(addsuffix /, $(INTERFACE_BUILD_DIR_64)), $(INTERFACE_FILE_NAMES))
+INTERFACE_LIBS_32 = $(addprefix $(addsuffix /, $(INTERFACE_BUILD_DIR_32)), $(INTERFACE_FILE_NAMES))
 
 # EX: -Iinterfaces/SDLOpenGLInterface
 INTERFACE_INC = $(addprefix -I,$(INTERFACE_PATHS))
 
-# EX: -Linterfaces/SDLOpenGLInterface
-INTERFACE_LIB_PATHS = $(addprefix -L, $(INTERFACE_PATHS))
+# EX: -Lbuild/.../interfaces
+INTERFACE_LIB_PATHS_64 = $(addprefix -L, $(INTERFACE_BUILD_DIR_64))
+INTERFACE_LIB_PATHS_32 = $(addprefix -L, $(INTERFACE_BUILD_DIR_32))
 
 # EX: -lSDLOpenGLInterface
 INTERFACE_LINKS = $(addprefix -l, $(INTERFACE_NAMES))
 
 
-include $(addsuffix /Makefile, $(INTERFACE_PATHS))
+define make-interface
+$(INTERFACE_BUILD_DIR_32)/%.o : $1/%.cpp $(wildcard $1/*.hpp) | $(INTERFACE_BUILD_DIR_32)
+	@echo Compiling $$@
+	@printf "  "
+	g++ $(FLAGS) $(LIB_INC_PATHS) -Iinclude -c $$< -o $$@
+$(INTERFACE_BUILD_DIR_64)/%.o : $1/%.cpp $(wildcard $1/*.hpp) | $(INTERFACE_BUILD_DIR_64)
+	@echo Compiling $$@
+	@printf "  "
+	g++ $(FLAGS) $(LIB_INC_PATHS) -Iinclude -c $$< -o $$@
+$(INTERFACE_BUILD_DIR_32)/lib$(notdir $1).a : $(addprefix $(INTERFACE_BUILD_DIR_32)/,$(notdir $(patsubst %.cpp,%.o,$(wildcard $1/*.cpp)))) | $(INTERFACE_BUILD_DIR_32)
+	@echo $$@ $$^
+	ar rcs $$@ $$^
+$(INTERFACE_BUILD_DIR_64)/lib$(notdir $1).a : $(addprefix $(INTERFACE_BUILD_DIR_64)/,$(notdir $(patsubst %.cpp,%.o,$(wildcard $1/*.cpp)))) | $(INTERFACE_BUILD_DIR_64)
+	@echo $$@ $$^
+	ar rcs $$@ $$^
+endef
+
+# include $(addsuffix /Makefile, $(INTERFACE_PATHS))
 
 .DEFAULT_GOAL = 64bit
 
-.PHONY: all depends 64bit 32bit interfaces test run clean dumpmachine
+.PHONY: all depends 64bit 32bit interfaces interfaces32 interfaces64 test run clean dumpmachine
 
-$(TEST_PROGRAM) : $(PATH64)/$(FULL_NAME) $(INTERFACE_LIBS) main_test.cpp
+$(TEST_PROGRAM) : $(PATH64)/$(FULL_NAME) $(INTERFACE_LIBS_64) main_test.cpp
 	@echo Compiling test program!
-	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
+	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS_64) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
 
 all: 64bit 32bit
 depends: $(FULL_DEPS)
 64bit: $(PATH64)/$(FULL_NAME)
 32bit: $(PATH32)/$(FULL_NAME)
-interfaces: $(INTERFACE_LIBS)
+interfaces64: $(INTERFACE_LIBS_64)
+interfaces32: $(INTERFACE_LIBS_32)
+interfaces : interfaces32 interfaces64
 test: $(TEST_PROGRAM)
 run: test
 	main_test
@@ -146,7 +169,22 @@ clean:
 	@echo Files are: $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
 	rm -rf build $(DEP_PATH) $(INTERFACE_LIBS) $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
 dumpmachine:
-	echo
+	@echo
+	
+$(foreach d,$(INTERFACE_PATHS),$(eval $(call make-interface,$d)))
+
+$(INTERFACE_BUILD_DIR_64)/%/*.o : $(INTERFACE_PATHS)/%/*.hpp
+
+$(INTERFACE_BUILD_DIR_64)/*/%.o : $(addsuffix /%.cpp, $(wildcard $(INTERFACE_PATHS)/*))
+	@echo $@ $^
+
+$(INTERFACE_BUILD_DIR_64)/%/*.a : $(INTERFACE_BUILD_DIR_64)
+
+$(INTERFACE_BUILD_DIR_64) : 
+	@mkdir $@ -p 2>$(NULL) || mkdir $(subst /,\,$@)
+	
+$(INTERFACE_BUILD_DIR_32) : 
+	@mkdir $@ -p 2>$(NULL) || mkdir $(subst /,\,$@)
 
 $(PATH64):
 	@echo Making 64-bit build directory
