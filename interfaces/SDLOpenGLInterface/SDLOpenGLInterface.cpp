@@ -7,8 +7,9 @@ using namespace Module;
 SDLOpenGLInterface::SDLOpenGLInterface() : 
 	window(0), context(0), vShader(0), fShader(0), program(0), frames(0), prevMillis(0), running(false), terminated(false)
 {
+	glewExperimental=GL_TRUE;
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
-    SDL_Init(SDL_INIT_EVERYTHING);
+	SDL_Init(SDL_INIT_EVERYTHING);
 }
 
 SDLOpenGLInterface::~SDLOpenGLInterface()
@@ -86,9 +87,9 @@ unsigned int SDLOpenGLInterface::initShader(const char * path, unsigned int shad
 
 void SDLOpenGLInterface::setupShaders()
 {
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LESS);
-    glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_CULL_FACE);
 	
 	vShader = initShader("shaders/vs.glsl",GL_VERTEX_SHADER);
 	fShader = initShader("shaders/fs.glsl",GL_FRAGMENT_SHADER);
@@ -151,22 +152,22 @@ void SDLOpenGLInterface::createWindow(int width, int height, int fps)
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 16);
 	window = SDL_CreateWindow("SDL Program",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_RESIZABLE|SDL_WINDOW_OPENGL);
 	context = SDL_GL_CreateContext(window);
-    // if (SDL_GL_SetSwapInterval(-1)==-1) // TODO change this to -1 for release
-		// SDL_GL_SetSwapInterval(1);
-    SDL_GL_SetSwapInterval(0);
-    glClearColor(0,0,0,1);
-    glClear(GL_COLOR_BUFFER_BIT);
+	// if (SDL_GL_SetSwapInterval(-1)==-1) // TODO change this to -1 for release
+	// SDL_GL_SetSwapInterval(1);
+	SDL_GL_SetSwapInterval(0);
+	glClearColor(0,0,0,1);
+	glClear(GL_COLOR_BUFFER_BIT);
 	glDisable(GL_CULL_FACE);
-    if (glewInit())
-    {
-    	throw std::runtime_error("[GraphicsInterface] : glew : Error initializing glew!");
-    }
+	if (glewInit())
+	{
+		throw std::runtime_error("[GraphicsInterface] : glew : Error initializing glew!");
+	}
 	if (!GLEW_VERSION_3_1)
 	{
 		throw std::runtime_error("[GraphicsInterface] : OpenGL : Version 3.1 not supported!");
 	}
-    setupShaders();
-    SDL_GL_SwapWindow(window);
+	setupShaders();
+	SDL_GL_SwapWindow(window);
 	prevMillis = getMilliseconds();
 }
 
@@ -600,7 +601,7 @@ void SDLOpenGLInterface::renderFrame()
 		return;
 	
 	glViewport(0,0,width,height);
-    glDepthFunc(GL_LESS);
+	glDepthFunc(GL_LESS);
 	
 	// create new VBOs
 	

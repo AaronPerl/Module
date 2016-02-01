@@ -1,4 +1,4 @@
-#version 150
+#version 130
 
 uniform mat4       view_matrix;
 uniform mat4 projection_matrix;
@@ -14,7 +14,7 @@ in vec4 varyingPosition;
 in vec4 varyingNormal;
 in vec2 varyingUV;
 
-out vec4 gl_FragColor;
+//out vec4 gl_FragColor;
 
 struct lightSource
 {
