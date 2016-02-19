@@ -172,16 +172,19 @@ int main(int argc, char ** argv)
 		}
 		
 		Module::Quaternion cubeRot = playerObject->getRotation();
-		cubeRot = Module::Quaternion(Module::Vector3(-1,0,0), MATH_PI * -input.rotY / 180.0f) * cubeRot;
+		cubeRot = Module::Quaternion(Module::Vector3(1,0,0), MATH_PI * input.rotY / 180.0f) * cubeRot;
 		cubeRot = Module::Quaternion(Module::Vector3(0,0,1), MATH_PI * -input.rotX / 180.0f) * cubeRot;
 		playerObject->setRotation(cubeRot);
 		
 		Module::Vector3 cubeForward = Module::Vector3(1,0,0).rotate(cubeRot);
+		Module::Vector3 cubeUp = Module::Vector3(0,1,0).rotate(cubeRot);
+		Module::Vector3 cubeRight = Module::Vector3(0,0,1).rotate(cubeRot);
 		
 		input.rotX = 0;
 		input.rotY = 0;
 		
-		playerObject->setPosition(Module::Vector3(input.posX / 30.0f, 0.0f, input.posY / 30.0f));// + cubeForward * -0.5f);
+		playerObject->setPosition(Module::Vector3(input.posX / 30.0f, 0.0f, input.posY / 30.0f) +
+			cubeForward * -0.5f + cubeUp * -0.5f + cubeRight * -0.5f);
 	}
 	
 	return 0;
