@@ -2,6 +2,8 @@
 #define __MODULE__GAMEOBJECT_HPP__
 
 #include "ModuleDefines.hpp"
+#include "Sound.hpp"
+#include "SoundClip.hpp"
 #include "Book.hpp"
 #include "TransformObject.hpp"
 #include "Vector3.hpp"

@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 // Module includes
+#include "ModuleDefines.hpp"
 #include "AudioInterface.hpp"
 #include "SoundClip.hpp"
 #include "GameObject.hpp"

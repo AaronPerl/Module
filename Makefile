@@ -148,8 +148,34 @@ endef
 # include $(addsuffix /Makefile, $(INTERFACE_PATHS))
 
 .DEFAULT_GOAL = 64bit
+	
+# targets for dumping specific variables for use in other makefiles
+.PHONY: dump_build_dir64 dump_build_dir32 \
+        dump_interfaces dump_interface_includes \
+        dump_interface_dir_64 dump_interface_dir_32 \
+		dump_lib_include_dirs dump_lib_bin_dirs \
+		dump_lib_links
 
-.PHONY: all depends 64bit 32bit interfaces interfaces32 interfaces64 test run clean dumpmachine
+dump_build_dir64:
+	@echo $(PATH64)
+dump_build_dir32:
+	@echo $(PATH32)
+dump_interfaces:
+	@echo $(INTERFACE_NAMES)
+dump_interface_includes:
+	@echo $(INTERFACE_PATHS)
+dump_interface_dir_64:
+	@echo $(INTERFACE_BUILD_DIR_64)
+dump_interface_dir_32:
+	@echo $(INTERFACE_BUILD_DIR_32)
+dump_lib_include_dirs:
+	@echo $(LIB_INC_PATHS:-I%=%)
+dump_lib_bin_dirs:
+	@echo $(LIB_PATHS:-L%=%)
+dump_lib_links:
+	@echo $(LIBS)
+ 
+.PHONY: all depends 64bit 32bit interfaces interfaces32 interfaces64 test run clean 
 
 $(TEST_PROGRAM) : $(PATH64)/$(FULL_NAME) $(INTERFACE_LIBS_64) main_test.cpp
 	@echo Compiling test program!
@@ -168,8 +194,6 @@ run: test
 clean:
 	@echo Files are: $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
 	rm -rf build $(DEP_PATH) $(INTERFACE_LIBS) $(foreach dir, $(INTERFACE_PATHS), $(wildcard $(dir)/*.o))
-dumpmachine:
-	@echo
 	
 $(foreach d,$(INTERFACE_PATHS),$(eval $(call make-interface,$d)))
 
