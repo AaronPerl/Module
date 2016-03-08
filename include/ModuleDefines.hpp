@@ -27,6 +27,7 @@ namespace Module
 		class ThreadData;
 		class ThreadObject;
 		class Mutex;
+	class Extension;
 	//class NetworkInterface;
 }
 

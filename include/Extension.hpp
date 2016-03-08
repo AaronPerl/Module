@@ -12,6 +12,8 @@ namespace Module {
  */
 class Extension {
 protected:
+	ModuleGame* game_;
+	Extension(ModuleGame* game) { game_ = game; }
 	
 	// IMPLEMENT THESE //
 	virtual const std::string& getName() = 0;
