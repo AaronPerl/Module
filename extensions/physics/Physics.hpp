@@ -1,3 +1,6 @@
+#ifndef __PHYSICS_HPP__
+#define __PHYSICS_HPP__
+
 #include <ModuleDefines.hpp>
 #include <Extension.hpp>
 
@@ -8,7 +11,6 @@ namespace Module {
  */
 class Physics : Extension
 {	
-	
 	// IMPLEMENT THESE //
 	virtual const std::string& getName() { return "Bullet Physics Extension"; }
 	virtual const std::string& getVersion() { return "0.0.1"; }
@@ -21,3 +23,5 @@ class Physics : Extension
 };
 
 }
+
+#endif
