@@ -85,17 +85,14 @@ CFLAGS :=
 ARFLAGS := rcs
 
 ################################
-###### Generated Variables #####
+######  Derived Variables ######
 ################################
 
 CXX_FILES    := $(wildcard *.cpp)
 C_FILES      := $(wildcard *.c)
 OBJECTS      := $(CXX_FILES:.cpp=.o) $(C_FILES:.c=.o)
 HEADER_FILES := $(wildcard *.h) $(wildcard *.hpp)
-
-
-
-EXTENSION = lib$(TARGET_NAME).a
+EXTENSION = lib$(EXTENSION_NAME).a
 
 ################################
 ######      Targets       ######
