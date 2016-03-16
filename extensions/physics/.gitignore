@@ -1,0 +1,4 @@
+# Compiler generated files
+*.o
+*.a
+*.d
