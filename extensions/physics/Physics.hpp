@@ -2,24 +2,37 @@
 #define __PHYSICS_HPP__
 
 #include <ModuleDefines.hpp>
+#include <ThreadObject.hpp>
 #include <Extension.hpp>
+
+#include <btBulletDynamicsCommon.h>
 
 namespace Module {
 
 /**
  * An extension that incorporates bullet physics into the Module Game Engine.
  */
-class Physics : Extension
-{	
-	// IMPLEMENT THESE //
-	virtual const std::string& getName() { return "Bullet Physics Extension"; }
-	virtual const std::string& getVersion() { return "0.0.1"; }
+class Physics : Extension, ThreadObject
+{
+protected:
+	btBroadphaseInterface* broadphase;
+	btCollisionConfiguration* collisionConfiguration;
+	btCollisionDispatcher* dispatcher;
+	btConstraintSolver* solver;
+	btDynamicsWorld* dynamicsWorld;
 	
-	// These functions are for organizing the instantiation of callbacks and threads
-	virtual void attachGraphicsCallbacks() {}
-	virtual void attachInputCallbacks() {}
-	virtual void attachAudioCallbacks() {}
-	virtual void spawnThreads();
+	void run(); // Overrides ThreadObject::run
+	
+	const std::string& getName() { return "Bullet Physics Extension"; }
+	const std::string& getVersion() { return "0.0.1"; }
+	
+	void attachGraphicsCallbacks() {}
+	void attachInputCallbacks() {}
+	void attachAudioCallbacks() {}
+	void spawnThreads();
+public:
+	Physics(ModuleGame* game);
+	~Physics();
 };
 
 }
