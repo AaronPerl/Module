@@ -2,6 +2,7 @@
 #define __PHYSICS_HPP__
 
 #include <ModuleDefines.hpp>
+#include <ModuleGame.hpp>
 #include <ThreadObject.hpp>
 #include <Extension.hpp>
 
@@ -15,6 +16,11 @@ namespace Module {
 class Physics : Extension, ThreadObject
 {
 protected:
+	const static std::string  NAME;
+	const static std::string  VERSION;
+	const static int          MAX_SUB_STEPS;
+	const static btScalar     FIXED_TIME_STEP;
+	
 	btBroadphaseInterface* broadphase;
 	btCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
@@ -23,8 +29,8 @@ protected:
 	
 	void run(); // Overrides ThreadObject::run
 	
-	const std::string& getName() { return "Bullet Physics Extension"; }
-	const std::string& getVersion() { return "0.0.1"; }
+	const std::string& getName() { return NAME; }
+	const std::string& getVersion() { return VERSION; }
 	
 	void attachGraphicsCallbacks() {}
 	void attachInputCallbacks() {}

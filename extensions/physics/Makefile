@@ -91,12 +91,15 @@ ARFLAGS := rcs
 CXX_FILES    := $(wildcard *.cpp)
 C_FILES      := $(wildcard *.c)
 OBJECTS      := $(CXX_FILES:.cpp=.o) $(C_FILES:.c=.o)
+DEPS         := $(OBJECTS:.o=.d)
 HEADER_FILES := $(wildcard *.h) $(wildcard *.hpp)
 EXTENSION = lib$(EXTENSION_NAME).a
 
 ################################
 ######      Targets       ######
 ################################
+
+-include $(DEPS)
 
 .DEFAULT_GOAL = all
 
@@ -106,5 +109,3 @@ all : $(EXTENSION)
 
 $(EXTENSION) : $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
-
--include $(DEPS)
