@@ -1,16 +1,25 @@
-Current WIP Features in order of completion
+Current WIP Features in order of completion:
 
-Textures
-	Texture class which has a pointer to a TextureData class
-	TextureData classes are extended by GraphicsInterface implementations
-		Contain implementation-specific texture data (i.e. Texture ID)
+Component Manager
+	Allow extensions to register components (via string containing component name)
+	Component superclass?
+	Templated method for adding/getting components?
+	Max of 1 instance of a component per game object?
+		Probably not, other game engines do not have this limitation
+	Extension is a friend class of ComponentManager
+		Extension will provide a method to give access to subclasses
+	Will allow for lookup of components by extension and vice-versa
+		Get a list of all components created by an extension
+		Get the extension that created any given component
+
+Physics Extension
+	PhysicsObject component
+		Should have a plethora of modifiable properties for the user to control
+	CharacterController component
+		Easy to script controller for NPCs or player characters
 
 Rendering 2D polygons
-	Polygon container class that stores vertices, vertex colors, texture coords for rendering 2D polygons (i.e. GUI)
-		Only 1 texture per polygon container? More? How so (efficiently)?
-			1 initially, perhaps more in the future
 	Stores information to keep track of which polygon each vertex belongs to for easy translation/deletion
-		Should polygons have a name?
 		Lookup (polygon to vertices) and reverse lookup (vertex to polygon)
 			Without having to iterate over every previous polygon (store a start index)
 			Reverse lookup without iterating over polygons? (map?)
@@ -20,6 +29,18 @@ Rendering 2D polygons
 		Rectangular or arbitrary?
 
 Click Handlers:
+	Built on top of Input Listeners
 	Priority based (lower values are called first)
 	If a click handler returns true, the event was processed
 		Otherwise, continue by calling the next click handler by order of priority
+
+Other features to keep in mind (no particular order):
+
+Library packaging
+	Package EASTL objects into output Module library (libModule.a)
+	Package bullet objects into physics extension library (libModulePhysicsExt.a)
+	
+Makefile cleanup
+	Better use of implicit rules
+	Organize and document variables
+	
