@@ -1,3 +1,8 @@
+EASTL := lib/EASTL
+EASTL_LINK := -lEASTL
+EASTL_LIB  := 
+EASTL_INC  := -I$(EASTL)/include
+
 GLM = lib/glm
 SDL2 = lib/SDL2-2.0.3/x86_64-w64-mingw32
 SDL2_32 = $(SDL2)/../i686-w64-mingw32
@@ -8,9 +13,9 @@ FREEALUT = lib/freealut
 SOIL = lib/SOIL
 
 #LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
-LIBS 			:= -lalut -lSDL2main -lSDL2 -lSOIL
-LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src
-LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src
+LIBS 			:= -lalut -lSDL2main -lSDL2 -lSOIL $(EASTL_LINK)
+LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src $(EASTL_INC)
+LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src $(EASTL_INC)
 LIB_PATHS		:= -L$(FREEALUT)/lib
 LIB_PATHS32		:=
 
@@ -70,8 +75,11 @@ NULL =
 
 ifeq ($(OS), Windows_NT)
 	TEST_PROGRAM := $(addsuffix .exe, $(TEST_PROGRAM))
-	LIB_PATHS 		+= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib -L$(OPENAL_SOFT)/libs/Win64 -L$(SOIL)/lib
+	EASTL_LIB := -L$(EASTL)/build/mingw-w64
+	LIB_PATHS 		+= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib -L$(OPENAL_SOFT)/libs/Win64 -L$(SOIL)/lib $(EASTL_LIB)
+	# TODO 32 bit EASTL
 	LIB_PATHS_32 	+= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32 -L$(OPENAL_SOFT)/libs/Win32 -L$(SOIL)/lib
+	
 	LIBS		+= -lopengl32 -lglew32 -lOpenAL32.dll
 	ifeq ($(IS_CYGWIN), false)
 		LIBS   :=  -lmingw32 $(LIBS)
@@ -230,7 +238,7 @@ $(PATH64)/%.o : src/%.cpp
 $(PATH32)/%.o : src/%.cpp
 	@echo Compiling $<
 	@printf "  "
-	i686-w64-mingw32-g++ $< -c -Iinclude $(FLAGS) -o $@
+	i686-w64-mingw32-g++ $< -c -Iinclude $(EASTL_INC) $(FLAGS) -o $@
 
 $(DEP_PATH)/%.d : src/%.cpp | $(DEP_PATH)
 	@echo Generating dependencies for $<
