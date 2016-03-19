@@ -233,7 +233,7 @@ $(DEP_PATH):
 $(PATH64)/%.o : src/%.cpp
 	@echo Compiling $<
 	@printf "  "
-	g++ $< -c -Iinclude $(FLAGS) -o $@
+	g++ $< -c -Iinclude $(EASTL_INC) $(FLAGS) -o $@
 
 $(PATH32)/%.o : src/%.cpp
 	@echo Compiling $<
