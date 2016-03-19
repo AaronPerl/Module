@@ -2,7 +2,6 @@
 #define __PTHREADSINTERFACE_HPP__
 
 // C++ standard library includes
-#include <string>
 #include <sstream>
 #include <stdexcept>
 #include <iostream>

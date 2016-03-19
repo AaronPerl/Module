@@ -1,7 +1,9 @@
 EASTL := lib/EASTL
-EASTL_LINK := -lEASTL
-EASTL_LIB  := 
-EASTL_INC  := -I$(EASTL)/include
+EASTL_LINK     := -lEASTL
+EASTL_LIB      := 
+EASTL_TEST_INC := -I$(EASTL)/test/packages/EABase/include/Common
+# $(addprefix -I, $(wildcard $(EASTL)/test/packages/*/include))
+EASTL_INC      := -I$(EASTL)/include $(EASTL_TEST_INC)
 
 GLM = lib/glm
 SDL2 = lib/SDL2-2.0.3/x86_64-w64-mingw32
@@ -187,7 +189,7 @@ dump_lib_links:
 
 $(TEST_PROGRAM) : $(PATH64)/$(FULL_NAME) $(INTERFACE_LIBS_64) main_test.cpp
 	@echo Compiling test program!
-	@g++ main_test.cpp -Iinclude -L$(PATH64) -l$(LIBRARY_NAME) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS_64) $(INTERFACE_LINKS) $(LIBS) $(FLAGS) -o main_test
+	@g++ main_test.cpp -Iinclude -L$(PATH64) $(INTERFACE_INC) $(LIB_PATHS) $(LIB_INC_PATHS) $(INTERFACE_LIB_PATHS_64) $(INTERFACE_LINKS) -l$(LIBRARY_NAME) $(LIBS) $(FLAGS) -o main_test
 
 all: 64bit 32bit
 depends: $(FULL_DEPS)
@@ -254,5 +256,8 @@ $(PATH32)/$(FULL_NAME): $(FULL_OBJS32)
 $(FULL_OBJS64) : | $(PATH64)
 $(FULL_OBJS32) : | $(PATH32)
 $(FULL_DEPS) : | $(DEP_PATH)
+
+blah:
+	@echo Files are $(EASTL_TEST_INC)
 
 -include $(FULL_DEPS)

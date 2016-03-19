@@ -3,7 +3,7 @@
 
 // C++ standard library includes
 #include <cstdio>
-#include <string>
+#include <EASTL/string.h>
 #include <stdint.h>
 
 // Module includes
@@ -48,7 +48,7 @@ class Sound
 		Vector3 getVelocity();
 		
 		// GETTERS
-		const std::string getName() const;		// Gets the name of this Sound
+		const eastl::string getName() const;		// Gets the name of this Sound
 		unsigned long getTime() const;			// Gets the time of this Sound
 		SoundClip* getSoundClip() const;		// Gets the SoundClip of this Sound
 		

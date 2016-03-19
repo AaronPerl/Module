@@ -4,9 +4,9 @@
 // C++ standard library includes
 #include <iostream>
 #include <fstream>
-#include <string>
-#include <vector>
 #include <stdexcept>
+#include <EASTL/vector.h>
+#include <EASTL/string.h>
 
 // Module includes
 #include <ModuleGame.hpp>
@@ -47,8 +47,8 @@ namespace Module
 		public:
 			OpenALInterface();								// Constructor
 			Sound* playSound(SoundClip*,GameObject*);		// Plays a Sound
-			SoundClip* loadSoundClip(const std::string&, 
-									 const std::string&);	// Loads SoundClip
+			SoundClip* loadSoundClip(const eastl::string&, 
+									 const eastl::string&);	// Loads SoundClip
 			void unloadSoundClip(SoundClip*);				// Unloads SoundClip
 	};
 

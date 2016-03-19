@@ -38,7 +38,7 @@ Module::Sound* GameObject::playSound(Module::SoundClip* clip)
  * @param fileName The name of the file to be loaded from.
  * @return A pointer to the loaded SoundClip.
 */
-inline Module::SoundClip* GameObject::loadSoundClip(const std::string& name, const std::string& fileName)
+inline Module::SoundClip* GameObject::loadSoundClip(const eastl::string& name, const eastl::string& fileName)
 {
 	return game->loadSoundClip(name,fileName);
 }

@@ -100,7 +100,7 @@ void GraphicsInterface::keyReleased(KeyCode::Code code, char keyChar)
 	}
 }
 
-Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, float* uvs, unsigned int num_vertices, const std::string& name)
+Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, float* uvs, unsigned int num_vertices, const eastl::string& name)
 {
 	assert(num_vertices);
 	Book<float>::size_type firstIndex = allVertices.size();
@@ -123,8 +123,8 @@ Mesh* GraphicsInterface::createMesh(Vector3* vertices, Vector3* normals, float* 
 	return &allMeshes.back();
 }
 
-Mesh* GraphicsInterface::createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals, const std::vector<float>& uvs, 
-                                    const std::string& name)
+Mesh* GraphicsInterface::createMesh(const eastl::vector<Vector3>& vertices, const eastl::vector<Vector3>& normals, const eastl::vector<float>& uvs, 
+                                    const eastl::string& name)
 {
 	Book<float>::size_type firstIndex = allVertices.size();
 	Book<float>::size_type firstUVIndex = allUVs.size();

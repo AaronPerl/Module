@@ -1,6 +1,7 @@
+#include <ModuleDefines.hpp>
+#include <Sound.hpp>
+#include <SoundClip.hpp>
 #include "OpenALInterface.hpp"
-#include "Sound.hpp"
-#include "SoundClip.hpp"
 #include <stdio.h>
 #include <string.h>
 
@@ -143,7 +144,7 @@ Sound* OpenALInterface::playSound(SoundClip* clip, GameObject* gameObj = NULL)//
 	return toReturn;
 }
 // Loads SoundClip
-SoundClip* OpenALInterface::loadSoundClip(const std::string& name, const std::string& fileName)
+SoundClip* OpenALInterface::loadSoundClip(const eastl::string& name, const eastl::string& fileName)
 {
 	SoundClip* toReturn = AudioInterface::loadSoundClip(name,fileName);
 	// Ensure we actually can create this SoundClip

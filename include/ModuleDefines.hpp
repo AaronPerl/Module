@@ -1,11 +1,12 @@
 #ifndef __MODULEDEFINES_HPP__
 #define __MODULEDEFINES_HPP__
 
-#include <string>
+#include <iostream>
+#include <EASTL/string.h>
 
 namespace Module
-{	
-	void Log(const std::string& info);
+{
+	void Log(const eastl::string& info);
 	
 	class ModuleGame;
 		class GameObject;
@@ -30,5 +31,7 @@ namespace Module
 	class Extension;
 	//class NetworkInterface;
 }
+
+std::ostream& operator<< (std::ostream& o, const eastl::string& s);
 
 #endif

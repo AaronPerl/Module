@@ -41,7 +41,7 @@ public:
 	
 	// Audio
 	Sound* playSound(SoundClip*);											// Plays a Sound
-	SoundClip* loadSoundClip(const std::string&, const std::string&);		// Loads SoundClip
+	SoundClip* loadSoundClip(const eastl::string&, const eastl::string&);	// Loads SoundClip
 	void unloadSoundClip(SoundClip*);										// Unloads SoundClip
 	
 	friend class ModuleGame;

@@ -6,8 +6,8 @@
 #include "ThreadObject.hpp"
 #include "KeyCodes.hpp"
 #include "PolygonContainer.hpp"
-#include <string>
-#include <vector>
+#include <EASTL/string.h>
+#include <EASTL/vector.h>
 #include <stdint.h>
 
 namespace Module
@@ -34,8 +34,8 @@ class GraphicsInterface : ThreadObject
 		Book<float> allUVs;					// all texture coordinates
 		Book<Mesh> allMeshes;					// same for meshes, though they matter less
 		Book<PolygonContainer> allPolygons;		// same for polygon containers
-		std::vector<GraphicsCallback*> graphicsCallbacks;
-		std::vector<InputCallback*> inputCallbacks;
+		eastl::vector<GraphicsCallback*> graphicsCallbacks;
+		eastl::vector<InputCallback*> inputCallbacks;
 		
 		void start();
 		void run(); //overrides ThreadObject::run()
@@ -72,12 +72,12 @@ class GraphicsInterface : ThreadObject
 		GraphicsInterface();
 		GraphicsInterface(unsigned int set_fps);
 		
-		Mesh* createMesh(Vector3* vertices, Vector3* normals, float* uvs, unsigned int num_vertices, const std::string& name);
-		Mesh* createMesh(const std::vector<Vector3>& vertices, const std::vector<Vector3>& normals,
-		                 const std::vector<float>& uvs, const std::string& name);
+		Mesh* createMesh(Vector3* vertices, Vector3* normals, float* uvs, unsigned int num_vertices, const eastl::string& name);
+		Mesh* createMesh(const eastl::vector<Vector3>& vertices, const eastl::vector<Vector3>& normals,
+		                 const eastl::vector<float>& uvs, const eastl::string& name);
 		//virtual Mesh* copyMesh(Mesh* other);
-		virtual Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false) = 0;
-		virtual Texture* loadTexture(const std::string& filename) = 0;
+		virtual Mesh* loadMeshFromFile(const eastl::string& meshname, const eastl::string& filename, bool flipFaces = false) = 0;
+		virtual Texture* loadTexture(const eastl::string& filename) = 0;
 		
 		PolygonContainer* createPolygonContainer();
 		

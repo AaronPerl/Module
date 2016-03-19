@@ -3,8 +3,9 @@
 
 // C++ standard library includes
 #include <iostream>
-#include <string>
-#include <vector>
+
+#include <EASTL/string.h>
+#include <EASTL/vector.h>
 
 // Module includes
 #include "ModuleDefines.hpp"
@@ -40,8 +41,8 @@ class AudioInterface : ThreadObject
 		
 		// IMPLEMENT FOR GAMEOBJECT & MODULEGAME
 		virtual Sound* playSound(SoundClip*, GameObject*);			// Plays a Sound
-		virtual SoundClip* loadSoundClip(const std::string&, 
-										 const std::string&);		// Loads SoundClip
+		virtual SoundClip* loadSoundClip(const eastl::string&, 
+										 const eastl::string&);		// Loads SoundClip
 		virtual void unloadSoundClip(SoundClip*) = 0;				// Unloads SoundClip
 		
 		// IMPLEMENT THESE FOR SOUND

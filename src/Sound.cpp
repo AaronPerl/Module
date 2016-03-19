@@ -69,11 +69,11 @@ Vector3 Sound::getVelocity()
 /** Gets the name of this Sound.
  * @return The name of this Sound.
 */
-const std::string Sound::getName() const
+const eastl::string Sound::getName() const
 {
 	char name[20];
 	sprintf(name,"%u", uid);
-	std::string s(name);
+	eastl::string s(name);
 	return soundClip->getName() + "_" + s;
 }
 /** Gets the current time of this Sound.

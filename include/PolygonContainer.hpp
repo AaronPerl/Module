@@ -2,7 +2,7 @@
 #define __MODULE_POLYGONCONTAINER_HPP__
 
 #include <stdint.h>
-#include <vector>
+#include <EASTL/vector.h>
 #include "Vector3.hpp"
 #include "Color.hpp"
 #include "Book.hpp"
@@ -14,9 +14,9 @@ namespace Module {
 // This allows for easy movement and deletion of polygons, while still being able to keep track of 
 class PolygonContainer {
 private:
-	std::vector<float> coordinates;
-	std::vector<uint8_t> colors;
-	//std::vector<Module::Polygon> polygons;
+	eastl::vector<float> coordinates;
+	eastl::vector<uint8_t> colors;
+	//eastl::vector<Module::Polygon> polygons;
 	Book<PolygonContainer>::size_type index;
 	bool resized;
 	bool updated;
@@ -26,7 +26,7 @@ private:
 	PolygonContainer(Book<PolygonContainer>* parent, Book<PolygonContainer>::size_type parentIndex)
 		: index(parentIndex), resized(false), updated(false) {}
 public:
-	typedef std::vector<float>::size_type size_type;
+	typedef eastl::vector<float>::size_type size_type;
 	
 	// Adds a triangle, with its vertices arranged in counter-clockwise order
 	void addTriangle(const Vector3& a, const Vector3& b, const Vector3& c, const Color& color)
@@ -53,8 +53,8 @@ public:
 		//polygons.push_back(Module::Polygon(3));
 	}
 
-	const std::vector<float>& getCoordinates() const { return coordinates; }
-	const std::vector<uint8_t>& getColorComponents() const { return colors; }
+	const eastl::vector<float>& getCoordinates() const { return coordinates; }
+	const eastl::vector<uint8_t>& getColorComponents() const { return colors; }
 	const size_type numTriangles() const { return coordinates.size() / 9; }
 	const size_type numVertices() const { return coordinates.size() / 3; }
 	Book<PolygonContainer*>::size_type getIndex() const { return index; }

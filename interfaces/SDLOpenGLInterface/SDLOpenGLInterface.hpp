@@ -2,14 +2,15 @@
 #define __SDLOPENGLINTERFACE_HPP__
 
 // C++ standard library includes
-#include <vector>
-#include <string>
 #include <sstream>
 #include <stdexcept>
 #include <iostream>
 #include <fstream>
 #include <limits>
-#include <utility>
+#include <EASTL/vector.h>
+#include <string>
+#include <EASTL/string.h>
+#include <EASTL/utility.h>
 
 // Library includes
 #define GLM_FORCE_RADIANS
@@ -68,11 +69,11 @@ namespace Module
 			
 			PolygonContainer* test;
 			
-			std::vector<SDLOpenGLTexture*> texturesToLoad;
-			std::vector<std::string> filesToLoadFrom;
+			eastl::vector<SDLOpenGLTexture*> texturesToLoad;
+			eastl::vector<eastl::string> filesToLoadFrom;
 	
 			unsigned int initShader(const char * path, unsigned int shaderType);
-			std::string readSource(const char * path);
+			eastl::string readSource(const char * path);
 			void setupShaders();
 			void terminate();
 	
@@ -94,8 +95,8 @@ namespace Module
 			SDLOpenGLInterface();
 			~SDLOpenGLInterface();
 			
-			Mesh* loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces = false);
-			Texture* loadTexture(const std::string& filename);
+			Mesh* loadMeshFromFile(const eastl::string& meshname, const eastl::string& filename, bool flipFaces = false);
+			Texture* loadTexture(const eastl::string& filename);
 			
 	};
 }

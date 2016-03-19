@@ -57,7 +57,7 @@ Sound* AudioInterface::playSound(SoundClip* clip, GameObject* gameObj = NULL)
  * @param fileName The name of the file to be loaded from.
  * @return A pointer to the loaded SoundClip.
 */
-SoundClip* AudioInterface::loadSoundClip(const std::string& name, const std::string& fileName)
+SoundClip* AudioInterface::loadSoundClip(const eastl::string& name, const eastl::string& fileName)
 {
 	for(unsigned int i = 0; i < clips.size(); i++)
 	{

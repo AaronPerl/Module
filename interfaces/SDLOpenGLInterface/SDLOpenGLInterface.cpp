@@ -35,7 +35,7 @@ void SDLOpenGLInterface::terminate()
 	terminated = true;
 }
 
-std::string SDLOpenGLInterface::readSource(const char * path)
+eastl::string SDLOpenGLInterface::readSource(const char * path)
 {
 	std::cout << "[GraphicsInterface] : OpenGL :   Reading shader source file: " << path << std::endl;
 
@@ -43,7 +43,7 @@ std::string SDLOpenGLInterface::readSource(const char * path)
 	inputFile.open(path);
 	std::stringstream sStream;
 	sStream << inputFile.rdbuf();
-	std::string outString = sStream.str();
+	eastl::string outString = sStream.str().c_str();
 
 	std::cout << "[GraphicsInterface] : OpenGL :   Done reading shader source file: " << path<< std::endl;
 
@@ -54,7 +54,7 @@ unsigned int SDLOpenGLInterface::initShader(const char * path, unsigned int shad
 {
 	std::cout << "[GraphicsInterface] : OpenGL : Creating shader from file " << path << std::endl;
 
-	std::string sourceString = readSource(path);
+	eastl::string sourceString = readSource(path);
 	unsigned int newShader = glCreateShader(shaderType);
 	std::cout.flush();
 
@@ -77,7 +77,7 @@ unsigned int SDLOpenGLInterface::initShader(const char * path, unsigned int shad
 		logFile.close ();
 		delete log;
 		std::cout.flush();
-		throw std::runtime_error("[GraphcisInterface] : OpenGL :   Failed to compile shader: "+std::string(path));
+		throw std::runtime_error("[GraphcisInterface] : OpenGL :   Failed to compile shader: " + std::string(path));
 	}
 
 	std::cout << "[GraphicsInterface] : OpenGL :   Shader compiled : " << path << std::endl;
@@ -216,7 +216,7 @@ void SDLOpenGLInterface::createVNBuffers(Mesh* mesh)
 		buffer = (float*) glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 		for (unsigned int i = 0; i < mesh->getNumVertices(); i++)
 		{
-			std::pair<float,float> curUV = mesh->getUV(i);
+			eastl::pair<float,float> curUV = mesh->getUV(i);
 			buffer[2*i+0] = curUV.first;
 			buffer[2*i+1] = curUV.second;
 		}
@@ -250,11 +250,11 @@ void SDLOpenGLInterface::createVertexBuffer(PolygonContainer* container)
 	vertexBuffers2D.push_back(vertexVBO);
 }
 
-std::vector<std::string> split(const std::string& toSplit)
+eastl::vector<eastl::string> split(const eastl::string& toSplit)
 {
-	std::vector<std::string> retval;
+	eastl::vector<eastl::string> retval;
 	int curPos = toSplit.find_first_not_of(" ", 0);
-	while (curPos != std::string::npos)
+	while (curPos != eastl::string::npos)
 	{
 		int nextPos = toSplit.find_first_of(" ", curPos);
 		retval.push_back(toSplit.substr(curPos, nextPos - curPos));
@@ -263,16 +263,16 @@ std::vector<std::string> split(const std::string& toSplit)
 	return retval;
 }
 
-Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const std::string& filename, bool flipFaces)
+Mesh* SDLOpenGLInterface::loadMeshFromFile(const eastl::string& meshname, const eastl::string& filename, bool flipFaces)
 {
 	std::cout << "[GraphicsInterface] Loading mesh [" << meshname << "] from file: " << filename << std::endl;
 	std::size_t periodIndex = filename.rfind('.');
-	if (periodIndex == std::string::npos)
+	if (periodIndex == eastl::string::npos)
 	{
 		std::cerr << "[GraphicsInterface]   File extension not found!" << std::endl;
 		return NULL;
 	}
-	std::string extension = filename.substr(periodIndex);
+	eastl::string extension = filename.substr(periodIndex);
 	if (extension != ".obj")
 	{
 		std::cerr << "[GraphicsInterface]   Unsupported file format: " << extension << std::endl;
@@ -289,12 +289,12 @@ Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const st
 	}
 	
 	std::string element;
-	std::vector<Vector3> indexedVertices;
-	std::vector<Vector3> indexedNormals;
-	std::vector<float> indexedUVs;
-	std::vector<Vector3> vertices;
-	std::vector<Vector3> normals;
-	std::vector<float> uvs;
+	eastl::vector<Vector3> indexedVertices;
+	eastl::vector<Vector3> indexedNormals;
+	eastl::vector<float> indexedUVs;
+	eastl::vector<Vector3> vertices;
+	eastl::vector<Vector3> normals;
+	eastl::vector<float> uvs;
 	
 	while (!modelFile.eof())
 	{
@@ -337,7 +337,7 @@ Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const st
 					return NULL;
 				}
 				unsigned int numVertices = 0;
-				std::vector<std::string> tokens = split(curLine);
+				eastl::vector<eastl::string> tokens = split(curLine);
 				if (tokens.size() < 3)
 				{
 					std::cerr << "[GraphicsInterface]   Not enough vertices in face!" << std::endl;
@@ -345,19 +345,19 @@ Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const st
 				}
 				for (unsigned short i = 0; i < tokens.size(); i++)
 				{
-					std::string indexStr = tokens[i];
+					eastl::string indexStr = tokens[i];
 					std::size_t slashIndex1 = indexStr.find('/');
-					std::size_t slashIndex2 = std::string::npos;
-					if (slashIndex1 != std::string::npos) // f v//n v//n v//n or f v/t/n v/t/n v/t/n
+					std::size_t slashIndex2 = eastl::string::npos;
+					if (slashIndex1 != eastl::string::npos) // f v//n v//n v//n or f v/t/n v/t/n v/t/n
 					{
 						slashIndex2 = indexStr.find('/', slashIndex1+1);
-						if (slashIndex2 == std::string::npos)
+						if (slashIndex2 == eastl::string::npos)
 						{
 							std::cerr << "[GraphicsInterface]   Unsupported obj file" << std::endl;
 							return NULL;
 						}
 						std::size_t slashIndex3 = indexStr.find('/', slashIndex2+1);
-						if (slashIndex3 != std::string::npos)
+						if (slashIndex3 != eastl::string::npos)
 						{
 							std::cerr << "[GraphicsInterface]   Invalid file data" << std::endl;
 							return NULL;
@@ -367,7 +367,7 @@ Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const st
 						// indexStr.replace(slashIndex1, slashIndex2 - slashIndex1 + 1, slashIndex2 - slashIndex1 + 1, ' ');
 						std::size_t vi, ti, ni;
 						bool has_ti;
-						std::stringstream indexStream(indexStr);
+						std::stringstream indexStream(indexStr.c_str());
 						if (slashIndex2 == slashIndex1 + 1)
 						{
 							indexStream >> vi >> ni;
@@ -437,7 +437,7 @@ Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const st
 					else // f v v v
 					{
 						std::size_t vi;					
-						std::stringstream indexStream(indexStr);
+						std::stringstream indexStream(indexStr.c_str());
 						indexStream >> vi;
 						
 						if (vi > indexedVertices.size() || vi > indexedNormals.size())
@@ -479,7 +479,7 @@ Mesh* SDLOpenGLInterface::loadMeshFromFile(const std::string& meshname, const st
 	return createMesh(vertices, normals, uvs, meshname);
 }
 
-Texture* SDLOpenGLInterface::loadTexture(const std::string& filename)
+Texture* SDLOpenGLInterface::loadTexture(const eastl::string& filename)
 {
 	textures.push_back(SDLOpenGLTexture());
 	texturesToLoad.push_back(&textures.back());
@@ -492,7 +492,7 @@ void SDLOpenGLInterface::loadNewTextures()
 	for (unsigned int i = 0; i < texturesToLoad.size(); i++)
 	{
 		SDLOpenGLTexture* curTex = texturesToLoad[i];
-		const std::string& curFilename = filesToLoadFrom[i];
+		const std::string& curFilename = filesToLoadFrom[i].c_str();
 		GLuint newID = SOIL_load_OGL_texture
 		(
 			curFilename.c_str(),

@@ -5,7 +5,7 @@ using namespace Module;
 /** Gets the name of this SoundClip.
  * @return The name of this SoundClip.
 */
-const std::string& SoundClip::getName() const
+const eastl::string& SoundClip::getName() const
 {
 	return name;
 }

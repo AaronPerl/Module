@@ -47,15 +47,15 @@ class ModuleGame
 		Mutex* createMutex();
 		
 		// Graphics
-		Texture* loadTexture(const std::string&);
+		Texture* loadTexture(const eastl::string&);
 		void setMesh(GameObject* obj, Mesh* mesh);
 		void setTexture(GameObject* obj, Texture* tex);
 		unsigned long getMilliseconds();
 		
 		// Audio
-		Sound* playSound(SoundClip*,GameObject*);									// Plays a Sound
-		SoundClip* loadSoundClip(const std::string&, const std::string&);		// Loads SoundClip
-		void unloadSoundClip(SoundClip*);										// Unloads SoundClip
+		Sound* playSound(SoundClip*,GameObject*);                            	// Plays a Sound
+		SoundClip* loadSoundClip(const eastl::string&, const eastl::string&);	// Loads SoundClip
+		void unloadSoundClip(SoundClip*);                                    	// Unloads SoundClip
 		void debugAudio();
 };
 
@@ -97,7 +97,7 @@ inline Mutex* ModuleGame::createMutex()
  * @param filename The name of the texture file to load
  * @return A pointer to the newly loaded Texture
  */
-inline Texture* ModuleGame::loadTexture(const std::string& filename)
+inline Texture* ModuleGame::loadTexture(const eastl::string& filename)
 {
 	return graphics->loadTexture(filename);
 }
@@ -144,7 +144,7 @@ inline Sound* ModuleGame::playSound(SoundClip* clip, GameObject* gameObj = NULL)
  * @param fileName The name of the file to be loaded from.
  * @return A pointer to the loaded SoundClip.
 */
-inline SoundClip* ModuleGame::loadSoundClip(const std::string& name, const std::string& fileName)
+inline SoundClip* ModuleGame::loadSoundClip(const eastl::string& name, const eastl::string& fileName)
 {
 	return audio->loadSoundClip(name,fileName);
 }

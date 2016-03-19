@@ -4,6 +4,7 @@
 #include <iostream>
 
 // Module includes
+#include <ModuleDefines.hpp>
 #include <ModuleGame.hpp>
 #include <OpenALInterface.hpp>
 #include <SDLOpenGLInterface.hpp>
@@ -123,7 +124,7 @@ int main(int argc, char ** argv)
 	cubeMesh->setScale(1/1.0f);
 	
 	// Create and initialize vector of objects with the cube mesh
-	std::vector<Module::GameObject*> objects;
+	eastl::vector<Module::GameObject*> objects;
 		
 	for (unsigned int i = 0; i < numObjects; i++)
 	{

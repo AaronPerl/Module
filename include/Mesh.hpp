@@ -3,10 +3,10 @@
 
 #include "Book.hpp"
 #include "Vector3.hpp"
-#include <string>
 #include <cstdlib>
-#include <vector>
-#include <utility>
+#include <EASTL/vector.h>
+#include <EASTL/string.h>
+#include <EASTL/utility.h>
 
 namespace Module {
 
@@ -21,7 +21,7 @@ class GameObject;
 // without its functionality being used.
 class Mesh {
 private:
-	std::vector<GameObject*> instances; // a vector of pointers to GameObjects that use this mesh
+	eastl::vector<GameObject*> instances; // a vector of pointers to GameObjects that use this mesh
 	Book<Mesh>::size_type selfIndex;	// this mesh's index in the book of all meshes
 	
 	Book<float>* vertexBook; // the book containing the vertices of this mesh
@@ -33,7 +33,7 @@ private:
 	Book<float>::size_type  numVertices; // the number of vertices/normals that this mesh has
 	float scale; // scalar to multiply all vertices by for rendering, etc.
 	bool hasUVCoords;
-	std::string name;
+	eastl::string name;
 	
 	Mesh() :
 		selfIndex(0),
@@ -46,7 +46,7 @@ private:
 	Mesh(Book<Mesh>::size_type index,
 			Book<float>* vb, Book<float>* nb, Book<float>* tb, bool hasTexture,
 			Book<float>::size_type vi, Book<float>::size_type ni, Book<float>::size_type ti,
-			unsigned int num, std::string meshName) : 
+			unsigned int num, eastl::string meshName) : 
 		selfIndex(index),
 		vertexBook(vb), normalBook(nb), uvBook(tb),
 		vertexIndex(vi), normalIndex(ni), uvIndex(ti),
@@ -58,7 +58,7 @@ public:
 	Book<float>::size_type getNumVertices() const;
 	Vector3 getVertex(unsigned int i) const;
 	Vector3 getNormal(unsigned int i) const;
-	std::pair<float, float> getUV(unsigned int i) const;
+	eastl::pair<float, float> getUV(unsigned int i) const;
 	float getScale() const;
 	void setScale(float newScale);
 	bool hasUVs() const;
@@ -106,9 +106,9 @@ inline Vector3 Mesh::getNormal(unsigned int i) const
 					(*normalBook)[normalIndex + 3 * i + 2]);
 }
 
-inline std::pair<float, float> Mesh::getUV(unsigned int i) const
+inline eastl::pair<float, float> Mesh::getUV(unsigned int i) const
 {
-	return std::make_pair(	(*uvBook)[uvIndex + 2 * i],
+	return eastl::make_pair(	(*uvBook)[uvIndex + 2 * i],
 							(*uvBook)[uvIndex + 2 * i + 1]);
 }
 	

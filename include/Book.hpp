@@ -2,7 +2,7 @@
 #define __MODULE_BOOK_HPP__
 
 #include <iostream>
-#include <vector>
+#include <EASTL/vector.h>
 
 namespace Module
 {
@@ -16,7 +16,7 @@ namespace Module
 	class Book
 	{
 		public:		
-			typedef typename std::vector<T*>::size_type page_size_type;	// The size type for the page vector and pages
+			typedef typename eastl::vector<T*>::size_type page_size_type;	// The size type for the page vector and pages
 			typedef unsigned long size_type;							// The size type for the Book itself
 			static const page_size_type maxPageSize = 4 * 1024; // 4 kilobyte pages
 				
@@ -45,11 +45,11 @@ namespace Module
 			// Returns the number of elements after index in the page containing index (including index itself)
 			page_size_type remainingElementsInPage(size_type index) const { return pageSize - (index % pageSize); }
 			
-			const std::vector<T*>& getPageVec() { return pageVec; }
+			const eastl::vector<T*>& getPageVec() { return pageVec; }
 		private:
 			size_type usedSize;
 			page_size_type pageSize;
-			std::vector<T*> pageVec;
+			eastl::vector<T*> pageVec;
 	};
 }
 
