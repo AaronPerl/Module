@@ -1,6 +1,6 @@
 build
 depend
-main_test.exe
+*.exe
 main_test
 interfaces/*/*.o
 interfaces/*/*.a
