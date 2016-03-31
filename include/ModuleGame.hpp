@@ -2,6 +2,7 @@
 #define __MODULE__MODULEGAME_HPP__
 
 #include "ModuleDefines.hpp"
+#include "ComponentManager.hpp"
 #include "GameObject.hpp"
 #include "Book.hpp"
 #include "GraphicsInterface.hpp"
@@ -25,6 +26,10 @@ class ModuleGame
 		ThreadingInterface* threading;	/**< The ThreadingInterface attached to this game */
 		
 		Book<GameObject> objects;		/**< The book of all GameObjects */
+		
+		ComponentManager componentManager;
+		
+		ComponentManager* getComponentManager() { return &componentManager; }
 	public:
 		ModuleGame();
 		
@@ -57,6 +62,8 @@ class ModuleGame
 		SoundClip* loadSoundClip(const eastl::string&, const eastl::string&);	// Loads SoundClip
 		void unloadSoundClip(SoundClip*);                                    	// Unloads SoundClip
 		void debugAudio();
+		
+	friend class Extension;
 };
 
 /**

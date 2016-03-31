@@ -2,6 +2,7 @@
 #define __MODULE__EXTENSION_HPP__
 
 #include "ModuleDefines.hpp"
+#include <EASTL/vector.h>
 
 namespace Module {
 
@@ -13,7 +14,9 @@ namespace Module {
 class Extension {
 protected:
 	ModuleGame* game_;
-	Extension(ModuleGame* game) { game_ = game; }
+	Extension(ModuleGame* game);
+	
+	eastl::vector<const char*> componentTypes;
 	
 	// IMPLEMENT THESE //
 	virtual const char* getName() = 0;
@@ -24,8 +27,11 @@ protected:
 	virtual void attachInputCallbacks() = 0;
 	virtual void attachAudioCallbacks() = 0;
 	virtual void spawnThreads() = 0;
+	
+	void registerComponent(const char* componentName);
+	void registerComponent(Component* component);
 public:
-
+	const eastl::vector<const char*>& getComponentTypes() { return componentTypes; }
 };
 
 }

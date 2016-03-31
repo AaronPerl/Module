@@ -13,6 +13,9 @@ namespace Module
 		class Vector3;
 		class Quaternion;
 		class TransformObject;
+	class Extension;
+		class ComponentManager;
+		class Component;
 	class GraphicsInterface;
 		class GraphicsCallback;
 		class InputCallback;
