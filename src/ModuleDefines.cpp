@@ -16,7 +16,7 @@ void Module::Log(const eastl::string& info)
 	
 #endif
 
-std::ostream& operator<< (std::ostream& o, const eastl::string& s)
+std::ostream& eastl::operator<< (std::ostream& o, const eastl::string& s)
 {
 	return (o << s.c_str());
 }

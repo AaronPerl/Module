@@ -35,6 +35,8 @@ namespace Module
 	//class NetworkInterface;
 }
 
-std::ostream& operator<< (std::ostream& o, const eastl::string& s);
+namespace eastl{
+	std::ostream& operator<< (std::ostream& o, const eastl::string& s);
+}
 
 #endif
