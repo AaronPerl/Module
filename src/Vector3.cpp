@@ -3,25 +3,28 @@
 
 using Module::Vector3;
 
-Vector3::Vector3() : x(0),y(0),z(0) {}
+Vector3::Vector3() : x(0), y(0), z(0) {}
 
 Vector3::Vector3(float _x, float _y, float _z) : x(_x),y(_y),z(_z) {}
 
-Vector3 Vector3::operator*(float scalar) const // scalar multiplication
+// Scalar multiplication
+Vector3 Vector3::operator*(float scalar) const
 {
 	return Vector3(	x * scalar,
 					y * scalar,
 					z * scalar);
 }
-	
-Vector3 Vector3::operator*(const Vector3& other) const // component-wise multiplication
+
+// Component-wise multiplication
+Vector3 Vector3::operator*(const Vector3& other) const
 {
 	return Vector3( x * other.x,
 					y * other.y,
 					z * other.z);
 }
 
-Vector3& Vector3::operator*=(float scalar) // scalar multiplication assignment
+// Scalar multiplication assignment
+Vector3& Vector3::operator*=(float scalar)
 {
 	x *= scalar;
 	y *= scalar;
@@ -29,7 +32,8 @@ Vector3& Vector3::operator*=(float scalar) // scalar multiplication assignment
 	return (*this);
 }
 
-Vector3& Vector3::operator*=(const Vector3& other) // component-wise multiplication assignment
+// Component-wise multiplication assignment
+Vector3& Vector3::operator*=(const Vector3& other)
 {
 	x *= other.x;
 	y *= other.y;
@@ -37,14 +41,16 @@ Vector3& Vector3::operator*=(const Vector3& other) // component-wise multiplicat
 	return (*this);
 }
 
-Vector3 Vector3::operator+(const Vector3& other) const // vector addition
+// Vector addition
+Vector3 Vector3::operator+(const Vector3& other) const
 {
 	return Vector3(	x + other.x,
 					y + other.y,
 					z + other.z);
 }
 
-Vector3& Vector3::operator+=(const Vector3& other) // addition assignment
+// Addition assignment
+Vector3& Vector3::operator+=(const Vector3& other)
 {
 	x += other.x;
 	y += other.y;
@@ -52,19 +58,22 @@ Vector3& Vector3::operator+=(const Vector3& other) // addition assignment
 	return (*this);
 }
 
-Vector3 Vector3::operator-() const // negation
+// Negation
+Vector3 Vector3::operator-() const
 {
 	return Vector3(-x,-y,-z);
 }
 
-Vector3 Vector3::operator-(const Vector3& other) const // vector subtraction
+// Vector subtraction
+Vector3 Vector3::operator-(const Vector3& other) const
 {
 	return Vector3(	x - other.x,
 					y - other.y,
 					z - other.z);
 }
 
-Vector3& Vector3::operator-=(const Vector3& other) // addition assignment
+// Addition assignment
+Vector3& Vector3::operator-=(const Vector3& other)
 {
 	x -= other.x;
 	y -= other.y;
@@ -72,6 +81,7 @@ Vector3& Vector3::operator-=(const Vector3& other) // addition assignment
 	return (*this);
 }
 
+// Rotate a Vector3
 Vector3 Vector3::rotate(const Quaternion& other) const
 {
 	Quaternion self(x,y,z,0);
@@ -79,20 +89,16 @@ Vector3 Vector3::rotate(const Quaternion& other) const
 	return Vector3(result.getX(),result.getY(),result.getZ());
 }
 
-Vector3 Vector3::cross(const Vector3& other) const // vector cross product
+// Vector cross product
+Vector3 Vector3::cross(const Vector3& other) const
 {
 	return Vector3(	y * other.z - z * other.y,
 					z * other.x - x * other.z,
 					x * other.y - y * other.x);
 }
 
-float Vector3::dot(const Vector3& other) const // vector dot product
+// Vector dot product
+float Vector3::dot(const Vector3& other) const
 {
 	return x * other.x + y * other.y + z * other.z;
-}
-
-std::ostream& operator<< (std::ostream& o, const Module::Vector3& v) // ostream insertion operator
-{
-	o << "Vector3(" << v.getX() << "," << v.getY() << "," << v.getZ() << ")";
-	return o;
 }

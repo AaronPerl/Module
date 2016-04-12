@@ -1,0 +1,652 @@
+src/AudioInterface.cpp: In member function 'virtual Module::Sound* Module::AudioInterface::playSound(Module::SoundClip*, Module::GameObject*)':
+src/AudioInterface.cpp:45:24: note: #pragma message: yep
+   #pragma message("yep")
+                        ^
+src/AudioInterface.cpp: In member function 'virtual Module::SoundClip* Module::AudioInterface::loadSoundClip(const string&, const string&)':
+src/AudioInterface.cpp:72:48: error: no match for 'operator<<' (operand types are 'std::basic_ostream<char>' and 'const string {aka const eastl::basic_string<char>}')
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:108:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ostream_type& (*)(std::basic_ostream<_CharT, _Traits>::__ostream_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(__ostream_type& (*__pf)(__ostream_type&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:108:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__ostream_type& (*)(std::basic_ostream<char>::__ostream_type&) {aka std::basic_ostream<char>& (*)(std::basic_ostream<char>&)}'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:117:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ios_type& (*)(std::basic_ostream<_CharT, _Traits>::__ios_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>; std::basic_ostream<_CharT, _Traits>::__ios_type = std::basic_ios<char>]
+       operator<<(__ios_type& (*__pf)(__ios_type&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:117:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__ios_type& (*)(std::basic_ostream<char>::__ios_type&) {aka std::basic_ios<char>& (*)(std::basic_ios<char>&)}'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:127:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::ios_base& (*)(std::ios_base&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(ios_base& (*__pf) (ios_base&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:127:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::ios_base& (*)(std::ios_base&)'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:166:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:166:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:170:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:170:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:174:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(bool __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:174:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'bool'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:91:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char; _Traits = std::char_traits<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:91:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'short int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:181:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned short __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:181:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'short unsigned int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:105:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char; _Traits = std::char_traits<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:105:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:192:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned int __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:192:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:201:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:201:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long long int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:205:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned long long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:205:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long long unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:220:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(double __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:220:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'double'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:224:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(float __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:224:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'float'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:232:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long double __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:232:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long double'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:245:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(const void*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(const void* __p)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:245:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'const void*'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:119:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__streambuf_type*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__streambuf_type = std::basic_streambuf<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:119:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__streambuf_type* {aka std::basic_streambuf<char>*}'
+In file included from include/GameObject.hpp:10:0,
+                 from include/ModuleGame.hpp:6,
+                 from src/AudioInterface.cpp:2:
+include/Quaternion.hpp:75:15: note: candidate: std::ostream& Module::operator<<(std::ostream&, const Module::Quaternion&)
+ std::ostream& operator<< (std::ostream& o, const Module::Quaternion& q); // ostream insertion operator
+               ^
+include/Quaternion.hpp:75:15: note:   no known conversion for argument 2 from 'const string {aka const eastl::basic_string<char>}' to 'const Module::Quaternion&'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:574:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const unsigned char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const unsigned char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:574:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'const unsigned char*'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:569:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const signed char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const signed char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:569:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'const signed char*'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:556:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:556:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'const char*'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:321:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const char*)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, const char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:321:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'const char*'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:539:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const _CharT*)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, const _CharT* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:539:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   mismatched types 'const _CharT*' and 'eastl::basic_string<char>'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:519:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, unsigned char)
+     operator<<(basic_ostream<char, _Traits>& __out, unsigned char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:519:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'unsigned char'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:514:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, signed char)
+     operator<<(basic_ostream<char, _Traits>& __out, signed char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:514:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'signed char'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:508:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, char)
+     operator<<(basic_ostream<char, _Traits>& __out, char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:508:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'char'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:502:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, char)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:502:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   cannot convert 'name' (type 'const string {aka const eastl::basic_string<char>}') to type 'char'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:497:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, _CharT)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, _CharT __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:497:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   deduced conflicting types for parameter '_CharT' ('char' and 'eastl::basic_string<char>')
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/string:52:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/locale_classes.h:40,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ios_base.h:41,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ios:42,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:38,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/basic_string.h:5174:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator<<(basic_ostream<_CharT, _Traits>& __os,
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/basic_string.h:5174:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:72:51: note:   'const string {aka const eastl::basic_string<char>}' is not derived from 'const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>'
+    std::cerr << "[AudioInterface] The name \"" << name << "\" has already been used." << std::endl;
+                                                   ^
+src/AudioInterface.cpp: In member function 'void Module::AudioInterface::debugAudio()':
+src/AudioInterface.cpp:88:52: error: no match for 'operator<<' (operand types are 'std::basic_ostream<char>' and 'const string {aka const eastl::basic_string<char>}')
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                    ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:108:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ostream_type& (*)(std::basic_ostream<_CharT, _Traits>::__ostream_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(__ostream_type& (*__pf)(__ostream_type&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:108:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__ostream_type& (*)(std::basic_ostream<char>::__ostream_type&) {aka std::basic_ostream<char>& (*)(std::basic_ostream<char>&)}'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:117:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ios_type& (*)(std::basic_ostream<_CharT, _Traits>::__ios_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>; std::basic_ostream<_CharT, _Traits>::__ios_type = std::basic_ios<char>]
+       operator<<(__ios_type& (*__pf)(__ios_type&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:117:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__ios_type& (*)(std::basic_ostream<char>::__ios_type&) {aka std::basic_ios<char>& (*)(std::basic_ios<char>&)}'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:127:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::ios_base& (*)(std::ios_base&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(ios_base& (*__pf) (ios_base&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:127:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::ios_base& (*)(std::ios_base&)'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:166:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:166:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:170:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:170:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:174:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(bool __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:174:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'bool'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:91:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char; _Traits = std::char_traits<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:91:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'short int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:181:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned short __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:181:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'short unsigned int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:105:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char; _Traits = std::char_traits<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:105:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:192:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned int __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:192:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:201:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:201:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long long int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:205:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned long long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:205:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long long unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:220:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(double __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:220:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'double'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:224:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(float __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:224:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'float'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:232:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long double __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:232:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long double'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:245:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(const void*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(const void* __p)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:245:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'const void*'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:119:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__streambuf_type*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__streambuf_type = std::basic_streambuf<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:119:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__streambuf_type* {aka std::basic_streambuf<char>*}'
+In file included from include/GameObject.hpp:10:0,
+                 from include/ModuleGame.hpp:6,
+                 from src/AudioInterface.cpp:2:
+include/Quaternion.hpp:75:15: note: candidate: std::ostream& Module::operator<<(std::ostream&, const Module::Quaternion&)
+ std::ostream& operator<< (std::ostream& o, const Module::Quaternion& q); // ostream insertion operator
+               ^
+include/Quaternion.hpp:75:15: note:   no known conversion for argument 2 from 'const string {aka const eastl::basic_string<char>}' to 'const Module::Quaternion&'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:574:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const unsigned char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const unsigned char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:574:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const unsigned char*'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:569:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const signed char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const signed char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:569:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const signed char*'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:556:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:556:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const char*'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:321:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const char*)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, const char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:321:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const char*'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:539:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const _CharT*)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, const _CharT* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:539:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:72: note:   mismatched types 'const _CharT*' and 'eastl::basic_string<char>'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:519:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, unsigned char)
+     operator<<(basic_ostream<char, _Traits>& __out, unsigned char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:519:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'unsigned char'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:514:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, signed char)
+     operator<<(basic_ostream<char, _Traits>& __out, signed char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:514:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'signed char'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:508:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, char)
+     operator<<(basic_ostream<char, _Traits>& __out, char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:508:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'char'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:502:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, char)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:502:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:71: note:   cannot convert '(&((Module::AudioInterface*)this)->Module::AudioInterface::clips.Module::Book<T>::operator[]<Module::SoundClip>(((Module::Book<Module::SoundClip>::size_type)i)))->Module::SoundClip::getName()' (type 'const string {aka const eastl::basic_string<char>}') to type 'char'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                       ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:497:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, _CharT)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, _CharT __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:497:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:72: note:   deduced conflicting types for parameter '_CharT' ('char' and 'eastl::basic_string<char>')
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/string:52:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/locale_classes.h:40,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ios_base.h:41,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ios:42,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:38,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/basic_string.h:5174:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator<<(basic_ostream<_CharT, _Traits>& __os,
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/basic_string.h:5174:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:88:72: note:   'const string {aka const eastl::basic_string<char>}' is not derived from 'const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>'
+   std::cout << "                 |" << i+1 << "| " << clips[i].getName() << std::endl;
+                                                                        ^
+src/AudioInterface.cpp:93:52: error: no match for 'operator<<' (operand types are 'std::basic_ostream<char>' and 'const string {aka const eastl::basic_string<char>}')
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                    ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:108:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ostream_type& (*)(std::basic_ostream<_CharT, _Traits>::__ostream_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(__ostream_type& (*__pf)(__ostream_type&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:108:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__ostream_type& (*)(std::basic_ostream<char>::__ostream_type&) {aka std::basic_ostream<char>& (*)(std::basic_ostream<char>&)}'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:117:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ios_type& (*)(std::basic_ostream<_CharT, _Traits>::__ios_type&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>; std::basic_ostream<_CharT, _Traits>::__ios_type = std::basic_ios<char>]
+       operator<<(__ios_type& (*__pf)(__ios_type&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:117:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__ios_type& (*)(std::basic_ostream<char>::__ios_type&) {aka std::basic_ios<char>& (*)(std::basic_ios<char>&)}'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:127:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::ios_base& (*)(std::ios_base&)) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(ios_base& (*__pf) (ios_base&))
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:127:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::ios_base& (*)(std::ios_base&)'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:166:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:166:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:170:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:170:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:174:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(bool __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:174:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'bool'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:91:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char; _Traits = std::char_traits<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:91:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'short int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:181:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned short __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:181:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'short unsigned int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:105:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char; _Traits = std::char_traits<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:105:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'int'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:192:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned int __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:192:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:201:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:201:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long long int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:205:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(unsigned long long __n)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:205:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long long unsigned int'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:220:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(double __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:220:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'double'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:224:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(float __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:224:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'float'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:232:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(long double __f)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:232:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'long double'
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:245:7: note: candidate: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(const void*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+       operator<<(const void* __p)
+       ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:245:7: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'const void*'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:119:5: note: candidate: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__streambuf_type*) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__streambuf_type = std::basic_streambuf<char>]
+     basic_ostream<_CharT, _Traits>::
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:119:5: note:   no known conversion for argument 1 from 'const string {aka const eastl::basic_string<char>}' to 'std::basic_ostream<char>::__streambuf_type* {aka std::basic_streambuf<char>*}'
+In file included from include/GameObject.hpp:10:0,
+                 from include/ModuleGame.hpp:6,
+                 from src/AudioInterface.cpp:2:
+include/Quaternion.hpp:75:15: note: candidate: std::ostream& Module::operator<<(std::ostream&, const Module::Quaternion&)
+ std::ostream& operator<< (std::ostream& o, const Module::Quaternion& q); // ostream insertion operator
+               ^
+include/Quaternion.hpp:75:15: note:   no known conversion for argument 2 from 'const string {aka const eastl::basic_string<char>}' to 'const Module::Quaternion&'
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:574:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const unsigned char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const unsigned char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:574:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const unsigned char*'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:569:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const signed char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const signed char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:569:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const signed char*'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:556:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const char*)
+     operator<<(basic_ostream<char, _Traits>& __out, const char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:556:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const char*'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:638:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:321:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const char*)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, const char* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ostream.tcc:321:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'const char*'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:539:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const _CharT*)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, const _CharT* __s)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:539:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:73: note:   mismatched types 'const _CharT*' and 'eastl::basic_string<char>'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                         ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:519:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, unsigned char)
+     operator<<(basic_ostream<char, _Traits>& __out, unsigned char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:519:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'unsigned char'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:514:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, signed char)
+     operator<<(basic_ostream<char, _Traits>& __out, signed char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:514:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'signed char'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:508:5: note: candidate: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, char)
+     operator<<(basic_ostream<char, _Traits>& __out, char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:508:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'char'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:502:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, char)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, char __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:502:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:72: note:   cannot convert 'Module::Sound::getName() const()' (type 'const string {aka const eastl::basic_string<char>}') to type 'char'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                        ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39:0,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:497:5: note: candidate: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, _CharT)
+     operator<<(basic_ostream<_CharT, _Traits>& __out, _CharT __c)
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:497:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:73: note:   deduced conflicting types for parameter '_CharT' ('char' and 'eastl::basic_string<char>')
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                         ^
+In file included from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/string:52:0,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/locale_classes.h:40,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/ios_base.h:41,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ios:42,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/ostream:38,
+                 from C:/tools/mingw64/x86_64-w64-mingw32/include/c++/iostream:39,
+                 from include/AudioInterface.hpp:5,
+                 from src/AudioInterface.cpp:1:
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/basic_string.h:5174:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator<<(basic_ostream<_CharT, _Traits>& __os,
+     ^
+C:/tools/mingw64/x86_64-w64-mingw32/include/c++/bits/basic_string.h:5174:5: note:   template argument deduction/substitution failed:
+src/AudioInterface.cpp:93:73: note:   'const string {aka const eastl::basic_string<char>}' is not derived from 'const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>'
+   std::cout << "                 |" << i+1 << "| " << sounds[i].getName() << std::endl;
+                                                                         ^
+make: *** [build/debug/64bit/windows/mingw-w64/AudioInterface.o] Error 1

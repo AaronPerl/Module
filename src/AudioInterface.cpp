@@ -41,6 +41,11 @@ Sound* AudioInterface::playSound(SoundClip* clip, GameObject* gameObj = NULL)
 	if(clip)
 	{
 		#ifdef DEBUG
+		#ifdef __MODULEDEFINES_HPP__
+		#pragma message("yep")
+		#else
+		#pragma message("no")
+		#endif
 		std::cerr << "[AudioInterface] Now playing the Sound: " << clip->getName() << std::endl;
 		#endif
 		sounds.push_back(Sound(clip,gameObj,this));
