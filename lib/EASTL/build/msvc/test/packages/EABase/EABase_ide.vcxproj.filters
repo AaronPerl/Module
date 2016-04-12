@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\eabase.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\eahave.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\earesult.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\eastdarg.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\nullptr.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\version.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\config\eacompiler.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\config\eacompilertraits.h">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\Aaron\Desktop\EASTL\test\packages\EABase\include\Common\EABase\config\eaplatform.h">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{FB5E8F6E-7B68-3C97-992B-FEFD93276EF8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

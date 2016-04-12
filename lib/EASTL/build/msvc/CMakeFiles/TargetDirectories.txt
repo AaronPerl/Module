@@ -1,0 +1,4 @@
+C:/Users/Aaron/Desktop/EASTL/build/msvc/CMakeFiles/ALL_BUILD.dir
+C:/Users/Aaron/Desktop/EASTL/build/msvc/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Aaron/Desktop/EASTL/build/msvc/test/packages/EABase/CMakeFiles/EABase_ide.dir
+C:/Users/Aaron/Desktop/EASTL/build/msvc/CMakeFiles/EASTL.dir
