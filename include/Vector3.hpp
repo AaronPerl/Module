@@ -11,8 +11,18 @@ class Quaternion;
 class Vector3
 {
 	private:
-		float x,y,z;
+		float x;	/**< The x-coordinate */
+		float y;	/**< The y-coordinate */
+		float z;	/**< The z-coordinate */
+		
 	public:
+		static const Vector3 ZERO;
+		static const Vector3 UP;
+		static const Vector3 DOWN;
+		static const Vector3 RIGHT;
+		static const Vector3 LEFT;
+		static const Vector3 FORWARD;
+		static const Vector3 BACK;
 		
 		Vector3();										// default constructor
 		Vector3(float x, float y, float z);				// constructor with arguments

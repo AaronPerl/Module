@@ -13,13 +13,11 @@ class Vector2
 		float y;	/**< The y-coordinate */
 		
 	public:
-		/*
-		static const Vector2 ZERO			= Vector2(0.0f,0.0f);
-		static const Vector2 UP				= Vector2(0.0f,1.0f);
-		static const Vector2 DOWN			= Vector2(0.0f,-1.0f);
-		static const Vector2 LEFT			= Vector2(-1.0f,1.0f);
-		static const Vector2 RIGHT			= Vector2(1.0f,1.0f);
-		*/
+		static const Vector2 ZERO;
+		static const Vector2 UP;
+		static const Vector2 DOWN;
+		static const Vector2 RIGHT;
+		static const Vector2 LEFT;
 		
 		Vector2();										// default constructor
 		Vector2(float x, float y);						// constructor with arguments

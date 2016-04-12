@@ -3,6 +3,14 @@
 
 using Module::Vector3;
 
+const Vector3 Vector3::ZERO		= Vector3(0.0f,0.0f,0.0f);
+const Vector3 Vector3::UP		= Vector3(0.0f,1.0f,0.0f);
+const Vector3 Vector3::DOWN		= Vector3(0.0f,-1.0f,0.0f);
+const Vector3 Vector3::RIGHT	= Vector3(1.0f,0.0f,0.0f);
+const Vector3 Vector3::LEFT		= Vector3(-1.0f,0.0f,0.0f);
+const Vector3 Vector3::FORWARD	= Vector3(0.0f,0.0f,1.0f);
+const Vector3 Vector3::BACK		= Vector3(0.0f,0.0f,-1.0f);
+
 Vector3::Vector3() : x(0), y(0), z(0) {}
 
 Vector3::Vector3(float _x, float _y, float _z) : x(_x),y(_y),z(_z) {}
