@@ -101,5 +101,3 @@ std::ostream& operator<< (std::ostream& o, const Quaternion& q) // ostream inser
 	o << "Quaternion(" << q.getX() << "," << q.getY() << "," << q.getZ() << "," << q.getW() << ")";
 	return o;
 }
-
-

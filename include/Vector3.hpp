@@ -1,5 +1,5 @@
-#ifndef __MODULE__VECTOR_HPP__
-#define __MODULE__VECTOR_HPP__
+#ifndef __MODULE__VECTOR3_HPP__
+#define __MODULE__VECTOR3_HPP__
 
 #include <iostream>
 
@@ -7,54 +7,76 @@ namespace Module {
 
 class Quaternion;
 
-// A simple 3D Vector class. Not optimized and may be replaced in the future to use a faster alternative.
-class Vector3 {
-private:
-	float x,y,z;
-public:
-	
-	Vector3();
-	Vector3(float x, float y, float z);
-	
-	Vector3 operator*(float scalar) const;			// scalar multiplication
-	Vector3 operator*(const Vector3& other) const; // component-wise multiplication
-	Vector3& operator*=(float scalar);				// scalar multiplication assignment
-	Vector3& operator*=(const Vector3& other);		// component-wise multiplication assignment
-	Vector3 operator+(const Vector3& other) const; 	// vector addition
-	Vector3& operator+=(const Vector3& other); 		// addition assignment
-	Vector3 operator-() const; 						// negation
-	Vector3 operator-(const Vector3& other) const;	// vector subtraction
-	Vector3& operator-=(const Vector3& other);		// subtraction assignment
-	
-	Vector3 rotate(const Quaternion& other) const;	// quaternion rotation
-	
-	float getX() const;
-	float getY() const;
-	float getZ() const;
-	
-	Vector3 cross(const Vector3& other) const; 		// vector cross product	
-	float dot(const Vector3& other) const; 			// vector dot product	
-	
-	
+// A simple 3D Vector class. Not optimized
+class Vector3
+{
+	private:
+		float x;	/**< The x-coordinate */
+		float y;	/**< The y-coordinate */
+		float z;	/**< The z-coordinate */
+		
+	public:
+		static const Vector3 ZERO;
+		static const Vector3 UP;
+		static const Vector3 DOWN;
+		static const Vector3 RIGHT;
+		static const Vector3 LEFT;
+		static const Vector3 FORWARD;
+		static const Vector3 BACK;
+		
+		Vector3();										// default constructor
+		Vector3(float x, float y, float z);				// constructor with arguments
+		
+		Vector3 operator*(float scalar) const;			// scalar multiplication
+		Vector3 operator*(const Vector3& other) const;	// component-wise multiplication
+		Vector3& operator*=(float scalar);				// scalar multiplication assignment
+		Vector3& operator*=(const Vector3& other);		// component-wise multiplication assignment
+		Vector3 operator+(const Vector3& other) const;	// vector addition
+		Vector3& operator+=(const Vector3& other);		// addition assignment
+		Vector3 operator-() const;						// negation
+		Vector3 operator-(const Vector3& other) const;	// vector subtraction
+		Vector3& operator-=(const Vector3& other);		// subtraction assignment
+		
+		Vector3 rotate(const Quaternion& other) const;	// quaternion rotation
+		
+		float getX() const;								// A getter for x
+		float getY() const;								// A getter for y
+		float getZ() const;								// A getter for z
+		
+		Vector3 cross(const Vector3& other) const; 		// vector cross product	
+		float dot(const Vector3& other) const; 			// vector dot product		
 };
 
+/** Gets the x-coordinate of this Vector3
+ * @return The x-coordinate of this Vector3
+*/
 inline float Vector3::getX() const
 {
 	return x;
 }
 
+/** Gets the y-coordinate of this Vector3
+ * @return The y-coordinate of this Vector3
+*/
 inline float Vector3::getY() const
 {
 	return y;
 }
 
+/** Gets the z-coordinate of this Vector3
+ * @return The z-coordinate of this Vector3
+*/
 inline float Vector3::getZ() const
 {
 	return z;
 }
-
+/*
+// Ostream insertion operator
+std::ostream& operator<< (std::ostream& o, const Module::Vector3& v)
+{
+	o << "Vector3(" << v.getX() << "," << v.getY() << "," << v.getZ() << ")";
+	return o;
 }
-
-std::ostream& operator<< (std::ostream& o, const Module::Vector3& v);	// ostream insertion operator
-
+*/
+}
 #endif

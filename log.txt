@@ -1,0 +1,2 @@
+Compiling src/AudioInterface.cpp
+  g++ src/AudioInterface.cpp -c -Iinclude -Ilib/EASTL/include -Ilib/EASTL/test/packages/EABase/include/Common -Wall -fstack-protector-all -fpic -Wstack-protector -D_FORTIFY_SOURCE=2 -g -DDEBUG -ggdb3 -o build/debug/64bit/windows/mingw-w64/AudioInterface.o
