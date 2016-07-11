@@ -14,7 +14,8 @@ namespace Module {
 class Extension {
 protected:
 	ModuleGame* game_;
-	Extension(ModuleGame* game);
+	
+	Extension() : game_(NULL) {}
 	
 	eastl::vector<const char*> componentTypes;
 	
@@ -22,16 +23,22 @@ protected:
 	virtual const char* getName() = 0;
 	virtual const char* getVersion() = 0;
 	
-	// These functions are for organizing the instantiation of callbacks and threads
+	// These functions are for organizing the instantiation of this extension.
+	// These are all called directly before the interfaces are started.
+	virtual void registerComponents() = 0;
 	virtual void attachGraphicsCallbacks() = 0;
 	virtual void attachInputCallbacks() = 0;
 	virtual void attachAudioCallbacks() = 0;
 	virtual void spawnThreads() = 0;
 	
+	void setGame(ModuleGame* game);
 	void registerComponent(const char* componentName);
 	void registerComponent(Component* component);
 public:
 	const eastl::vector<const char*>& getComponentTypes() { return componentTypes; }
+
+friend class ModuleGame;
+friend class ComponentManager;
 };
 
 }

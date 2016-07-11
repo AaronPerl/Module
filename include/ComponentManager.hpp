@@ -26,6 +26,9 @@ class ComponentManager {
 		
 		void registerComponent(Extension*, const char*);
 		void registerExtension(Extension*);
+		
+		void initializeExtensions();
+		
 		unsigned long hash(const char*);
 	public:
 

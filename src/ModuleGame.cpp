@@ -49,6 +49,16 @@ void Module::ModuleGame::attachThreadingInterface(ThreadingInterface* newThreadi
 }
 
 /**
+ * Adds a new extension to the game to be initialized at the start of the game.
+ * @param extension The extension to add to the game
+ */
+void Module::ModuleGame::addExtension(Extension* extension)
+{
+	extension->setGame(this);
+	componentManager.registerExtension(extension);
+}
+
+/**
  * Calls the run function of a ThreadObject in a newly spawned thread.
  * @param obj The ThreadObject to call the run method of
  */
@@ -63,6 +73,8 @@ void Module::ModuleGame::startThread(ThreadObject* obj)
  */
 void Module::ModuleGame::start()
 {
+	componentManager.initializeExtensions();
+	
 	if(graphics)
 		graphics->start();
 	if(audio)

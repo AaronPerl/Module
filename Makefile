@@ -9,15 +9,14 @@ GLM = lib/glm
 SDL2 = lib/SDL2-2.0.3/x86_64-w64-mingw32
 SDL2_32 = $(SDL2)/../i686-w64-mingw32
 GLEW = lib/glew-1.11.0
-BULLET = lib/bullet3
 OPENAL_SOFT = lib/openal-soft-1.16.0
 FREEALUT = lib/freealut
 SOIL = lib/SOIL
 
 #LIBS = -lmingw32 -lSDL2main -lSDL2 -lopengl32 -lglew32 -lBulletDynamics -lBulletCollision -lLinearMath
 LIBS 			:= -lalut -lSDL2main -lSDL2 -lSOIL $(EASTL_LINK)
-LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src $(EASTL_INC)
-LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(BULLET)/src -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src $(EASTL_INC)
+LIB_INC_PATHS 		:= -I$(GLEW)/include -I$(SDL2)/include -I$(GLM) -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src $(EASTL_INC)
+LIB_INC_PATHS_32 	:= -I$(GLEW)/include -I$(SDL2_32)/include -I$(GLM) -I$(OPENAL_SOFT)/include -I$(FREEALUT)/include -I$(SOIL)/src $(EASTL_INC)
 LIB_PATHS		:= -L$(FREEALUT)/lib
 LIB_PATHS32		:=
 
@@ -77,10 +76,10 @@ NULL =
 
 ifeq ($(OS), Windows_NT)
 	TEST_PROGRAM := $(addsuffix .exe, $(TEST_PROGRAM))
-	EASTL_LIB := -L$(EASTL)/build/mingw-w64
-	LIB_PATHS 		+= -L$(GLEW)/lib -L$(SDL2)/lib -L$(BULLET)/lib -L$(OPENAL_SOFT)/libs/Win64 -L$(SOIL)/lib $(EASTL_LIB)
+	EASTL_LIB := $(EASTL)/build/mingw-w64
+	LIB_PATHS 		+= -L$(GLEW)/lib -L$(SDL2)/lib -L$(OPENAL_SOFT)/libs/Win64 -L$(SOIL)/lib -L$(EASTL_LIB)
 	# TODO 32 bit EASTL
-	LIB_PATHS_32 	+= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(BULLET)/lib32 -L$(OPENAL_SOFT)/libs/Win32 -L$(SOIL)/lib
+	LIB_PATHS_32 	+= -L$(GLEW)/lib32 -L$(SDL2_32)/lib -L$(OPENAL_SOFT)/libs/Win32 -L$(SOIL)/lib
 	
 	LIBS		+= -lopengl32 -lglew32 -lOpenAL32.dll
 	ifeq ($(IS_CYGWIN), false)

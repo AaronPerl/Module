@@ -29,13 +29,16 @@ class ModuleGame
 		
 		ComponentManager componentManager;
 		
-		ComponentManager* getComponentManager() { return &componentManager; }
+		void registerComponent(Extension* ext, const char* componentType)
+			{ componentManager.registerComponent(ext, componentType); }
 	public:
 		ModuleGame();
 		
 		void attachGraphicsInterface(GraphicsInterface* newGraphics);
 		void attachAudioInterface(AudioInterface* newAudio);
 		void attachThreadingInterface(ThreadingInterface* newThreading);
+		
+		void addExtension(Extension* extension);
 		
 		void startThread(ThreadObject* obj);
 		

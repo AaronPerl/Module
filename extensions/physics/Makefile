@@ -41,17 +41,38 @@ MODULE_INC := $(MODULE_DIR)/include
 ###### External Libraries ######
 ################################
 
+# Arguments:
+#  1: file
+#  2: variable name
+#  3: variable value (output)
+define readLine
+  GREP_PATTERN := $(2)[ \t]*=[ \t]*
+  SED_PATTERN := /$(GREP_PATTERN)/s/$(GREP_PATTERN)//p
+  $(3) = (shell grep -P "$(GREP_PATTERN)" $(1) | sed -n "$(SED_PATTERN)")
+endef
+  
+#define readConfig
+#  GREP_PATTERN := 
+#  SED_PATTERN := 
+#  $(2) := 
+#  $(3) :=
+#  $(4) :=
+#  $(5) :=
+#endef
+
+#$(call readLine, build.txt, inc_dirs, $(test_value))
+
 # External library directories
 BULLET_DIR  := bullet
 
 # External library include directories
-LIB_INC := $(BULLET_DIR)/src
+LIB_INC := $(MODULE_DIR)/lib/EASTL/include $(MODULE_DIR)/lib/EASTL/test/packages/EABase/include/Common $(BULLET_DIR)/src
 
 # External library binary directories
 LIB_BINS := $(BULLET_DIR)/bin
 
 # External libraries to link
-LIBSS := BulletSoftBody BulletDynamics BulletCollision LinearMath
+LIBS := BulletSoftBody BulletDynamics BulletCollision LinearMath
 
 # Generate linker flags from list of libraries
 LINKS := $(addprefix -l, $(LIBS))
@@ -103,9 +124,12 @@ EXTENSION = lib$(EXTENSION_NAME).a
 
 .DEFAULT_GOAL = all
 
-.PHONY : all clean
+.PHONY : all clean test
 
 all : $(EXTENSION)
 
 $(EXTENSION) : $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
+
+say_stuff:
+	echo $(testvalue)

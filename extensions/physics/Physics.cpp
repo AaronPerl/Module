@@ -1,5 +1,7 @@
 #include "Physics.hpp"
 
+#include <btBulletDynamicsCommon.h>
+
 using namespace Module;
 
 const std::string  Physics::NAME            = "Bullet Physics Extension";
@@ -30,7 +32,7 @@ void Physics::run()
 	}
 }
 
-Physics::Physics(ModuleGame* game_) : Extension(game_)
+Physics::Physics(ModuleGame* game_)
 {
 	broadphase = new btDbvtBroadphase();
 	collisionConfiguration = new btDefaultCollisionConfiguration();
